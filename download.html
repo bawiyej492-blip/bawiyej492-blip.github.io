@@ -1,0 +1,4720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水库藻华全流程管控系统集成平台</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 配置Tailwind自定义颜色 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        dark: '#1D2129',
+                        light: '#F2F3F5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(22, 93, 255, 0.1), 0 8px 10px -6px rgba(22, 93, 255, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-dark">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-water text-primary text-2xl"></i>
+                    <h1 class="text-xl font-bold text-primary">藻华管控系统集成平台</h1>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-primary font-medium transition-colors">首页</a>
+                    <a href="#systems" class="text-gray-700 hover:text-primary font-medium transition-colors">系统功能</a>
+                    <a href="#download" class="text-gray-700 hover:text-primary font-medium transition-colors">源代码下载</a>
+                    <a href="#tech" class="text-gray-700 hover:text-primary font-medium transition-colors">技术栈</a>
+                </div>
+                <button class="md:hidden text-gray-700" id="menuBtn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="md:hidden hidden bg-white border-t" id="mobileMenu">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#home" class="text-gray-700 hover:text-primary py-2">首页</a>
+                <a href="#systems" class="text-gray-700 hover:text-primary py-2">系统功能</a>
+                <a href="#download" class="text-gray-700 hover:text-primary py-2">源代码下载</a>
+                <a href="#tech" class="text-gray-700 hover:text-primary py-2">技术栈</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页横幅 -->
+    <section id="home" class="bg-gradient-to-r from-primary to-blue-700 text-white py-20 md:py-32">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-shadow">水库藻华全流程智能管控解决方案</h2>
+            <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                集成在线监测、风险预测、智能预警、防控方案生成、装备调度和资源化利用全流程，
+                为水库灌区藻华防控提供一站式技术支撑
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#systems" class="bg-white text-primary font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors shadow-lg">
+                    查看系统功能
+                </a>
+                <a href="#download" class="bg-secondary text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition-colors shadow-lg">
+                    下载源代码
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心优势 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-12">平台核心优势</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6 card-hover bg-light rounded-xl">
+                    <i class="fas fa-chart-line text-primary text-4xl mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">实时监测</h4>
+                    <p class="text-gray-600">多参数实时采集，24小时不间断监控水库水质与藻情变化</p>
+                </div>
+                <div class="text-center p-6 card-hover bg-light rounded-xl">
+                    <i class="fas fa-brain text-primary text-4xl mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">智能预测</h4>
+                    <p class="text-gray-600">基于机器学习和水文水动力耦合模型，提前预测藻华爆发风险</p>
+                </div>
+                <div class="text-center p-6 card-hover bg-light rounded-xl">
+                    <i class="fas fa-shield-alt text-primary text-4xl mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">精准防控</h4>
+                    <p class="text-gray-600">自动生成分级防控方案，智能调度作业装备，实现精准治理</p>
+                </div>
+                <div class="text-center p-6 card-hover bg-light rounded-xl">
+                    <i class="fas fa-recycle text-primary text-4xl mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">循环利用</h4>
+                    <p class="text-gray-600">藻秸协同资源化利用，实现"以废治废"的生态闭环</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 系统功能模块 -->
+    <section id="systems" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-12">六大核心系统</h3>
+            
+            <!-- 系统卡片 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <!-- 系统1：在线监测与数据管理 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="bg-primary/10 p-6">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xl font-bold text-primary">水域藻类防控在线监测与数据管理系统</h4>
+                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full">V1.0</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">
+                            实现水库多监测点水质参数实时采集、数据存储、可视化展示和异常预警功能，
+                            支持历史数据查询和趋势分析。
+                        </p>
+                        <h5 class="font-bold mb-2">核心功能：</h5>
+                        <ul class="text-gray-600 space-y-1 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>多检测点管理与配置</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>水温、pH、溶解氧、藻类密度实时监测</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>自定义预警阈值设置</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>实时趋势图与历史数据回看</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>异常状态自动报警</li>
+                        </ul>
+                        <button onclick="downloadFile('monitor')" class="w-full bg-primary text-white font-medium py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fas fa-download mr-2"></i>下载源代码
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 系统2：风险预判与防控方案生成 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="bg-primary/10 p-6">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xl font-bold text-primary">水域藻类爆发风险预判与防控方案生成系统</h4>
+                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full">V2.0</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">
+                            基于随机森林算法和K-Means聚类技术，实现藻类爆发风险预判和防控装置智能布设方案生成。
+                        </p>
+                        <h5 class="font-bold mb-2">核心功能：</h5>
+                        <ul class="text-gray-600 space-y-1 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>历史与实时数据导入管理</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>机器学习模型训练与评估</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>多点位风险等级预判</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>重点防控区域自动划定</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>除藻装置布设方案优化</li>
+                        </ul>
+                        <button onclick="downloadFile('prediction')" class="w-full bg-primary text-white font-medium py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fas fa-download mr-2"></i>下载源代码
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 系统3：水库藻华管控系统 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="bg-primary/10 p-6">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xl font-bold text-primary">水库藻华管控系统</h4>
+                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full">V1.0</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">
+                            整合藻华预测、风险预警、防控方案生成、作业装备调度和治理效果核算全流程功能。
+                        </p>
+                        <h5 class="font-bold mb-2">核心功能：</h5>
+                        <ul class="text-gray-600 space-y-1 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>自定义藻华爆发阈值设置</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>多等级风险预警与通知</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>水利调度与防控方案生成</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>作业装备智能调度管理</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>治理效果核算与台账管理</li>
+                        </ul>
+                        <button onclick="downloadFile('control')" class="w-full bg-primary text-white font-medium py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fas fa-download mr-2"></i>下载源代码
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 系统4：藻秸协同资源化产品溯源管理 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="bg-primary/10 p-6">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xl font-bold text-primary">藻秸协同资源化产品溯源管理系统</h4>
+                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full">V1.0</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">
+                            实现藻秸协同资源化产品从原料登记、生产加工、产品检测到销售流向的全流程溯源管理。
+                        </p>
+                        <h5 class="font-bold mb-2">核心功能：</h5>
+                        <ul class="text-gray-600 space-y-1 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>秸秆与藻泥原料登记入库</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>生产加工过程记录</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>产品质量检测管理</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>销售流向跟踪</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>全流程数据批量导出</li>
+                        </ul>
+                        <button onclick="downloadFile('traceability')" class="w-full bg-primary text-white font-medium py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fas fa-download mr-2"></i>下载源代码
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 系统5：藻类防控装置智能浮力调节控制 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="bg-primary/10 p-6">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xl font-bold text-primary">藻类防控装置智能浮力调节控制系统</h4>
+                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full">V1.0</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">
+                            基于PID控制算法，实现藻类防控装置悬浮深度的自动调节，适应不同水位变化。
+                        </p>
+                        <h5 class="font-bold mb-2">核心功能：</h5>
+                        <ul class="text-gray-600 space-y-1 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>深度与水位实时监测</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>PID参数在线配置</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>自适应目标深度计算</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>实时深度变化曲线</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>异常状态自动预警</li>
+                        </ul>
+                        <button onclick="downloadFile('buoyancy')" class="w-full bg-primary text-white font-medium py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fas fa-download mr-2"></i>下载源代码
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 系统6：水文水动力耦合驱动的藻华预测与防控 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="bg-primary/10 p-6">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xl font-bold text-primary">水文水动力耦合驱动的水库灌区藻华预测与防控系统</h4>
+                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full">V1.0</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">
+                            结合SWAT灌区面源污染模型和MIKE21水库水动力模型，采用LSTM深度学习算法进行藻华预测。
+                        </p>
+                        <h5 class="font-bold mb-2">核心功能：</h5>
+                        <ul class="text-gray-600 space-y-1 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>水文-水动力双向耦合模拟</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>LSTM深度学习模型训练</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>多时间尺度藻华预测</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>风险指数计算与分级预警</li>
+                            <li class="flex items-center"><i class="fas fa-check text-secondary mr-2"></i>模型增量学习与迭代优化</li>
+                        </ul>
+                        <button onclick="downloadFile('coupling')" class="w-full bg-primary text-white font-medium py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fas fa-download mr-2"></i>下载源代码
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 源代码下载区 -->
+    <section id="download" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-12">源代码批量下载</h3>
+            <div class="max-w-3xl mx-auto bg-light rounded-xl p-8 text-center">
+                <i class="fas fa-file-code text-primary text-5xl mb-6"></i>
+                <h4 class="text-xl font-bold mb-4">全套系统源代码打包下载</h4>
+                <p class="text-gray-600 mb-8">
+                    包含所有6套系统的完整源代码、数据库脚本和使用说明文档，
+                    下载后即可直接运行使用。
+                </p>
+                <button onclick="downloadAllFiles()" class="bg-secondary text-white font-bold py-3 px-10 rounded-lg hover:bg-green-600 transition-colors shadow-lg">
+                    <i class="fas fa-download mr-2"></i>下载全部源代码
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术栈 -->
+    <section id="tech" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-12">技术栈</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <i class="fab fa-python text-4xl text-blue-500 mb-3"></i>
+                    <p class="font-medium">Python</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <i class="fas fa-database text-4xl text-blue-600 mb-3"></i>
+                    <p class="font-medium">SQLite</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <i class="fas fa-chart-bar text-4xl text-orange-500 mb-3"></i>
+                    <p class="font-medium">Matplotlib</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <i class="fas fa-table text-4xl text-green-600 mb-3"></i>
+                    <p class="font-medium">Pandas</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <i class="fas fa-brain text-4xl text-purple-600 mb-3"></i>
+                    <p class="font-medium">Scikit-learn</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <i class="fas fa-network-wired text-4xl text-red-500 mb-3"></i>
+                    <p class="font-medium">TensorFlow</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <i class="fas fa-water text-primary text-2xl"></i>
+                        <h2 class="text-xl font-bold">水库藻华全流程管控系统集成平台</h2>
+                    </div>
+                    <p class="text-gray-400">为水库灌区藻华防控提供一站式技术解决方案</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-gray-400 mb-2">技术支持：秸藻清源项目团队</p>
+                    <p class="text-gray-400">© 2026 版权所有</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    // 关闭移动端菜单
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // 系统源代码内容
+        const systemFiles = {
+            monitor: `# 水域藻类防控在线监测与数据管理系统 V1.0
+# 完整源代码
+import tkinter as tk
+from tkinter import ttk, scrolledtext, messagebox
+import sqlite3
+import random
+from datetime import datetime
+
+# -------------------------- 数据库模块 --------------------------
+class DatabaseManager:
+    def __init__(self):
+        self.conn = sqlite3.connect('algae_monitor.db', check_same_thread=False)
+        self.create_table()
+
+    def create_table(self):
+        cursor = self.conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS sensor_data (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                point_name TEXT NOT NULL,
+                timestamp TEXT NOT NULL,
+                water_temp REAL NOT NULL,
+                ph REAL NOT NULL,
+                do REAL NOT NULL,
+                algae REAL NOT NULL
+            )
+        ''')
+        self.conn.commit()
+
+    def insert_data(self, point_name, t, temp, ph, do, algae):
+        cursor = self.conn.cursor()
+        cursor.execute('INSERT INTO sensor_data VALUES (NULL,?,?,?,?,?,?)', 
+                      (point_name, t, temp, ph, do, algae))
+        self.conn.commit()
+
+    def get_data_by_point(self, point_name):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT * FROM sensor_data WHERE point_name=? ORDER BY id ASC', (point_name,))
+        return cursor.fetchall()
+
+# -------------------------- 数据采集与预警 --------------------------
+class DataCollector:
+    @staticmethod
+    def collect():
+        return {
+            "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "temp": round(25 + random.uniform(-2, 2), 2),
+            "ph": round(7.5 + random.uniform(-0.5, 0.5), 2),
+            "do": round(8 + random.uniform(-1, 1), 2),
+            "algae": round(500 + random.uniform(-200, 800), 2)
+        }
+
+class AlertSystem:
+    @staticmethod
+    def check(temp, ph, do, algae, thresholds):
+        alerts = []
+        if temp > thresholds['temp_max']:
+            alerts.append(f"水温过高（>{thresholds['temp_max']}℃）：{temp}℃")
+        if ph > thresholds['ph_max'] or ph < thresholds['ph_min']:
+            alerts.append(f"pH异常（{thresholds['ph_min']}-{thresholds['ph_max']}）：{ph}")
+        if do < thresholds['do_min']:
+            alerts.append(f"溶解氧过低（<{thresholds['do_min']}mg/L）：{do}mg/L")
+        if algae > thresholds['algae_max']:
+            alerts.append(f"藻类密度超标（>{thresholds['algae_max']}个/mL）：{algae}个/mL")
+        return alerts
+
+# -------------------------- GUI主程序 --------------------------
+class AlgaeMonitorGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("水域藻类防控在线监测与数据管理系统 V1.0")
+        self.root.geometry("1300x1000")
+        self.root.resizable(True, True)
+
+        # 全局配置 - 自定义阈值
+        self.thresholds = {
+            'temp_max': 30.0,    
+            'ph_min': 6.5,       
+            'ph_max': 8.5,       
+            'do_min': 5.0,       
+            'algae_max': 1000.0  
+        }
+
+        # 定义检测点专属颜色
+        self.point_colors = [
+            "#FF0000",  # 红色
+            "#00FF00",  # 绿色
+            "#0000FF",  # 蓝色
+            "#FFA500",  # 橙色
+            "#800080",  # 紫色
+            "#FF00FF",  # 品红
+            "#00FFFF",  # 青色
+            "#8B4513",  # 棕色
+            "#FFFF00",  # 黄色
+            "#008080"   # 蓝绿色
+        ]
+
+        # 全局状态
+        self.monitor_interval = 2000  # 默认2秒
+        self.is_running = False
+        self.monitor_points = []
+        self.point_widgets = {}
+        self.real_time_algae = {}  # 每个检测点的实时藻类数据
+
+        # 初始化
+        self.db = DatabaseManager()
+        self.collector = DataCollector()
+        self.alert = AlertSystem()
+        self.create_widgets()
+
+    def create_widgets(self):
+        # 蓝色醒目抬头
+        header_frame = tk.Frame(self.root, bg="#0066FF")
+        header_frame.pack(fill="x", padx=0, pady=0)
+        
+        header_label = tk.Label(
+            header_frame, 
+            text="水域藻类防控在线监测与数据管理系统 V1.0",
+            font=("微软雅黑", 20, "bold"),
+            bg="#0066FF",
+            fg="white",
+            padx=20,
+            pady=15
+        )
+        header_label.pack(anchor="center")
+
+        # 1. 顶部系统配置
+        config_main_frame = ttk.LabelFrame(self.root, text="系统配置", padding=10)
+        config_main_frame.pack(fill="x", padx=20, pady=10)
+
+        # 第一行：监测间隔 + 检测点管理
+        config_frame1 = ttk.Frame(config_main_frame)
+        config_frame1.pack(fill="x", pady=5)
+
+        # 监测间隔设置
+        ttk.Label(config_frame1, text="监测间隔(秒)：").grid(row=0, column=0, padx=5)
+        self.interval_var = tk.StringVar(value="2")
+        ttk.Entry(config_frame1, textvariable=self.interval_var, width=8).grid(row=0, column=1, padx=5)
+        ttk.Button(config_frame1, text="保存间隔", command=self.save_interval).grid(row=0, column=2, padx=10)
+
+        # 检测点管理
+        ttk.Label(config_frame1, text="检测点名称：").grid(row=0, column=3, padx=5)
+        self.point_name_var = tk.StringVar()
+        ttk.Entry(config_frame1, textvariable=self.point_name_var, width=12).grid(row=0, column=4, padx=5)
+        ttk.Button(config_frame1, text="添加检测点", command=self.add_point).grid(row=0, column=5, padx=5)
+        ttk.Button(config_frame1, text="删除选中点", command=self.del_point).grid(row=0, column=6, padx=5)
+
+        # 检测点列表
+        ttk.Label(config_frame1, text="已添加检测点：").grid(row=0, column=7, padx=5)
+        self.point_list = tk.Listbox(config_frame1, height=1, width=15, selectmode=tk.SINGLE)
+        self.point_list.grid(row=0, column=8, padx=5)
+        self.point_list.configure(selectbackground="#4a86e8", selectforeground="white")
+
+        # 第二行：阈值设置区
+        config_frame2 = ttk.Frame(config_main_frame)
+        config_frame2.pack(fill="x", pady=5)
+
+        # 水温阈值
+        ttk.Label(config_frame2, text="水温上限(℃)：").grid(row=0, column=0, padx=5)
+        self.temp_max_var = tk.StringVar(value=str(self.thresholds['temp_max']))
+        ttk.Entry(config_frame2, textvariable=self.temp_max_var, width=8).grid(row=0, column=1, padx=5)
+
+        # pH阈值
+        ttk.Label(config_frame2, text="pH范围：").grid(row=0, column=2, padx=5)
+        self.ph_min_var = tk.StringVar(value=str(self.thresholds['ph_min']))
+        ttk.Entry(config_frame2, textvariable=self.ph_min_var, width=6).grid(row=0, column=3, padx=2)
+        ttk.Label(config_frame2, text="-").grid(row=0, column=4, padx=2)
+        self.ph_max_var = tk.StringVar(value=str(self.thresholds['ph_max']))
+        ttk.Entry(config_frame2, textvariable=self.ph_max_var, width=6).grid(row=0, column=5, padx=2)
+
+        # 溶解氧阈值
+        ttk.Label(config_frame2, text="溶解氧下限(mg/L)：").grid(row=0, column=6, padx=5)
+        self.do_min_var = tk.StringVar(value=str(self.thresholds['do_min']))
+        ttk.Entry(config_frame2, textvariable=self.do_min_var, width=8).grid(row=0, column=7, padx=5)
+
+        # 藻类密度阈值
+        ttk.Label(config_frame2, text="藻类密度上限(个/mL)：").grid(row=0, column=8, padx=5)
+        self.algae_max_var = tk.StringVar(value=str(self.thresholds['algae_max']))
+        ttk.Entry(config_frame2, textvariable=self.algae_max_var, width=8).grid(row=0, column=9, padx=5)
+
+        # 保存阈值按钮
+        ttk.Button(config_frame2, text="保存预警阈值", command=self.save_thresholds).grid(row=0, column=10, padx=10)
+
+        # 2. 控制按钮
+        btn_frame = ttk.Frame(self.root)
+        btn_frame.pack(pady=8)
+        self.start_btn = ttk.Button(btn_frame, text="开始监测", command=self.start_monitor)
+        self.start_btn.grid(row=0, column=0, padx=10)
+        ttk.Button(btn_frame, text="停止监测", command=self.stop_monitor).grid(row=0, column=1, padx=10)
+        ttk.Button(btn_frame, text="历史数据表格", command=self.show_history_table).grid(row=0, column=2, padx=10)
+        ttk.Button(btn_frame, text="历史趋势回看", command=self.show_history_chart).grid(row=0, column=3, padx=10)
+
+        # 3. 实时数据面板
+        data_main_frame = ttk.LabelFrame(self.root, text="实时监测数据", padding=10)
+        data_main_frame.pack(fill="x", padx=20, pady=5)
+        
+        data_canvas = tk.Canvas(data_main_frame, height=150)
+        data_scroll = ttk.Scrollbar(data_main_frame, orient="horizontal", command=data_canvas.xview)
+        data_scroll.pack(side="bottom", fill="x")
+        data_canvas.configure(xscrollcommand=data_scroll.set)
+        data_canvas.pack(side="left", fill="both", expand=True)
+        
+        self.data_container = ttk.Frame(data_canvas)
+        data_canvas.create_window((0, 0), window=self.data_container, anchor="nw")
+        self.data_container.bind("<Configure>", lambda e: data_canvas.configure(scrollregion=data_canvas.bbox("all")))
+
+        # 4. 实时折线图面板
+        chart_frame = ttk.LabelFrame(self.root, text="实时藻类密度趋势图（每个检测点不同颜色）", padding=10)
+        chart_frame.pack(fill="both", expand=True, padx=20, pady=5)
+        self.chart_canvas = tk.Canvas(chart_frame, bg="white", width=1200, height=400)
+        self.chart_canvas.pack(fill="both", expand=True)
+
+        # 5. 预警面板
+        alert_frame = ttk.LabelFrame(self.root, text="系统预警信息", padding=10)
+        alert_frame.pack(fill="x", padx=20, pady=5)
+        self.alert_box = scrolledtext.ScrolledText(alert_frame, height=5, fg="red", font=("微软雅黑", 11))
+        self.alert_box.pack(fill="x")
+        self.alert_box.insert(tk.END, "系统就绪，等待监测...\\n")
+
+    # -------------------------- 配置保存 --------------------------
+    def save_interval(self):
+        try:
+            sec = int(self.interval_var.get())
+            if sec < 1:
+                messagebox.showerror("错误", "最小间隔为1秒")
+                return
+            self.monitor_interval = sec * 1000
+            messagebox.showinfo("成功", f"监测间隔已设置为 {sec} 秒")
+        except ValueError:
+            messagebox.showerror("错误", "请输入有效数字（如：1、2、5）")
+
+    def save_thresholds(self):
+        try:
+            temp_max = float(self.temp_max_var.get())
+            ph_min = float(self.ph_min_var.get())
+            ph_max = float(self.ph_max_var.get())
+            do_min = float(self.do_min_var.get())
+            algae_max = float(self.algae_max_var.get())
+
+            if ph_min >= ph_max:
+                messagebox.showerror("错误", "pH下限必须小于pH上限")
+                return
+            if temp_max <= 0 or do_min <= 0 or algae_max <= 0:
+                messagebox.showerror("错误", "阈值不能为负数或0")
+                return
+
+            self.thresholds['temp_max'] = temp_max
+            self.thresholds['ph_min'] = ph_min
+            self.thresholds['ph_max'] = ph_max
+            self.thresholds['do_min'] = do_min
+            self.thresholds['algae_max'] = algae_max
+
+            if self.is_running:
+                self.draw_real_time_chart()
+
+            messagebox.showinfo("成功", "预警阈值已更新并生效！")
+        except ValueError:
+            messagebox.showerror("错误", "请输入有效数字（如：30、6.5、5.0）")
+
+    # -------------------------- 检测点管理 --------------------------
+    def add_point(self):
+        name = self.point_name_var.get().strip()
+        if not name:
+            messagebox.showwarning("提示", "请输入检测点名称（如：水库1号、河道A）")
+            return
+        if name in self.monitor_points:
+            messagebox.showwarning("提示", f"检测点【{name}】已存在")
+            return
+        
+        self.monitor_points.append(name)
+        self.point_list.insert(tk.END, name)
+        self.real_time_algae[name] = []
+        self.point_name_var.set("")
+        
+        self.refresh_point_ui()
+        messagebox.showinfo("成功", f"检测点【{name}】添加成功")
+
+    def del_point(self):
+        try:
+            selected_indices = self.point_list.curselection()
+            if not selected_indices:
+                messagebox.showwarning("提示", "请先选中要删除的检测点！")
+                return
+            idx = selected_indices[0]
+            name = self.point_list.get(idx)
+
+            self.monitor_points.remove(name)
+            self.point_list.delete(idx)
+            del self.real_time_algae[name]
+            if name in self.point_widgets:
+                del self.point_widgets[name]
+
+            self.refresh_point_ui()
+            messagebox.showinfo("成功", f"检测点【{name}】已删除")
+        except Exception as e:
+            messagebox.showerror("错误", f"删除失败：{str(e)}")
+
+    def refresh_point_ui(self):
+        for widget in self.data_container.winfo_children():
+            widget.destroy()
+        self.point_widgets.clear()
+
+        for i, point in enumerate(self.monitor_points):
+            frame = ttk.LabelFrame(self.data_container, text=f"检测点：{point}", padding=10)
+            frame.grid(row=0, column=i, padx=15, pady=5, sticky="nsew")
+            frame.configure(width=200, height=120)
+
+            vars_dict = {
+                "time": tk.StringVar(value="时间：--"),
+                "temp": tk.StringVar(value="水温：-- ℃"),
+                "ph": tk.StringVar(value="pH：--"),
+                "do": tk.StringVar(value="溶解氧：-- mg/L"),
+                "algae": tk.StringVar(value="藻类密度：-- 个/mL")
+            }
+            self.point_widgets[point] = vars_dict
+
+            ttk.Label(frame, textvariable=vars_dict["time"], font=("微软雅黑", 10)).grid(row=0, column=0, columnspan=2, pady=3)
+            ttk.Label(frame, textvariable=vars_dict["temp"], font=("微软雅黑", 10)).grid(row=1, column=0, padx=5, sticky="w")
+            ttk.Label(frame, textvariable=vars_dict["ph"], font=("微软雅黑", 10)).grid(row=1, column=1, padx=5, sticky="w")
+            ttk.Label(frame, textvariable=vars_dict["do"], font=("微软雅黑", 10)).grid(row=2, column=0, padx=5, sticky="w")
+            ttk.Label(frame, textvariable=vars_dict["algae"], font=("微软雅黑", 10)).grid(row=2, column=1, padx=5, sticky="w")
+
+    # -------------------------- 折线图绘制 --------------------------
+    def draw_real_time_chart(self):
+        self.chart_canvas.delete("all")
+        w = self.chart_canvas.winfo_width() if self.chart_canvas.winfo_width() > 0 else 1200
+        h = self.chart_canvas.winfo_height() if self.chart_canvas.winfo_height() > 0 else 400
+
+        # 绘制预警红线
+        alert_y = h - 50 - (self.thresholds['algae_max'] / 1500) * (h - 100)
+        self.chart_canvas.create_line(50, alert_y, w-50, alert_y, fill="red", width=3)
+        self.chart_canvas.create_text(60, alert_y-10, 
+                                    text=f"藻类密度预警阈值：{self.thresholds['algae_max']}个/mL", 
+                                    fill="red", font=("微软雅黑", 11, "bold"))
+
+        # 无数据提示
+        if not self.monitor_points or all(len(self.real_time_algae[p]) == 0 for p in self.monitor_points):
+            self.chart_canvas.create_text(w//2, h//2, text="暂无监测数据，请启动监测", font=("微软雅黑", 14))
+            # 绘制图例
+            legend_y = 50
+            for i, point in enumerate(self.monitor_points):
+                color = self.point_colors[i % len(self.point_colors)]
+                self.chart_canvas.create_rectangle(w-200, legend_y, w-180, legend_y+15, fill=color)
+                self.chart_canvas.create_text(w-170, legend_y+7, text=point, anchor="w", font=("微软雅黑", 10))
+                legend_y += 20
+            return
+
+        # 绘制图例
+        legend_y = 50
+        self.chart_canvas.create_rectangle(w-220, 30, w-40, legend_y + len(self.monitor_points)*20, 
+                                        fill="white", outline="#cccccc")
+        self.chart_canvas.create_text(w-130, 40, text="检测点颜色对应", font=("微软雅黑", 10, "bold"))
+        for i, point in enumerate(self.monitor_points):
+            color = self.point_colors[i % len(self.point_colors)]
+            self.chart_canvas.create_rectangle(w-200, legend_y, w-180, legend_y+15, fill=color)
+            self.chart_canvas.create_text(w-170, legend_y+7, text=point, anchor="w", font=("微软雅黑", 10))
+            legend_y += 20
+
+        # 绘制各检测点折线
+        max_points = 30
+
+        for idx, point in enumerate(self.monitor_points):
+            algae_data = self.real_time_algae[point][-max_points:]
+            if len(algae_data) < 2:
+                if len(algae_data) == 1:
+                    color = self.point_colors[idx % len(self.point_colors)]
+                    x = 50
+                    y = h - 50 - (algae_data[0] / 1500) * (h - 100)
+                    self.chart_canvas.create_oval(x-4, y-4, x+4, y+4, fill=color, outline="black", width=1)
+                continue
+
+            x_step = (w - 100) / (len(algae_data) - 1)
+            color = self.point_colors[idx % len(self.point_colors)]
+
+            # 加粗折线 + 实心数据点
+            for i in range(len(algae_data)-1):
+                x1 = 50 + i * x_step
+                y1 = h - 50 - (algae_data[i] / 1500) * (h - 100)
+                x2 = 50 + (i+1) * x_step
+                y2 = h - 50 - (algae_data[i+1] / 1500) * (h - 100)
+                
+                self.chart_canvas.create_line(x1, y1, x2, y2, fill=color, width=3)
+                self.chart_canvas.create_oval(x1-4, y1-4, x1+4, y1+4, fill=color, outline="black", width=1)
+            
+            # 最后一个数据点
+            last_x = 50 + (len(algae_data)-1)*x_step
+            last_y = h - 50 - (algae_data[-1] / 1500) * (h - 100)
+            self.chart_canvas.create_oval(last_x-4, last_y-4, last_x+4, last_y+4, fill=color, outline="black", width=1)
+            # 检测点名称标签
+            self.chart_canvas.create_rectangle(last_x+10, last_y-15, last_x+80, last_y+5, fill="white", outline="#cccccc")
+            self.chart_canvas.create_text(last_x+15, last_y-5, text=point, fill=color, font=("微软雅黑", 10), anchor="w")
+
+    # -------------------------- 核心监测逻辑 --------------------------
+    def update_monitor(self):
+        if not self.is_running:
+            return
+
+        for point in self.monitor_points:
+            data = self.collector.collect()
+            vars_dict = self.point_widgets[point]
+
+            vars_dict["time"].set(f"时间：{data['time']}")
+            vars_dict["temp"].set(f"水温：{data['temp']} ℃")
+            vars_dict["ph"].set(f"pH：{data['ph']}")
+            vars_dict["do"].set(f"溶解氧：{data['do']} mg/L")
+            vars_dict["algae"].set(f"藻类密度：{data['algae']} 个/mL")
+
+            self.db.insert_data(point, data['time'], data['temp'], data['ph'], data['do'], data['algae'])
+            
+            self.real_time_algae[point].append(data['algae'])
+            if len(self.real_time_algae[point]) > 50:
+                self.real_time_algae[point].pop(0)
+
+            alerts = self.alert.check(data['temp'], data['ph'], data['do'], data['algae'], self.thresholds)
+            if alerts:
+                alert_msg = f"[{data['time']}] 【{point}】 {' | '.join(alerts)}\\n"
+                self.alert_box.insert(tk.END, alert_msg)
+                self.alert_box.see(tk.END)
+
+        self.draw_real_time_chart()
+        self.root.after(self.monitor_interval, self.update_monitor)
+
+    def start_monitor(self):
+        if not self.monitor_points:
+            messagebox.showwarning("提示", "请先添加至少一个检测点！")
+            return
+        if self.is_running:
+            messagebox.showinfo("提示", "监测已在运行中！")
+            return
+        
+        self.is_running = True
+        self.alert_box.insert(tk.END, f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 开始实时监测...\\n")
+        self.alert_box.see(tk.END)
+        self.update_monitor()
+        messagebox.showinfo("成功", "实时监测已启动！")
+
+    def stop_monitor(self):
+        if not self.is_running:
+            messagebox.showinfo("提示", "监测未运行！")
+            return
+        
+        self.is_running = False
+        stop_msg = f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 已停止实时监测\\n"
+        self.alert_box.insert(tk.END, stop_msg)
+        self.alert_box.see(tk.END)
+        messagebox.showinfo("成功", "实时监测已停止！")
+
+    # -------------------------- 历史数据功能 --------------------------
+    def show_history_table(self):
+        try:
+            selected_indices = self.point_list.curselection()
+            if not selected_indices:
+                messagebox.showwarning("提示", "请先选中要查看的检测点！")
+                return
+            point_name = self.point_list.get(selected_indices[0])
+        except Exception as e:
+            messagebox.showerror("错误", f"选择检测点失败：{str(e)}")
+            return
+
+        win = tk.Toplevel(self.root)
+        win.title(f"历史数据表格 - {point_name}")
+        win.geometry("900x500")
+
+        tree = ttk.Treeview(win, columns=("id","time","temp","ph","do","algae"), show="headings")
+        tree.heading("id", text="序号")
+        tree.heading("time", text="监测时间")
+        tree.heading("temp", text="水温(℃)")
+        tree.heading("ph", text="pH值")
+        tree.heading("do", text="溶解氧(mg/L)")
+        tree.heading("algae", text="藻类密度(个/mL)")
+
+        tree.column("id", width=80, anchor="center")
+        tree.column("time", width=200, anchor="center")
+        tree.column("temp", width=120, anchor="center")
+        tree.column("ph", width=120, anchor="center")
+        tree.column("do", width=150, anchor="center")
+        tree.column("algae", width=180, anchor="center")
+
+        tree_scroll = ttk.Scrollbar(win, orient="vertical", command=tree.yview)
+        tree.configure(yscrollcommand=tree_scroll.set)
+        tree_scroll.pack(side="right", fill="y")
+        tree.pack(fill="both", expand=True, padx=10, pady=10)
+
+        history_data = self.db.get_data_by_point(point_name)
+        if not history_data:
+            messagebox.showinfo("提示", f"检测点【{point_name}】暂无历史数据！")
+            win.destroy()
+            return
+
+        for row in history_data:
+            tree.insert("", 0, values=row)
+
+    def show_history_chart(self):
+        try:
+            selected_indices = self.point_list.curselection()
+            if not selected_indices:
+                messagebox.showwarning("提示", "请先选中要查看的检测点！")
+                return
+            point_name = self.point_list.get(selected_indices[0])
+        except Exception as e:
+            messagebox.showerror("错误", f"选择检测点失败：{str(e)}")
+            return
+
+        win = tk.Toplevel(self.root)
+        win.title(f"历史趋势回看 - {point_name}")
+        win.geometry("900x600")
+
+        canvas = tk.Canvas(win, bg="white", width=880, height=550)
+        canvas.pack(fill="both", expand=True, padx=10, pady=10)
+
+        history_data = self.db.get_data_by_point(point_name)
+        if not history_data or len(history_data) < 2:
+            canvas.create_text(440, 275, text=f"检测点【{point_name}】暂无足够历史数据", font=("微软雅黑", 14))
+            return
+
+        # 获取该检测点的专属颜色
+        point_idx = self.monitor_points.index(point_name)
+        color = self.point_colors[point_idx % len(self.point_colors)]
+
+        # 绘制阈值红线
+        algae_data = [row[6] for row in history_data]
+        w = canvas.winfo_width() if canvas.winfo_width() > 0 else 880
+        h = canvas.winfo_height() if canvas.winfo_height() > 0 else 550
+
+        alert_y = h - 50 - (self.thresholds['algae_max'] / 1500) * (h - 100)
+        canvas.create_line(50, alert_y, w-50, alert_y, fill="red", width=3)
+        canvas.create_text(60, alert_y-10, 
+                        text=f"藻类密度预警阈值：{self.thresholds['algae_max']}个/mL", 
+                        fill="red", font=("微软雅黑", 11, "bold"))
+
+        # 绘制历史折线
+        x_step = (w - 100) / (len(algae_data) - 1)
+        for i in range(len(algae_data)-1):
+            x1 = 50 + i * x_step
+            y1 = h - 50 - (algae_data[i] / 1500) * (h - 100)
+            x2 = 50 + (i+1) * x_step
+            y2 = h - 50 - (algae_data[i+1] / 1500) * (h - 100)
+            
+            canvas.create_line(x1, y1, x2, y2, fill=color, width=3)
+            canvas.create_oval(x1-4, y1-4, x1+4, y1+4, fill=color, outline="black", width=1)
+
+        # 最后一个点
+        last_x = 50 + (len(algae_data)-1)*x_step
+        last_y = h - 50 - (algae_data[-1] / 1500) * (h - 100)
+        canvas.create_oval(last_x-4, last_y-4, last_x+4, last_y+4, fill=color, outline="black", width=1)
+
+        canvas.create_text(w//2, 20, text=f"{point_name} 藻类密度历史趋势", font=("微软雅黑", 14, "bold"))
+
+# -------------------------- 启动程序 --------------------------
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = AlgaeMonitorGUI(root)
+    root.mainloop()`,
+            
+            prediction: `# 水域藻类爆发风险预判与防控方案生成系统 V2.0
+# 全中文界面版
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+import numpy as np
+import pandas as pd
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.cluster import KMeans
+import os
+
+# 全局中文设置
+matplotlib.rcParams['font.sans-serif'] = ['SimHei']
+matplotlib.rcParams['axes.unicode_minus'] = False
+
+# 核心系统类
+class AlgaeRiskCore:
+    def __init__(self):
+        # 核心配置
+        self.必填特征列 = ['水温', 'pH值', '溶解氧', '总氮', '总磷']
+        self.必填坐标列 = ['X坐标', 'Y坐标']
+        self.标签列 = '风险等级'
+        self.历史数据 = None
+        self.实时数据 = None
+        self.预测结果 = None
+        self.防控区域 = None
+        self.装置方案 = None
+        self.模型 = None
+        self.聚类中心 = None
+
+    # 生成模拟演示数据
+    def 生成模拟数据(self, 样本数=200, 是历史数据=True):
+        np.random.seed(42)
+        数据 = {
+            '水温': np.random.uniform(10, 35, 样本数),
+            'pH值': np.random.uniform(6, 10, 样本数),
+            '溶解氧': np.random.uniform(0, 15, 样本数),
+            '总氮': np.random.uniform(0.1, 10, 样本数),
+            '总磷': np.random.uniform(0.01, 1, 样本数),
+            'X坐标': np.random.uniform(0, 100, 样本数),
+            'Y坐标': np.random.uniform(0, 100, 样本数)
+        }
+        df = pd.DataFrame(数据)
+        # 自动生成风险等级标签
+        风险评分 = (df['总氮'] * 2 + df['总磷'] * 20 + (df['水温'] - 25).abs() * -0.5)
+        df[self.标签列] = pd.cut(风险评分, bins=3, labels=[0, 1, 2]).astype(int)
+        if 是历史数据:
+            self.历史数据 = df
+        else:
+            self.实时数据 = df
+        return f"模拟数据生成成功，共{样本数}条记录"
+
+    # 导入数据
+    def 导入数据(self, 文件路径, 是历史数据=True):
+        if not os.path.exists(文件路径):
+            return f"错误：找不到文件 {文件路径}"
+        
+        try:
+            if 文件路径.endswith('.csv'):
+                df = pd.read_csv(文件路径)
+            elif 文件路径.endswith('.xlsx'):
+                df = pd.read_excel(文件路径)
+            else:
+                return "错误：不支持的文件格式，仅支持.csv和.xlsx文件"
+            
+            # 数据校验
+            校验结果 = self.数据格式校验(df)
+            if 校验结果 != "校验通过":
+                return 校验结果
+            
+            # 自动补全风险等级
+            if 是历史数据 and self.标签列 not in df.columns:
+                风险评分 = (df['总氮'] * 2 + df['总磷'] * 20 + (df['水温'] - 25).abs() * -0.5)
+                df[self.标签列] = pd.cut(风险评分, bins=3, labels=[0, 1, 2]).astype(int)
+            
+            if 是历史数据:
+                self.历史数据 = df
+            else:
+                self.实时数据 = df
+            return f"数据导入成功，共{len(df)}条记录"
+        except Exception as e:
+            return f"导入失败：{str(e)}"
+
+    # 数据格式校验
+    def 数据格式校验(self, df):
+        缺失特征 = [列 for 列 in self.必填特征列 if 列 not in df.columns]
+        缺失坐标 = [列 for 列 in self.必填坐标列 if 列 not in df.columns]
+        
+        if 缺失特征:
+            return f"数据格式错误：缺少必填特征列 {缺失特征}\\n请确保Excel表头包含：{self.必填特征列}"
+        if 缺失坐标:
+            return f"数据格式错误：缺少必填坐标列 {缺失坐标}\\n请确保Excel表头包含：{self.必填坐标列}"
+        
+        # 检查空值
+        空值统计 = df[self.必填特征列 + self.必填坐标列].isnull().sum().sum()
+        if 空值统计 > 0:
+            return f"数据警告：存在{空值统计}个空值，可能影响模型训练，建议补充完整数据"
+        
+        return "校验通过"
+
+    # 训练模型
+    def 训练模型(self, 决策树数量=100):
+        if self.历史数据 is None:
+            return "错误：请先导入/生成历史数据"
+        
+        try:
+            X = self.历史数据[self.必填特征列]
+            y = self.历史数据[self.标签列]
+            
+            # 划分训练集测试集
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            
+            # 训练随机森林模型
+            self.模型 = RandomForestClassifier(n_estimators=决策树数量, random_state=42)
+            self.模型.fit(X_train, y_train)
+            
+            # 模型评估
+            y_pred = self.模型.predict(X_test)
+            准确率 = accuracy_score(y_test, y_pred)
+            分类报告 = classification_report(y_test, y_pred, target_names=['低风险', '中风险', '高风险'])
+            
+            return f"模型训练完成！\\n测试集准确率：{准确率:.2%}\\n\\n分类报告：\\n{分类报告}"
+        except Exception as e:
+            return f"模型训练失败：{str(e)}"
+
+    # 风险预判
+    def 风险预判(self):
+        if self.模型 is None:
+            return "错误：请先训练风险预测模型"
+        if self.实时数据 is None:
+            return "错误：请先导入/生成实时监测数据"
+        
+        try:
+            # 执行预测
+            self.预测结果 = self.模型.predict(self.实时数据[self.必填特征列])
+            self.实时数据['预测风险等级'] = self.预测结果
+            
+            # 统计风险分布
+            低风险数 = len(self.实时数据[self.实时数据['预测风险等级'] == 0])
+            中风险数 = len(self.实时数据[self.实时数据['预测风险等级'] == 1])
+            高风险数 = len(self.实时数据[self.实时数据['预测风险等级'] == 2])
+            总数 = len(self.实时数据)
+            
+            return f"风险预判完成！\\n总监测点位：{总数}个\\n低风险点位：{低风险数}个（{低风险数/总数:.1%}）\\n中风险点位：{中风险数}个（{中风险数/总数:.1%}）\\n高风险点位：{高风险数}个（{高风险数/总数:.1%}）"
+        except Exception as e:
+            return f"风险预判失败：{str(e)}"
+
+    # 生成防控方案
+    def 生成防控方案(self, 防控区域数=2, 装置覆盖半径=15):
+        if self.预测结果 is None:
+            return "错误：请先执行风险预判"
+        
+        try:
+            # 筛选高风险点位
+            高风险掩码 = (self.预测结果 == 2)
+            高风险点位 = self.实时数据[高风险掩码][self.必填坐标列]
+            
+            if len(高风险点位) == 0:
+                self.防控区域 = pd.DataFrame()
+                self.装置方案 = pd.DataFrame()
+                return "无高风险点位，无需布设防控装置"
+            
+            # 聚类划定防控区域
+            实际区域数 = min(防控区域数, len(高风险点位))
+            kmeans = KMeans(n_clusters=实际区域数, random_state=42)
+            聚类结果 = kmeans.fit_predict(高风险点位)
+            高风险点位['防控区域编号'] = 聚类结果
+            self.防控区域 = 高风险点位
+            self.聚类中心 = kmeans.cluster_centers_
+            
+            # 优化装置布设方案
+            方案列表 = []
+            for 序号, 中心 in enumerate(self.聚类中心):
+                方案列表.append({
+                    '装置编号': f'FC-ZZ-{序号+1:03d}',
+                    'X坐标': round(中心[0], 2),
+                    'Y坐标': round(中心[1], 2),
+                    '覆盖半径(m)': 装置覆盖半径,
+                    '装置类型': '超声除藻装置' if 序号 % 2 == 0 else '曝气增氧除藻装置',
+                    '防控区域': f'区域{序号+1}'
+                })
+            self.装置方案 = pd.DataFrame(方案列表)
+            return f"防控方案生成完成！\\n划定重点防控区域：{实际区域数}个\\n布设防控装置：{len(self.装置方案)}台\\n方案已自动生成，可在界面查看详情"
+        except Exception as e:
+            return f"方案生成失败：{str(e)}"
+
+    # 导出结果到Excel
+    def 导出结果(self, 保存路径):
+        try:
+            with pd.ExcelWriter(保存路径, engine='openpyxl') as writer:
+                if self.实时数据 is not None and '预测风险等级' in self.实时数据.columns:
+                    self.实时数据.to_excel(writer, sheet_name='风险预判结果', index=False)
+                if self.装置方案 is not None and not self.装置方案.empty:
+                    self.装置方案.to_excel(writer, sheet_name='装置布设方案', index=False)
+                if self.防控区域 is not None and not self.防控区域.empty:
+                    self.防控区域.to_excel(writer, sheet_name='重点防控区域', index=False)
+            return f"结果导出成功！文件已保存至：{保存路径}"
+        except Exception as e:
+            return f"导出失败：{str(e)}"
+
+# 主界面类
+class AlgaeRiskApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        # 窗口基础设置
+        self.title("水域藻类爆发风险预判与防控方案生成系统 V2.0")
+        self.geometry("1280x800")
+        self.minsize(1000, 700)
+        
+        # 初始化核心系统
+        self.core = AlgaeRiskCore()
+        
+        # 创建界面组件
+        self.创建菜单栏()
+        self.创建主界面()
+        
+        # 窗口关闭事件
+        self.protocol("WM_DELETE_WINDOW", self.退出程序)
+
+    # 创建顶部菜单栏
+    def 创建菜单栏(self):
+        菜单栏 = tk.Menu(self)
+        
+        # 系统菜单
+        系统菜单 = tk.Menu(菜单栏, tearoff=0)
+        系统菜单.add_command(label="重置系统", command=self.重置系统)
+        系统菜单.add_separator()
+        系统菜单.add_command(label="退出", command=self.退出程序)
+        菜单栏.add_cascade(label="系统", menu=系统菜单)
+        
+        # 帮助菜单
+        帮助菜单 = tk.Menu(菜单栏, tearoff=0)
+        帮助菜单.add_command(label="数据格式说明", command=self.显示数据格式说明)
+        帮助菜单.add_command(label="使用教程", command=self.显示使用教程)
+        帮助菜单.add_separator()
+        帮助菜单.add_command(label="关于系统", command=self.显示关于)
+        菜单栏.add_cascade(label="帮助", menu=帮助菜单)
+        
+        self.config(menu=菜单栏)
+
+    # 创建主界面分页
+    def 创建主界面(self):
+        # 主容器
+        主容器 = ttk.Frame(self)
+        主容器.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 分页控件
+        self.分页器 = ttk.Notebook(主容器)
+        self.分页器.pack(fill=tk.BOTH, expand=True)
+        
+        # 创建各个分页
+        self.创建数据管理页()
+        self.创建模型训练页()
+        self.创建风险防控页()
+        self.创建可视化页()
+        self.创建结果导出页()
+        
+        # 底部日志框
+        日志容器 = ttk.LabelFrame(主容器, text="系统运行日志")
+        日志容器.pack(fill=tk.X, side=tk.BOTTOM, padx=5, pady=5)
+        
+        self.日志框 = tk.Text(日志容器, height=6, font=("微软雅黑", 10))
+        self.日志框.pack(fill=tk.X, padx=5, pady=5)
+        self.日志框.insert(tk.END, "=== 系统启动成功，欢迎使用水域藻类防控系统 ===\\n")
+        self.日志框.config(state=tk.DISABLED)
+
+    # 1. 数据管理页面
+    def 创建数据管理页(self):
+        页面 = ttk.Frame(self.分页器)
+        self.分页器.add(页面, text="1. 数据管理")
+        
+        # 左右分栏
+        左面板 = ttk.Frame(页面, width=300)
+        左面板.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
+        右面板 = ttk.Frame(页面)
+        右面板.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # --- 左面板：操作按钮区 ---
+        # 历史数据操作区
+        历史数据区 = ttk.LabelFrame(左面板, text="历史训练数据操作")
+        历史数据区.pack(fill=tk.X, pady=10)
+        
+        ttk.Button(历史数据区, text="导入历史Excel/CSV数据", command=self.导入历史数据).pack(fill=tk.X, padx=5, pady=5)
+        ttk.Button(历史数据区, text="生成演示历史数据", command=self.生成演示历史数据).pack(fill=tk.X, padx=5, pady=5)
+        ttk.Button(历史数据区, text="校验数据格式", command=self.校验历史数据).pack(fill=tk.X, padx=5, pady=5)
+        
+        # 实时数据操作区
+        实时数据区 = ttk.LabelFrame(左面板, text="实时监测数据操作")
+        实时数据区.pack(fill=tk.X, pady=10)
+        
+        ttk.Button(实时数据区, text="导入实时Excel/CSV数据", command=self.导入实时数据).pack(fill=tk.X, padx=5, pady=5)
+        ttk.Button(实时数据区, text="生成演示实时数据", command=self.生成演示实时数据).pack(fill=tk.X, padx=5, pady=5)
+        ttk.Button(实时数据区, text="校验数据格式", command=self.校验实时数据).pack(fill=tk.X, padx=5, pady=5)
+        
+        # 数据预览切换
+        预览切换区 = ttk.LabelFrame(左面板, text="数据预览切换")
+        预览切换区.pack(fill=tk.X, pady=10)
+        
+        self.预览数据类型 = tk.StringVar(value="历史数据")
+        ttk.Radiobutton(预览切换区, text="历史训练数据", variable=self.预览数据类型, value="历史数据", command=self.刷新数据预览).pack(anchor=tk.W, padx=5, pady=3)
+        ttk.Radiobutton(预览切换区, text="实时监测数据", variable=self.预览数据类型, value="实时数据", command=self.刷新数据预览).pack(anchor=tk.W, padx=5, pady=3)
+        ttk.Button(预览切换区, text="刷新预览", command=self.刷新数据预览).pack(fill=tk.X, padx=5, pady=5)
+        
+        # --- 右面板：数据预览表格 ---
+        ttk.Label(右面板, text="数据预览", font=("微软雅黑", 12, "bold")).pack(anchor=tk.W, pady=5)
+        
+        # 表格滚动条
+        表格容器 = ttk.Frame(右面板)
+        表格容器.pack(fill=tk.BOTH, expand=True)
+        
+        横向滚动条 = ttk.Scrollbar(表格容器, orient=tk.HORIZONTAL)
+        纵向滚动条 = ttk.Scrollbar(表格容器, orient=tk.VERTICAL)
+        
+        self.数据预览表格 = ttk.Treeview(
+            表格容器,
+            xscrollcommand=横向滚动条.set,
+            yscrollcommand=纵向滚动条.set
+        )
+        横向滚动条.config(command=self.数据预览表格.xview)
+        纵向滚动条.config(command=self.数据预览表格.yview)
+        
+        横向滚动条.pack(side=tk.BOTTOM, fill=tk.X)
+        纵向滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.数据预览表格.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+    # 2. 模型训练页面
+    def 创建模型训练页(self):
+        页面 = ttk.Frame(self.分页器)
+        self.分页器.add(页面, text="2. 模型训练")
+        
+        # 左右分栏
+        左面板 = ttk.Frame(页面, width=300)
+        左面板.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
+        右面板 = ttk.Frame(页面)
+        右面板.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # --- 左面板：参数设置与操作 ---
+        参数设置区 = ttk.LabelFrame(左面板, text="模型参数设置")
+        参数设置区.pack(fill=tk.X, pady=10)
+        
+        ttk.Label(参数设置区, text="决策树数量：").pack(anchor=tk.W, padx=5, pady=3)
+        self.决策树数量输入 = tk.IntVar(value=100)
+        ttk.Entry(参数设置区, textvariable=self.决策树数量输入).pack(fill=tk.X, padx=5, pady=3)
+        ttk.Label(参数设置区, text="说明：数值越大模型精度越高，训练速度越慢", font=("微软雅黑", 9)).pack(anchor=tk.W, padx=5, pady=2)
+        
+        # 操作按钮
+        ttk.Button(左面板, text="开始训练模型", command=self.执行模型训练, style="Accent.TButton").pack(fill=tk.X, padx=5, pady=20)
+        ttk.Button(左面板, text="清空模型", command=self.清空模型).pack(fill=tk.X, padx=5, pady=5)
+        
+        # --- 右面板：训练结果展示 ---
+        ttk.Label(右面板, text="模型训练结果与评估报告", font=("微软雅黑", 12, "bold")).pack(anchor=tk.W, pady=5)
+        
+        self.训练结果框 = tk.Text(右面板, font=("微软雅黑", 11))
+        self.训练结果框.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.训练结果框.insert(tk.END, "请先导入历史数据，然后点击【开始训练模型】按钮\\n")
+        self.训练结果框.config(state=tk.DISABLED)
+
+    # 3. 风险防控页面
+    def 创建风险防控页(self):
+        页面 = ttk.Frame(self.分页器)
+        self.分页器.add(页面, text="3. 风险预判与防控方案")
+        
+        # 左右分栏
+        左面板 = ttk.Frame(页面, width=300)
+        左面板.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
+        右面板 = ttk.Frame(页面)
+        右面板.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # --- 左面板：操作与参数设置 ---
+        # 风险预判区
+        风险预判区 = ttk.LabelFrame(左面板, text="藻类爆发风险预判")
+        风险预判区.pack(fill=tk.X, pady=10)
+        ttk.Button(风险预判区, text="执行风险预判", command=self.执行风险预判).pack(fill=tk.X, padx=5, pady=5)
+        
+        # 防控方案参数区
+        方案参数区 = ttk.LabelFrame(左面板, text="防控方案参数设置")
+        方案参数区.pack(fill=tk.X, pady=10)
+        
+        ttk.Label(方案参数区, text="防控区域数量：").pack(anchor=tk.W, padx=5, pady=3)
+        self.区域数量输入 = tk.IntVar(value=2)
+        ttk.Entry(方案参数区, textvariable=self.区域数量输入).pack(fill=tk.X, padx=5, pady=3)
+        
+        ttk.Label(方案参数区, text="装置覆盖半径(m)：").pack(anchor=tk.W, padx=5, pady=3)
+        self.覆盖半径输入 = tk.IntVar(value=15)
+        ttk.Entry(方案参数区, textvariable=self.覆盖半径输入).pack(fill=tk.X, padx=5, pady=3)
+        
+        # 方案生成按钮
+        ttk.Button(左面板, text="生成防控方案", command=self.执行方案生成, style="Accent.TButton").pack(fill=tk.X, padx=5, pady=20)
+        
+        # --- 右面板：结果展示 ---
+        self.防控结果分页器 = ttk.Notebook(右面板)
+        self.防控结果分页器.pack(fill=tk.BOTH, expand=True)
+        
+        # 风险预判结果页
+        风险结果页 = ttk.Frame(self.防控结果分页器)
+        self.防控结果分页器.add(风险结果页, text="风险预判结果")
+        
+        风险结果滚动条 = ttk.Scrollbar(风险结果页, orient=tk.VERTICAL)
+        self.风险结果框 = tk.Text(风险结果页, yscrollcommand=风险结果滚动条.set, font=("微软雅黑", 11))
+        风险结果滚动条.config(command=self.风险结果框.yview)
+        风险结果滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.风险结果框.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.风险结果框.config(state=tk.DISABLED)
+        
+        # 装置方案页
+        装置方案页 = ttk.Frame(self.防控结果分页器)
+        self.防控结果分页器.add(装置方案页, text="装置布设方案")
+        
+        装置表格容器 = ttk.Frame(装置方案页)
+        装置表格容器.pack(fill=tk.BOTH, expand=True)
+        
+        装置横向滚动条 = ttk.Scrollbar(装置表格容器, orient=tk.HORIZONTAL)
+        装置纵向滚动条 = ttk.Scrollbar(装置表格容器, orient=tk.VERTICAL)
+        
+        self.装置方案表格 = ttk.Treeview(
+            装置表格容器,
+            xscrollcommand=装置横向滚动条.set,
+            yscrollcommand=装置纵向滚动条.set
+        )
+        装置横向滚动条.config(command=self.装置方案表格.xview)
+        装置纵向滚动条.config(command=self.装置方案表格.yview)
+        
+        装置横向滚动条.pack(side=tk.BOTTOM, fill=tk.X)
+        装置纵向滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.装置方案表格.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+    # 4. 可视化页面
+    def 创建可视化页(self):
+        页面 = ttk.Frame(self.分页器)
+        self.分页器.add(页面, text="4. 结果可视化")
+        
+        # 顶部操作栏
+        操作栏 = ttk.Frame(页面)
+        操作栏.pack(fill=tk.X, padx=10, pady=10)
+        ttk.Button(操作栏, text="生成风险分布与防控方案图", command=self.生成可视化图表).pack(side=tk.LEFT, padx=5)
+        
+        # 图表容器
+        self.图表容器 = ttk.Frame(页面)
+        self.图表容器.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 初始化图表
+        self.图表 = Figure(figsize=(12, 7), dpi=100)
+        self.画布 = FigureCanvasTkAgg(self.图表, master=self.图表容器)
+        self.画布.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        
+        # 初始空白图提示
+        子图1 = self.图表.add_subplot(121)
+        子图2 = self.图表.add_subplot(122)
+        子图1.set_title("风险分布预判图")
+        子图2.set_title("防控区域与装置布设图")
+        子图1.text(0.5, 0.5, "请先执行风险预判，再点击生成图表", ha='center', va='center', fontsize=12)
+        子图2.text(0.5, 0.5, "请先生成防控方案，再点击生成图表", ha='center', va='center', fontsize=12)
+        self.图表.tight_layout()
+        self.画布.draw()
+
+    # 5. 结果导出页面
+    def 创建结果导出页(self):
+        页面 = ttk.Frame(self.分页器)
+        self.分页器.add(页面, text="5. 结果导出")
+        
+        # 居中容器
+        容器 = ttk.Frame(页面)
+        容器.pack(expand=True)
+        
+        ttk.Label(容器, text="结果一键导出", font=("微软雅黑", 16, "bold")).pack(pady=20)
+        ttk.Label(容器, text="导出内容包含：风险预判结果、重点防控区域、装置布设方案", font=("微软雅黑", 11)).pack(pady=10)
+        
+        ttk.Button(容器, text="选择保存路径并导出Excel", command=self.导出结果, width=30).pack(pady=30)
+        
+        self.导出结果框 = tk.Text(容器, height=5, width=60, font=("微软雅黑", 10))
+        self.导出结果框.pack(pady=10)
+        self.导出结果框.insert(tk.END, "请点击上方按钮执行导出\\n")
+        self.导出结果框.config(state=tk.DISABLED)
+
+    # ------------------------------ 功能方法 ------------------------------
+    # 日志输出方法
+    def 输出日志(self, 内容):
+        self.日志框.config(state=tk.NORMAL)
+        self.日志框.insert(tk.END, f"{内容}\\n")
+        self.日志框.see(tk.END)
+        self.日志框.config(state=tk.DISABLED)
+
+    # 数据管理相关方法
+    def 导入历史数据(self):
+        文件路径 = filedialog.askopenfilename(
+            title="选择历史数据文件",
+            filetypes=[("Excel文件", "*.xlsx"), ("CSV文件", "*.csv"), ("所有文件", "*.*")]
+        )
+        if 文件路径:
+            结果 = self.core.导入数据(文件路径, 是历史数据=True)
+            self.输出日志(结果)
+            self.刷新数据预览()
+
+    def 生成演示历史数据(self):
+        结果 = self.core.生成模拟数据(样本数=200, 是历史数据=True)
+        self.输出日志(结果)
+        self.刷新数据预览()
+
+    def 校验历史数据(self):
+        if self.core.历史数据 is None:
+            messagebox.showwarning("提示", "请先导入/生成历史数据")
+            return
+        结果 = self.core.数据格式校验(self.core.历史数据)
+        self.输出日志(f"历史数据校验结果：{结果}")
+        messagebox.showinfo("校验结果", 结果)
+
+    def 导入实时数据(self):
+        文件路径 = filedialog.askopenfilename(
+            title="选择实时监测数据文件",
+            filetypes=[("Excel文件", "*.xlsx"), ("CSV文件", "*.csv"), ("所有文件", "*.*")]
+        )
+        if 文件路径:
+            结果 = self.core.导入数据(文件路径, 是历史数据=False)
+            self.输出日志(结果)
+            self.刷新数据预览()
+
+    def 生成演示实时数据(self):
+        结果 = self.core.生成模拟数据(样本数=50, 是历史数据=False)
+        self.输出日志(结果)
+        self.刷新数据预览()
+
+    def 校验实时数据(self):
+        if self.core.实时数据 is None:
+            messagebox.showwarning("提示", "请先导入/生成实时数据")
+            return
+        结果 = self.core.数据格式校验(self.core.实时数据)
+        self.输出日志(f"实时数据校验结果：{结果}")
+        messagebox.showinfo("校验结果", 结果)
+
+    def 刷新数据预览(self):
+        # 清空表格
+        for item in self.数据预览表格.get_children():
+            self.数据预览表格.delete(item)
+        
+        # 获取要预览的数据
+        数据类型 = self.预览数据类型.get()
+        if 数据类型 == "历史数据":
+            df = self.core.历史数据
+        else:
+            df = self.core.实时数据
+        
+        if df is None:
+            return
+        
+        # 设置表格列
+        self.数据预览表格["columns"] = list(df.columns)
+        self.数据预览表格["show"] = "headings"
+        
+        for 列名 in df.columns:
+            self.数据预览表格.heading(列名, text=列名)
+            self.数据预览表格.column(列名, width=100, anchor=tk.CENTER)
+        
+        # 插入数据（最多显示100行）
+        for _, 行 in df.head(100).iterrows():
+            self.数据预览表格.insert("", tk.END, values=list(行))
+
+    # 模型训练相关方法
+    def 执行模型训练(self):
+        if self.core.历史数据 is None:
+            messagebox.showwarning("提示", "请先导入/生成历史数据")
+            return
+        
+        try:
+            决策树数量 = self.决策树数量输入.get()
+            if 决策树数量 <= 0:
+                messagebox.showwarning("提示", "决策树数量必须大于0")
+                return
+        except:
+            messagebox.showwarning("提示", "请输入有效的数字")
+            return
+        
+        结果 = self.core.训练模型(决策树数量=决策树数量)
+        self.输出日志(结果)
+        
+        # 更新训练结果框
+        self.训练结果框.config(state=tk.NORMAL)
+        self.训练结果框.delete(1.0, tk.END)
+        self.训练结果框.insert(tk.END, 结果)
+        self.训练结果框.config(state=tk.DISABLED)
+
+    def 清空模型(self):
+        self.core.模型 = None
+        self.输出日志("模型已清空")
+        self.训练结果框.config(state=tk.NORMAL)
+        self.训练结果框.delete(1.0, tk.END)
+        self.训练结果框.insert(tk.END, "模型已清空，请重新训练\\n")
+        self.训练结果框.config(state=tk.DISABLED)
+
+    # 风险防控相关方法
+    def 执行风险预判(self):
+        结果 = self.core.风险预判()
+        self.输出日志(结果)
+        
+        # 更新风险结果框
+        self.风险结果框.config(state=tk.NORMAL)
+        self.风险结果框.delete(1.0, tk.END)
+        self.风险结果框.insert(tk.END, 结果)
+        self.风险结果框.config(state=tk.DISABLED)
+
+    def 执行方案生成(self):
+        try:
+            区域数量 = self.区域数量输入.get()
+            覆盖半径 = self.覆盖半径输入.get()
+            if 区域数量 <= 0 or 覆盖半径 <= 0:
+                messagebox.showwarning("提示", "区域数量和覆盖半径必须大于0")
+                return
+        except:
+            messagebox.showwarning("提示", "请输入有效的数字")
+            return
+        
+        结果 = self.core.生成防控方案(防控区域数=区域数量, 装置覆盖半径=覆盖半径)
+        self.输出日志(结果)
+        
+        # 刷新装置方案表格
+        for item in self.装置方案表格.get_children():
+            self.装置方案表格.delete(item)
+        
+        if self.core.装置方案 is not None and not self.core.装置方案.empty:
+            df = self.core.装置方案
+            self.装置方案表格["columns"] = list(df.columns)
+            self.装置方案表格["show"] = "headings"
+            
+            for 列名 in df.columns:
+                self.装置方案表格.heading(列名, text=列名)
+                self.装置方案表格.column(列名, width=120, anchor=tk.CENTER)
+            
+            for _, 行 in df.iterrows():
+                self.装置方案表格.insert("", tk.END, values=list(行))
+
+    # 可视化相关方法
+    def 生成可视化图表(self):
+        if self.core.实时数据 is None or self.core.预测结果 is None:
+            messagebox.showwarning("提示", "请先执行风险预判")
+            return
+        
+        # 清空原有图表
+        self.图表.clear()
+        
+        # 子图1：风险分布预判图
+        子图1 = self.图表.add_subplot(121)
+        散点图 = 子图1.scatter(
+            self.core.实时数据['X坐标'],
+            self.core.实时数据['Y坐标'],
+            c=self.core.预测结果,
+            cmap='RdYlGn_r',
+            s=100,
+            alpha=0.7
+        )
+        子图1.set_title('水域藻类爆发风险分布预判图', fontsize=12, fontweight='bold')
+        子图1.set_xlabel('水域X坐标')
+        子图1.set_ylabel('水域Y坐标')
+        self.图表.colorbar(散点图, ax=子图1, label='风险等级 (0=低风险, 2=高风险)')
+        
+        # 子图2：防控方案图
+        子图2 = self.图表.add_subplot(122)
+        # 绘制背景监测点
+        子图2.scatter(
+            self.core.实时数据['X坐标'],
+            self.core.实时数据['Y坐标'],
+            c='gray',
+            s=20,
+            alpha=0.3,
+            label='监测点位'
+        )
+        # 绘制高风险点位
+        if self.core.防控区域 is not None and not self.core.防控区域.empty:
+            子图2.scatter(
+                self.core.防控区域['X坐标'],
+                self.core.防控区域['Y坐标'],
+                c='red',
+                s=80,
+                marker='s',
+                label='高风险核心区'
+            )
+        # 绘制装置与覆盖范围
+        if self.core.装置方案 is not None and not self.core.装置方案.empty:
+            for _, 行 in self.core.装置方案.iterrows():
+                # 绘制覆盖范围圆形
+                圆形 = matplotlib.patches.Circle(
+                    (行['X坐标'], 行['Y坐标']),
+                    行['覆盖半径(m)'],
+                    color='blue',
+                    alpha=0.2,
+                    linestyle='--'
+                )
+                子图2.add_patch(圆形)
+                # 绘制装置点位
+                子图2.scatter(
+                    行['X坐标'],
+                    行['Y坐标'],
+                    c='blue',
+                    s=200,
+                    marker='P',
+                    edgecolors='black',
+                    linewidth=2
+                )
+                # 标注装置编号
+                子图2.text(
+                    行['X坐标']+2,
+                    行['Y坐标']+2,
+                    行['装置编号'],
+                    fontsize=10,
+                    fontweight='bold'
+                )
+        
+        子图2.set_title('防控区域划定与装置布设方案', fontsize=12, fontweight='bold')
+        子图2.set_xlabel('水域X坐标')
+        子图2.set_ylabel('水域Y坐标')
+        子图2.legend()
+        子图2.axis('equal')
+        
+        # 调整布局并刷新画布
+        self.图表.tight_layout()
+        self.画布.draw()
+        self.输出日志("可视化图表生成成功")
+
+    # 导出相关方法
+    def 导出结果(self):
+        if self.core.预测结果 is None:
+            messagebox.showwarning("提示", "请先执行风险预判，再导出结果")
+            return
+        
+        保存路径 = filedialog.asksaveasfilename(
+            title="保存结果文件",
+            defaultextension=".xlsx",
+            filetypes=[("Excel文件", "*.xlsx")]
+        )
+        if 保存路径:
+            结果 = self.core.导出结果(保存路径)
+            self.输出日志(结果)
+            
+            self.导出结果框.config(state=tk.NORMAL)
+            self.导出结果框.delete(1.0, tk.END)
+            self.导出结果框.insert(tk.END, 结果)
+            self.导出结果框.config(state=tk.DISABLED)
+
+    # 系统菜单相关方法
+    def 重置系统(self):
+        if messagebox.askyesno("确认", "确定要重置系统吗？所有数据和模型将被清空"):
+            self.core = AlgaeRiskCore()
+            # 清空所有界面内容
+            for item in self.数据预览表格.get_children():
+                self.数据预览表格.delete(item)
+            for item in self.装置方案表格.get_children():
+                self.装置方案表格.delete(item)
+            
+            self.训练结果框.config(state=tk.NORMAL)
+            self.训练结果框.delete(1.0, tk.END)
+            self.训练结果框.insert(tk.END, "请先导入历史数据，然后点击【开始训练模型】按钮\\n")
+            self.训练结果框.config(state=tk.DISABLED)
+            
+            self.风险结果框.config(state=tk.NORMAL)
+            self.风险结果框.delete(1.0, tk.END)
+            self.风险结果框.config(state=tk.DISABLED)
+            
+            self.导出结果框.config(state=tk.NORMAL)
+            self.导出结果框.delete(1.0, tk.END)
+            self.导出结果框.insert(tk.END, "请点击上方按钮执行导出\\n")
+            self.导出结果框.config(state=tk.DISABLED)
+            
+            # 重置图表
+            self.图表.clear()
+            子图1 = self.图表.add_subplot(121)
+            子图2 = self.图表.add_subplot(122)
+            子图1.set_title("风险分布预判图")
+            子图2.set_title("防控区域与装置布设图")
+            子图1.text(0.5, 0.5, "请先执行风险预判，再点击生成图表", ha='center', va='center', fontsize=12)
+            子图2.text(0.5, 0.5, "请先生成防控方案，再点击生成图表", ha='center', va='center', fontsize=12)
+            self.图表.tight_layout()
+            self.画布.draw()
+            
+            self.输出日志("系统已重置完成")
+
+    def 退出程序(self):
+        if messagebox.askyesno("确认", "确定要退出系统吗？"):
+            self.destroy()
+
+    def 显示数据格式说明(self):
+        说明内容 = """
+Excel/CSV数据格式要求（表头必须完全一致，顺序可调整）：
+
+【必填特征列】
+1. 水温：监测点水温，单位℃
+2. pH值：水体pH值
+3. 溶解氧：水体溶解氧含量，单位mg/L
+4. 总氮：水体总氮含量，单位mg/L
+5. 总磷：水体总磷含量，单位mg/L
+
+【必填坐标列】
+6. X坐标：监测点的X坐标/经度
+7. Y坐标：监测点的Y坐标/纬度
+
+【可选列】
+8. 风险等级：历史数据的真实风险标签（0=低风险，1=中风险，2=高风险）
+   无此列时系统会自动根据富营养化规则生成
+        """
+        messagebox.showinfo("数据格式说明", 说明内容)
+
+    def 显示使用教程(self):
+        教程内容 = """
+系统使用步骤（按分页顺序操作即可）：
+
+1. 【数据管理】
+   - 导入/生成历史训练数据，用于训练模型
+   - 导入/生成实时监测数据，用于风险预判
+   - 可预览数据、校验数据格式是否正确
+
+2. 【模型训练】
+   - 设置模型参数（默认100即可）
+   - 点击【开始训练模型】，查看模型准确率
+
+3. 【风险预判与防控方案】
+   - 点击【执行风险预判】，查看风险分布统计
+   - 设置防控区域数量、装置覆盖半径
+   - 点击【生成防控方案】，查看装置布设详情
+
+4. 【结果可视化】
+   - 点击【生成图表】，查看风险分布图和防控方案图
+
+5. 【结果导出】
+   - 点击导出按钮，将所有结果保存为Excel文件
+        """
+        messagebox.showinfo("使用教程", 教程内容)
+
+    def 显示关于(self):
+        关于内容 = """
+水域藻类爆发风险预判与防控方案生成系统 V2.0
+全中文界面版
+
+核心功能：
+- 基于机器学习的藻类爆发风险提前预判
+- 重点防控区域自动划定
+- 除藻装置布设方案智能优化生成
+- 全流程可视化与结果一键导出
+
+技术支持：随机森林分类算法、K-Means聚类算法
+        """
+        messagebox.showinfo("关于系统", 关于内容)
+
+# 程序入口
+if __name__ == "__main__":
+    app = AlgaeRiskApp()
+    app.mainloop()`,
+            
+            control: `# 水库藻华管控系统 V1.0
+# 完整源代码
+import tkinter as tk
+from tkinter import ttk, messagebox, simpledialog
+import sqlite3
+import datetime
+import pandas as pd
+import os
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+# 设置matplotlib中文显示
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+# 数据库初始化
+def init_database():
+    数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+    游标 = 数据库连接.cursor()
+    
+    # 创建预警阈值设置表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 预警阈值设置 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        水温阈值 REAL NOT NULL,
+        总氮阈值 REAL NOT NULL,
+        总磷阈值 REAL NOT NULL,
+        藻类密度阈值 REAL NOT NULL,
+        更新时间 TEXT NOT NULL
+    )
+    ''')
+    
+    # 创建监测数据表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 监测数据 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        采集时间 TEXT NOT NULL,
+        水温 REAL NOT NULL,
+        总氮 REAL NOT NULL,
+        总磷 REAL NOT NULL,
+        藻类密度 REAL NOT NULL
+    )
+    ''')
+    
+    # 创建藻华预测记录表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 藻华预测记录 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        预测时间 TEXT NOT NULL,
+        检测区域 TEXT NOT NULL,
+        风险等级 TEXT NOT NULL,
+        预判爆发时间 TEXT NOT NULL,
+        预测影响区域 TEXT NOT NULL,
+        预测说明 TEXT
+    )
+    ''')
+    
+    # 创建风险预警记录表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 风险预警记录 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        预警触发时间 TEXT NOT NULL,
+        风险等级 TEXT NOT NULL,
+        影响区域 TEXT NOT NULL,
+        报警方式 TEXT NOT NULL,
+        接收人 TEXT NOT NULL,
+        处理状态 TEXT NOT NULL
+    )
+    ''')
+    
+    # 创建防控方案记录表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 防控方案记录 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        生成时间 TEXT NOT NULL,
+        对应预警等级 TEXT NOT NULL,
+        对应爆发区域 TEXT NOT NULL,
+        方案内容 TEXT NOT NULL,
+        执行状态 TEXT NOT NULL
+    )
+    ''')
+    
+    # 创建作业装备台账表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 作业装备台账 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        设备名称 TEXT NOT NULL,
+        设备类型 TEXT NOT NULL,
+        工作状态 TEXT NOT NULL,
+        投放区域 TEXT NOT NULL,
+        初始投放时间 TEXT NOT NULL,
+        最近检修时间 TEXT NOT NULL
+    )
+    ''')
+    
+    # 创建治理效果核算记录表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 治理效果核算记录 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        核算时间 TEXT NOT NULL,
+        核算周期 TEXT NOT NULL,
+        总氮削减率 REAL NOT NULL,
+        总磷削减率 REAL NOT NULL,
+        藻类清除率 REAL NOT NULL,
+        核算报告 TEXT NOT NULL
+    )
+    ''')
+    
+    # 插入默认阈值
+    游标.execute("SELECT COUNT(*) FROM 预警阈值设置")
+    if 游标.fetchone()[0] == 0:
+        游标.execute('''
+        INSERT INTO 预警阈值设置 VALUES (NULL, ?, ?, ?, ?, ?)
+        ''', (28.0, 1.0, 0.05, 1000000.0, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    
+    数据库连接.commit()
+    数据库连接.close()
+
+# 主系统类
+class 水库藻华管控系统:
+    def __init__(self, 主窗口):
+        self.主窗口 = 主窗口
+        self.主窗口.title("水库藻华管控系统 V1.0")
+        self.主窗口.geometry("1400x900")
+        self.主窗口.state('zoomed')
+        
+        # 全局变量
+        self.当前选中预测记录 = None
+        self.当前选中预警记录 = None
+        self.当前核算数据 = None
+        
+        # 创建选项卡容器
+        self.选项卡容器 = ttk.Notebook(self.主窗口)
+        self.选项卡容器.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 创建各个模块
+        self.创建藻华预测模块()
+        self.创建风险预警模块()
+        self.创建防控方案模块()
+        self.创建装备调度模块()
+        self.创建治理效果核算模块()
+        
+        # 初始化数据库
+        init_database()
+
+    # ====================== 1. 藻华爆发风险预测模块 ======================
+    def 创建藻华预测模块(self):
+        模块面板 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(模块面板, text="1.藻华风险预测")
+        
+        # 左侧：参数输入区
+        左侧容器 = ttk.Frame(模块面板)
+        左侧容器.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 1. 爆发阈值设置区
+        阈值设置区 = ttk.LabelFrame(左侧容器, text="藻华爆发阈值设置（可自定义修改）")
+        阈值设置区.pack(fill=tk.X, padx=5, pady=5)
+        
+        self.阈值输入项 = {}
+        阈值配置列表 = [
+            ("水温阈值(℃):", 0, 0),
+            ("总氮阈值(mg/L):", 0, 2),
+            ("总磷阈值(mg/L):", 1, 0),
+            ("藻类密度阈值(个/L):", 1, 2)
+        ]
+        for 标签文本, 行号, 列号 in 阈值配置列表:
+            ttk.Label(阈值设置区, text=标签文本).grid(row=行号, column=列号, padx=5, pady=8, sticky=tk.E)
+            输入框 = ttk.Entry(阈值设置区, width=15)
+            输入框.grid(row=行号, column=列号+1, padx=5, pady=8)
+            self.阈值输入项[标签文本] = 输入框
+        
+        ttk.Button(阈值设置区, text="加载当前阈值", command=self.加载当前阈值).grid(row=2, column=0, padx=5, pady=5)
+        ttk.Button(阈值设置区, text="保存修改后的阈值", command=self.保存修改后的阈值).grid(row=2, column=2, padx=5, pady=5)
+        
+        # 2. 预测参数输入区
+        参数输入区 = ttk.LabelFrame(左侧容器, text="预测参数设置")
+        参数输入区.pack(fill=tk.X, padx=5, pady=10)
+        
+        ttk.Label(参数输入区, text="检测区域:").grid(row=0, column=0, padx=5, pady=8, sticky=tk.E)
+        self.检测区域输入框 = ttk.Combobox(参数输入区, values=["水库A区", "水库B区", "水库C区", "全库区", "自定义区域"], width=18)
+        self.检测区域输入框.current(0)
+        self.检测区域输入框.grid(row=0, column=1, padx=5, pady=8)
+        
+        self.预测参数输入项 = {}
+        参数配置列表 = [
+            ("当前水温(℃):", 1, 0),
+            ("当前总氮(mg/L):", 1, 2),
+            ("当前总磷(mg/L):", 2, 0),
+            ("当前藻类密度(个/L):", 2, 2),
+        ]
+        for 标签文本, 行号, 列号 in 参数配置列表:
+            ttk.Label(参数输入区, text=标签文本).grid(row=行号, column=列号, padx=5, pady=8, sticky=tk.E)
+            输入框 = ttk.Entry(参数输入区, width=15)
+            输入框.grid(row=行号, column=列号+1, padx=5, pady=8)
+            self.预测参数输入项[标签文本] = 输入框
+        
+        ttk.Button(参数输入区, text="加载最新监测数据", command=self.加载最新监测数据到预测).grid(row=3, column=0, columnspan=2, padx=5, pady=5)
+        ttk.Button(参数输入区, text="清空参数", command=lambda: [输入框.delete(0, tk.END) for 输入框 in self.预测参数输入项.values()]).grid(row=3, column=2, columnspan=2, padx=5, pady=5)
+        
+        # 3. 预测结果自定义区
+        结果自定义区 = ttk.LabelFrame(左侧容器, text="预测结果自定义编辑")
+        结果自定义区.pack(fill=tk.X, padx=5, pady=10)
+        
+        ttk.Label(结果自定义区, text="预判爆发时间:").grid(row=0, column=0, padx=5, pady=8, sticky=tk.E)
+        self.预判爆发时间输入框 = ttk.Entry(结果自定义区, width=20)
+        self.预判爆发时间输入框.grid(row=0, column=1, padx=5, pady=8)
+        self.预判爆发时间输入框.insert(0, "72小时内")
+        
+        ttk.Label(结果自定义区, text="预测影响区域:").grid(row=1, column=0, padx=5, pady=8, sticky=tk.E)
+        self.预测影响区域输入框 = ttk.Entry(结果自定义区, width=20)
+        self.预测影响区域输入框.grid(row=1, column=1, padx=5, pady=8)
+        
+        ttk.Label(结果自定义区, text="预测补充说明:").grid(row=2, column=0, padx=5, pady=8, sticky=tk.NE)
+        self.预测说明输入框 = tk.Text(结果自定义区, height=3, width=30)
+        self.预测说明输入框.grid(row=2, column=1, padx=5, pady=8)
+        
+        # 执行预测按钮
+        ttk.Button(左侧容器, text="执行藻华爆发风险预测", command=self.执行藻华预测).pack(fill=tk.X, padx=5, pady=20)
+        
+        # 右侧：预测结果展示+历史记录
+        右侧容器 = ttk.Frame(模块面板)
+        右侧容器.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 预测结果展示区
+        结果展示区 = ttk.LabelFrame(右侧容器, text="预测结果详情")
+        结果展示区.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        self.预测结果展示框 = tk.Text(结果展示区, height=10, font=("SimHei", 12))
+        self.预测结果展示框.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        # 历史预测记录区
+        历史记录区 = ttk.LabelFrame(右侧容器, text="历史预测记录")
+        历史记录区.pack(fill=tk.BOTH, expand=True, padx=5, pady=10)
+        
+        历史记录列名 = ("预测时间", "检测区域", "风险等级", "预判爆发时间")
+        self.预测历史表格 = ttk.Treeview(历史记录区, columns=历史记录列名, show="headings", height=10)
+        for 列名 in 历史记录列名:
+            self.预测历史表格.heading(列名, text=列名)
+            self.预测历史表格.column(列名, width=150, anchor=tk.CENTER)
+        
+        历史滚动条 = ttk.Scrollbar(历史记录区, orient=tk.VERTICAL, command=self.预测历史表格.yview)
+        self.预测历史表格.configure(yscroll=历史滚动条.set)
+        历史滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.预测历史表格.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
+        # 绑定选中事件
+        self.预测历史表格.bind("<<TreeviewSelect>>", self.选中历史预测记录)
+        
+        # 初始化加载阈值和历史记录
+        self.加载当前阈值()
+        self.刷新预测历史记录()
+
+    def 加载当前阈值(self):
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 预警阈值设置 ORDER BY 更新时间 DESC LIMIT 1")
+        阈值数据 = 游标.fetchone()
+        数据库连接.close()
+        
+        if 阈值数据:
+            self.阈值输入项["水温阈值(℃):"].delete(0, tk.END)
+            self.阈值输入项["水温阈值(℃):"].insert(0, 阈值数据[1])
+            self.阈值输入项["总氮阈值(mg/L):"].delete(0, tk.END)
+            self.阈值输入项["总氮阈值(mg/L):"].insert(0, 阈值数据[2])
+            self.阈值输入项["总磷阈值(mg/L):"].delete(0, tk.END)
+            self.阈值输入项["总磷阈值(mg/L):"].insert(0, 阈值数据[3])
+            self.阈值输入项["藻类密度阈值(个/L):"].delete(0, tk.END)
+            self.阈值输入项["藻类密度阈值(个/L):"].insert(0, 阈值数据[4])
+
+    def 保存修改后的阈值(self):
+        try:
+            水温阈值 = float(self.阈值输入项["水温阈值(℃):"].get())
+            总氮阈值 = float(self.阈值输入项["总氮阈值(mg/L):"].get())
+            总磷阈值 = float(self.阈值输入项["总磷阈值(mg/L):"].get())
+            藻类密度阈值 = float(self.阈值输入项["藻类密度阈值(个/L):"].get())
+        except ValueError:
+            messagebox.showerror("输入错误", "阈值必须为有效数字，请重新输入！")
+            return
+        
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 预警阈值设置 VALUES (NULL, ?, ?, ?, ?, ?)",
+                  (水温阈值, 总氮阈值, 总磷阈值, 藻类密度阈值, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+        数据库连接.commit()
+        数据库连接.close()
+        messagebox.showinfo("操作成功", "自定义阈值已保存，后续预测将使用该阈值进行风险判定！")
+
+    def 加载最新监测数据到预测(self):
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT 水温, 总氮, 总磷, 藻类密度 FROM 监测数据 ORDER BY 采集时间 DESC LIMIT 1")
+        最新数据 = 游标.fetchone()
+        数据库连接.close()
+        
+        if 最新数据:
+            self.预测参数输入项["当前水温(℃):"].delete(0, tk.END)
+            self.预测参数输入项["当前水温(℃):"].insert(0, 最新数据[0])
+            self.预测参数输入项["当前总氮(mg/L):"].delete(0, tk.END)
+            self.预测参数输入项["当前总氮(mg/L):"].insert(0, 最新数据[1])
+            self.预测参数输入项["当前总磷(mg/L):"].delete(0, tk.END)
+            self.预测参数输入项["当前总磷(mg/L):"].insert(0, 最新数据[2])
+            self.预测参数输入项["当前藻类密度(个/L):"].delete(0, tk.END)
+            self.预测参数输入项["当前藻类密度(个/L):"].insert(0, 最新数据[3])
+            # 自动填充预测影响区域
+            self.预测影响区域输入框.delete(0, tk.END)
+            self.预测影响区域输入框.insert(0, self.检测区域输入框.get())
+        else:
+            messagebox.showwarning("警告", "暂无监测数据，请先采集数据！")
+
+    def 执行藻华预测(self):
+        # 校验输入
+        try:
+            当前水温 = float(self.预测参数输入项["当前水温(℃):"].get())
+            当前总氮 = float(self.预测参数输入项["当前总氮(mg/L):"].get())
+            当前总磷 = float(self.预测参数输入项["当前总磷(mg/L):"].get())
+            当前藻类密度 = float(self.预测参数输入项["当前藻类密度(个/L):"].get())
+            水温阈值 = float(self.阈值输入项["水温阈值(℃):"].get())
+            总氮阈值 = float(self.阈值输入项["总氮阈值(mg/L):"].get())
+            总磷阈值 = float(self.阈值输入项["总磷阈值(mg/L):"].get())
+            藻类密度阈值 = float(self.阈值输入项["藻类密度阈值(个/L):"].get())
+        except ValueError:
+            messagebox.showerror("输入错误", "所有参数必须为有效数字，请检查输入！")
+            return
+        
+        检测区域 = self.检测区域输入框.get()
+        预判爆发时间 = self.预判爆发时间输入框.get()
+        预测影响区域 = self.预测影响区域输入框.get()
+        预测说明 = self.预测说明输入框.get(1.0, tk.END).strip()
+        
+        # 风险等级判定逻辑
+        超标项数量 = 0
+        if 当前水温 >= 水温阈值:
+            超标项数量 +=1
+        if 当前总氮 >= 总氮阈值:
+            超标项数量 +=1
+        if 当前总磷 >= 总磷阈值:
+            超标项数量 +=1
+        if 当前藻类密度 >= 藻类密度阈值:
+            超标项数量 +=1
+        
+        if 超标项数量 >=4:
+            风险等级 = "红色预警（极高风险）"
+        elif 超标项数量 >=3:
+            风险等级 = "橙色预警（高风险）"
+        elif 超标项数量 >=2:
+            风险等级 = "黄色预警（中风险）"
+        else:
+            风险等级 = "蓝色预警（低风险）"
+        
+        # 生成预测结果文本
+        预测结果文本 = f"""
+        ===== 藻华爆发风险预测结果 =====
+        预测时间：{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        检测区域：{检测区域}
+        风险等级：{风险等级}
+        预判爆发时间：{预判爆发时间}
+        预测影响区域：{预测影响区域}
+
+        ===== 阈值对比详情 =====
+        水温：当前{当前水温}℃ / 阈值{水温阈值}℃ {'【超标】' if 当前水温>=水温阈值 else '【正常】'}
+        总氮：当前{当前总氮}mg/L / 阈值{总氮阈值}mg/L {'【超标】' if 当前总氮>=总氮阈值 else '【正常】'}
+        总磷：当前{当前总磷}mg/L / 阈值{总磷阈值}mg/L {'【超标】' if 当前总磷>=总磷阈值 else '【正常】'}
+        藻类密度：当前{当前藻类密度}个/L / 阈值{藻类密度阈值}个/L {'【超标】' if 当前藻类密度>=藻类密度阈值 else '【正常】'}
+
+        ===== 预测补充说明 =====
+        {预测说明 if 预测说明 else '无'}
+        """
+        
+        # 展示结果
+        self.预测结果展示框.delete(1.0, tk.END)
+        self.预测结果展示框.insert(tk.END, 预测结果文本)
+        
+        # 保存到数据库
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 藻华预测记录 VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+                  (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 检测区域, 风险等级, 预判爆发时间, 预测影响区域, 预测说明))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        # 刷新历史记录
+        self.刷新预测历史记录()
+        messagebox.showinfo("预测完成", "藻华风险预测已完成，结果已保存至数据库！")
+
+    def 刷新预测历史记录(self):
+        for 行 in self.预测历史表格.get_children():
+            self.预测历史表格.delete(行)
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT 预测时间, 检测区域, 风险等级, 预判爆发时间 FROM 藻华预测记录 ORDER BY 预测时间 DESC")
+        for 行数据 in 游标.fetchall():
+            self.预测历史表格.insert("", tk.END, values=行数据)
+        数据库连接.close()
+
+    def 选中历史预测记录(self, 事件):
+        选中行 = self.预测历史表格.selection()
+        if not 选中行:
+            return
+        选中数据 = self.预测历史表格.item(选中行[0], "values")
+        预测时间 = 选中数据[0]
+        
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 藻华预测记录 WHERE 预测时间 = ?", (预测时间,))
+        完整记录 = 游标.fetchone()
+        数据库连接.close()
+        
+        if 完整记录:
+            self.当前选中预测记录 = 完整记录
+            # 填充到输入框
+            self.检测区域输入框.set(完整记录[2])
+            self.预判爆发时间输入框.delete(0, tk.END)
+            self.预判爆发时间输入框.insert(0, 完整记录[4])
+            self.预测影响区域输入框.delete(0, tk.END)
+            self.预测影响区域输入框.insert(0, 完整记录[5])
+            self.预测说明输入框.delete(1.0, tk.END)
+            self.预测说明输入框.insert(tk.END, 完整记录[6])
+
+    # ====================== 2. 风险分级预警模块 ======================
+    def 创建风险预警模块(self):
+        模块面板 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(模块面板, text="2.风险分级预警")
+        
+        # 顶部：最新预测信息展示区
+        预测信息区 = ttk.LabelFrame(模块面板, text="关联预测信息")
+        预测信息区.pack(fill=tk.X, padx=10, pady=10)
+        
+        self.关联预测信息展示框 = tk.Text(预测信息区, height=4, font=("SimHei", 11))
+        self.关联预测信息展示框.pack(fill=tk.X, padx=5, pady=5)
+        ttk.Button(预测信息区, text="加载最新预测记录", command=self.加载最新预测到预警).pack(side=tk.LEFT, padx=5, pady=5)
+        ttk.Button(预测信息区, text="加载选中的历史预测记录", command=lambda: self.加载选中预测到预警()).pack(side=tk.LEFT, padx=5, pady=5)
+        
+        # 中间：预警配置区
+        预警配置区 = ttk.LabelFrame(模块面板, text="预警配置")
+        预警配置区.pack(fill=tk.X, padx=10, pady=10)
+        
+        ttk.Label(预警配置区, text="预警风险等级:").grid(row=0, column=0, padx=5, pady=8, sticky=tk.E)
+        self.预警风险等级框 = ttk.Combobox(预警配置区, values=["蓝色预警（低风险）", "黄色预警（中风险）", "橙色预警（高风险）", "红色预警（极高风险）"], width=20)
+        self.预警风险等级框.grid(row=0, column=1, padx=5, pady=8)
+        
+        ttk.Label(预警配置区, text="预警影响区域:").grid(row=0, column=2, padx=5, pady=8, sticky=tk.E)
+        self.预警影响区域框 = ttk.Entry(预警配置区, width=20)
+        self.预警影响区域框.grid(row=0, column=3, padx=5, pady=8)
+        
+        ttk.Label(预警配置区, text="报警方式选择:").grid(row=1, column=0, padx=5, pady=8, sticky=tk.E)
+        self.报警方式变量 = {
+            "系统弹窗": tk.BooleanVar(value=True),
+            "短信通知": tk.BooleanVar(value=False),
+            "邮件通知": tk.BooleanVar(value=False)
+        }
+        报警方式容器 = ttk.Frame(预警配置区)
+        报警方式容器.grid(row=1, column=1, padx=5, pady=8, sticky=tk.W)
+        for 方式名称, 变量 in self.报警方式变量.items():
+            ttk.Checkbutton(报警方式容器, text=方式名称, variable=变量).pack(side=tk.LEFT, padx=10)
+        
+        ttk.Label(预警配置区, text="预警接收人:").grid(row=1, column=2, padx=5, pady=8, sticky=tk.E)
+        self.预警接收人框 = ttk.Entry(预警配置区, width=25)
+        self.预警接收人框.grid(row=1, column=3, padx=5, pady=8)
+        self.预警接收人框.insert(0, "水库管理局负责人、河长办相关人员")
+        
+        # 触发预警按钮
+        ttk.Button(模块面板, text="触发对应等级预警", command=self.触发预警).pack(fill=tk.X, padx=10, pady=20)
+        
+        # 底部：预警历史记录区
+        预警历史区 = ttk.LabelFrame(模块面板, text="预警历史记录")
+        预警历史区.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        预警记录列名 = ("预警触发时间", "风险等级", "影响区域", "报警方式", "接收人", "处理状态")
+        self.预警历史表格 = ttk.Treeview(预警历史区, columns=预警记录列名, show="headings", height=15)
+        for 列名 in 预警记录列名:
+            self.预警历史表格.heading(列名, text=列名)
+            self.预警历史表格.column(列名, width=180, anchor=tk.CENTER)
+        
+        预警滚动条 = ttk.Scrollbar(预警历史区, orient=tk.VERTICAL, command=self.预警历史表格.yview)
+        self.预警历史表格.configure(yscroll=预警滚动条.set)
+        
+        # 操作按钮区
+        预警操作区 = ttk.Frame(预警历史区)
+        ttk.Button(预警操作区, text="标记为已处理", command=self.标记预警为已处理).pack(side=tk.LEFT, padx=5, pady=5)
+        ttk.Button(预警操作区, text="刷新记录", command=self.刷新预警历史记录).pack(side=tk.LEFT, padx=5, pady=5)
+        ttk.Button(预警操作区, text="导出预警记录", command=self.导出预警记录).pack(side=tk.LEFT, padx=5, pady=5)
+        
+        # 布局
+        预警操作区.pack(side=tk.BOTTOM, fill=tk.X)
+        预警滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.预警历史表格.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
+        # 初始化加载
+        self.刷新预警历史记录()
+
+    def 加载最新预测到预警(self):
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 藻华预测记录 ORDER BY 预测时间 DESC LIMIT 1")
+        最新预测 = 游标.fetchone()
+        数据库连接.close()
+        
+        if 最新预测:
+            self.当前选中预测记录 = 最新预测
+            # 填充信息
+            预测信息文本 = f"最新预测记录 | 预测时间：{最新预测[1]} | 检测区域：{最新预测[2]} | 风险等级：{最新预测[3]} | 预判爆发时间：{最新预测[4]} | 影响区域：{最新预测[5]}"
+            self.关联预测信息展示框.delete(1.0, tk.END)
+            self.关联预测信息展示框.insert(tk.END, 预测信息文本)
+            self.预警风险等级框.set(最新预测[3])
+            self.预警影响区域框.delete(0, tk.END)
+            self.预警影响区域框.insert(0, 最新预测[5])
+        else:
+            messagebox.showwarning("警告", "暂无预测记录，请先执行藻华预测！")
+
+    def 加载选中预测到预警(self):
+        if not self.当前选中预测记录:
+            messagebox.showwarning("警告", "请先在预测模块选中一条历史预测记录！")
+            return
+        预测信息文本 = f"选中历史预测记录 | 预测时间：{self.当前选中预测记录[1]} | 检测区域：{self.当前选中预测记录[2]} | 风险等级：{self.当前选中预测记录[3]} | 预判爆发时间：{self.当前选中预测记录[4]} | 影响区域：{self.当前选中预测记录[5]}"
+        self.关联预测信息展示框.delete(1.0, tk.END)
+        self.关联预测信息展示框.insert(tk.END, 预测信息文本)
+        self.预警风险等级框.set(self.当前选中预测记录[3])
+        self.预警影响区域框.delete(0, tk.END)
+        self.预警影响区域框.insert(0, self.当前选中预测记录[5])
+
+    def 触发预警(self):
+        风险等级 = self.预警风险等级框.get()
+        影响区域 = self.预警影响区域框.get()
+        接收人 = self.预警接收人框.get()
+        
+        if not 风险等级 or not 影响区域:
+            messagebox.showerror("错误", "风险等级和影响区域不能为空！")
+            return
+        
+        # 收集选中的报警方式
+        选中的报警方式 = [方式 for 方式, 变量 in self.报警方式变量.items() if 变量.get()]
+        if not 选中的报警方式:
+            messagebox.showerror("错误", "请至少选择一种报警方式！")
+            return
+        报警方式文本 = "、".join(选中的报警方式)
+        
+        # 执行报警
+        预警信息 = f"""
+        ===== 水库藻华风险预警 =====
+        预警触发时间：{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        风险等级：{风险等级}
+        影响区域：{影响区域}
+        预警接收人：{接收人}
+        报警方式：{报警方式文本}
+        """
+        
+        # 弹窗报警
+        if "系统弹窗" in 选中的报警方式:
+            messagebox.showwarning("藻华风险预警", 预警信息)
+        
+        # 短信/邮件模拟提示
+        if "短信通知" in 选中的报警方式:
+            print(f"[模拟短信发送] 已向{接收人}发送预警短信：{预警信息}")
+        if "邮件通知" in 选中的报警方式:
+            print(f"[模拟邮件发送] 已向{接收人}发送预警邮件：{预警信息}")
+        
+        # 保存预警记录
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 风险预警记录 VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+                  (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 风险等级, 影响区域, 报警方式文本, 接收人, "未处理"))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        self.刷新预警历史记录()
+        messagebox.showinfo("预警触发成功", f"已通过【{报警方式文本}】完成预警推送，记录已保存！")
+
+    def 刷新预警历史记录(self):
+        for 行 in self.预警历史表格.get_children():
+            self.预警历史表格.delete(行)
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 风险预警记录 ORDER BY 预警触发时间 DESC")
+        for 行数据 in 游标.fetchall():
+            self.预警历史表格.insert("", tk.END, values=行数据[1:])
+        数据库连接.close()
+
+    def 标记预警为已处理(self):
+        选中行 = self.预警历史表格.selection()
+        if not 选中行:
+            messagebox.showwarning("警告", "请先选择要标记的预警记录！")
+            return
+        
+        选中数据 = self.预警历史表格.item(选中行[0], "values")
+        触发时间 = 选中数据[0]
+        
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("UPDATE 风险预警记录 SET 处理状态 = '已处理' WHERE 预警触发时间 = ?", (触发时间,))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        self.刷新预警历史记录()
+        messagebox.showinfo("操作成功", "已标记为已处理！")
+
+    def 导出预警记录(self):
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        全部数据 = pd.read_sql("SELECT * FROM 风险预警记录 ORDER BY 预警触发时间 DESC", 数据库连接)
+        数据库连接.close()
+        
+        导出路径 = f"风险预警记录_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
+        全部数据.to_excel(导出路径, index=False)
+        messagebox.showinfo("导出成功", f"预警记录已导出至：\\n{os.path.abspath(导出路径)}")
+
+    # ====================== 3. 水利调度-防控方案联动生成模块 ======================
+    def 创建防控方案模块(self):
+        模块面板 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(模块面板, text="3.防控方案生成")
+        
+        # 顶部：方案基础信息区
+        基础信息区 = ttk.LabelFrame(模块面板, text="方案基础信息")
+        基础信息区.pack(fill=tk.X, padx=10, pady=10)
+        
+        ttk.Label(基础信息区, text="对应预警等级:").grid(row=0, column=0, padx=5, pady=8, sticky=tk.E)
+        self.方案预警等级框 = ttk.Combobox(基础信息区, values=["蓝色预警（低风险）", "黄色预警（中风险）", "橙色预警（高风险）", "红色预警（极高风险）"], width=20)
+        self.方案预警等级框.grid(row=0, column=1, padx=5, pady=8)
+        
+        ttk.Label(基础信息区, text="对应爆发区域:").grid(row=0, column=2, padx=5, pady=8, sticky=tk.E)
+        self.方案爆发区域框 = ttk.Entry(基础信息区, width=25)
+        self.方案爆发区域框.grid(row=0, column=3, padx=5, pady=8)
+        
+        ttk.Button(基础信息区, text="加载最新预警信息", command=self.加载最新预警到方案).grid(row=0, column=4, padx=20, pady=8)
+        
+        # 中间：方案编辑区
+        方案编辑区 = ttk.LabelFrame(模块面板, text="防控方案内容编辑（可自行修改填写）")
+        方案编辑区.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 分标签页编辑不同模块
+        方案选项卡 = ttk.Notebook(方案编辑区)
+        方案选项卡.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        # 1. 水利调度优化方案
+        水利调度面板 = ttk.Frame(方案选项卡)
+        方案选项卡.add(水利调度面板, text="水利调度优化方案")
+        self.水利调度编辑框 = tk.Text(水利调度面板, font=("SimHei", 11))
+        self.水利调度编辑框.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        # 2. 防控装置投放方案
+        装置投放面板 = ttk.Frame(方案选项卡)
+        方案选项卡.add(装置投放面板, text="防控装置投放方案")
+        self.装置投放编辑框 = tk.Text(装置投放面板, font=("SimHei", 11))
+        self.装置投放编辑框.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        # 3. 空-地-船治理作业计划
+        作业计划面板 = ttk.Frame(方案选项卡)
+        方案选项卡.add(作业计划面板, text="空-地-船治理作业计划")
+        self.作业计划编辑框 = tk.Text(作业计划面板, font=("SimHei", 11))
+        self.作业计划编辑框.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        # 底部操作按钮区
+        按钮区 = ttk.Frame(模块面板)
+        按钮区.pack(fill=tk.X, padx=10, pady=10)
+        
+        ttk.Button(按钮区, text="根据区域生成初始方案模板", command=self.生成初始方案模板).pack(side=tk.LEFT, padx=5)
+        ttk.Button(按钮区, text="保存当前方案", command=self.保存防控方案).pack(side=tk.LEFT, padx=5)
+        ttk.Button(按钮区, text="加载历史方案", command=self.加载历史防控方案).pack(side=tk.LEFT, padx=5)
+        ttk.Button(按钮区, text="清空所有编辑内容", command=self.清空方案编辑内容).pack(side=tk.LEFT, padx=5)
+        ttk.Button(按钮区, text="方案仿真模拟（预留接口）", command=lambda: messagebox.showinfo("提示", "仿真模拟功能已预留，可对接水动力模型后启用")).pack(side=tk.RIGHT, padx=5)
+        ttk.Button(按钮区, text="导出方案为文本文件", command=self.导出防控方案).pack(side=tk.RIGHT, padx=5)
+
+    def 加载最新预警到方案(self):
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 风险预警记录 ORDER BY 预警触发时间 DESC LIMIT 1")
+        最新预警 = 游标.fetchone()
+        数据库连接.close()
+        
+        if 最新预警:
+            self.当前选中预警记录 = 最新预警
+            self.方案预警等级框.set(最新预警[2])
+            self.方案爆发区域框.delete(0, tk.END)
+            self.方案爆发区域框.insert(0, 最新预警[3])
+            messagebox.showinfo("加载成功", "已加载最新预警信息，可生成对应方案！")
+        else:
+            messagebox.showwarning("警告", "暂无预警记录，请先触发风险预警！")
+
+    def 生成初始方案模板(self):
+        预警等级 = self.方案预警等级框.get()
+        爆发区域 = self.方案爆发区域框.get()
+        
+        if not 预警等级 or not 爆发区域:
+            messagebox.showerror("错误", "预警等级和爆发区域不能为空！")
+            return
+        
+        # 水利调度模板
+        水利调度模板 = f"""
+        ===== 针对{爆发区域}的水利调度优化方案 =====
+        对应预警等级：{预警等级}
+        1. 下泄流量调整：优化水库下泄流量，提升{爆发区域}水体交换速率，缩短水体滞留时间，破坏藻类生长环境
+        2. 水位调控：根据当前水文情况，调整库区水位，避免浅水区水温快速升高，抑制藻类光合作用
+        3. 生态流量保障：保障下游生态基流，维持水体自净能力
+        4. 闸门调度优化：调整闸门启闭频次和开度，形成水体扰动，抑制藻类上浮聚集
+        """
+        
+        # 装置投放模板
+        装置投放模板 = f"""
+        ===== 针对{爆发区域}的防控装置投放方案 =====
+        对应预警等级：{预警等级}
+        1. 抑藻装置投放：在{爆发区域}重点水域投放原位抑藻设备，精准抑制藻类繁殖
+        2. 水质净化装置：在{爆发区域}进水口布设净化装置，削减入流氮磷营养盐
+        3. 曝气增氧装置：在{爆发区域}底层水体布设曝气设备，提升水体溶解氧，改善底质环境，抑制内源污染释放
+        4. 监测设备加密：在{爆发区域}增设临时水质监测点，加密监测频次，实时掌握藻情变化
+        """
+        
+        # 作业计划模板
+        作业计划模板 = f"""
+        ===== 针对{爆发区域}的空-地-船治理作业计划 =====
+        对应预警等级：{预警等级}
+        1. 无人机作业：安排航拍无人机对{爆发区域}进行每日2次全域航拍，识别藻华聚集区域，同步回传影像数据
+        2. 地面作业：安排运维人员对{爆发区域}沿岸进行巡查，清理岸边垃圾和藻类聚集带，检查设备运行状态
+        3. 船载作业：安排监测船对{爆发区域}进行定点加密取样，打捞船对藻华聚集区进行精准打捞清除
+        4. 应急值守：安排人员24小时应急值守，实时监控藻情变化，动态调整作业计划
+        """
+        
+        # 填充到编辑框
+        self.水利调度编辑框.delete(1.0, tk.END)
+        self.水利调度编辑框.insert(tk.END, 水利调度模板)
+        self.装置投放编辑框.delete(1.0, tk.END)
+        self.装置投放编辑框.insert(tk.END, 装置投放模板)
+        self.作业计划编辑框.delete(1.0, tk.END)
+        self.作业计划编辑框.insert(tk.END, 作业计划模板)
+
+    def 保存防控方案(self):
+        预警等级 = self.方案预警等级框.get()
+        爆发区域 = self.方案爆发区域框.get()
+        水利调度内容 = self.水利调度编辑框.get(1.0, tk.END).strip()
+        装置投放内容 = self.装置投放编辑框.get(1.0, tk.END).strip()
+        作业计划内容 = self.作业计划编辑框.get(1.0, tk.END).strip()
+        
+        if not 预警等级 or not 爆发区域:
+            messagebox.showerror("错误", "预警等级和爆发区域不能为空！")
+            return
+        
+        完整方案内容 = f"""
+        水库藻华防控协同方案
+        生成时间：{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        对应预警等级：{预警等级}
+        对应爆发区域：{爆发区域}
+
+        ==================== 水利调度优化方案 ====================
+        {水利调度内容}
+
+        ==================== 防控装置投放方案 ====================
+        {装置投放内容}
+
+        ==================== 空-地-船治理作业计划 ====================
+        {作业计划内容}
+        """
+        
+        # 保存到数据库
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 防控方案记录 VALUES (NULL, ?, ?, ?, ?, ?)",
+                  (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 预警等级, 爆发区域, 完整方案内容, "未执行"))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        messagebox.showinfo("保存成功", "防控方案已保存至数据库！")
+
+    def 加载历史防控方案(self):
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT 生成时间, 对应预警等级, 对应爆发区域, 方案内容 FROM 防控方案记录 ORDER BY 生成时间 DESC LIMIT 1")
+        最新方案 = 游标.fetchone()
+        数据库连接.close()
+        
+        if 最新方案:
+            self.方案预警等级框.set(最新方案[1])
+            self.方案爆发区域框.delete(0, tk.END)
+            self.方案爆发区域框.insert(0, 最新方案[2])
+            messagebox.showinfo("加载成功", "已加载最新历史方案，可查看编辑！")
+        else:
+            messagebox.showwarning("警告", "暂无历史方案记录！")
+
+    def 清空方案编辑内容(self):
+        self.水利调度编辑框.delete(1.0, tk.END)
+        self.装置投放编辑框.delete(1.0, tk.END)
+        self.作业计划编辑框.delete(1.0, tk.END)
+
+    def 导出防控方案(self):
+        预警等级 = self.方案预警等级框.get()
+        爆发区域 = self.方案爆发区域框.get()
+        水利调度内容 = self.水利调度编辑框.get(1.0, tk.END).strip()
+        装置投放内容 = self.装置投放编辑框.get(1.0, tk.END).strip()
+        作业计划内容 = self.作业计划编辑框.get(1.0, tk.END).strip()
+        
+        完整方案内容 = f"""
+        水库藻华防控协同方案
+        生成时间：{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        对应预警等级：{预警等级}
+        对应爆发区域：{爆发区域}
+
+        ==================== 水利调度优化方案 ====================
+        {水利调度内容}
+
+        ==================== 防控装置投放方案 ====================
+        {装置投放内容}
+
+        ==================== 空-地-船治理作业计划 ====================
+        {作业计划内容}
+        """
+        
+        导出路径 = f"防控方案_{爆发区域}_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.txt"
+        with open(导出路径, "w", encoding="utf-8") as 文件:
+            文件.write(完整方案内容)
+        messagebox.showinfo("导出成功", f"方案已导出至：\\n{os.path.abspath(导出路径)}")
+
+    # ====================== 4. 作业装备智能调度模块 ======================
+    def 创建装备调度模块(self):
+        模块面板 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(模块面板, text="4.作业装备智能调度")
+        
+        # 顶部操作按钮区
+        按钮区 = ttk.Frame(模块面板)
+        按钮区.pack(fill=tk.X, padx=10, pady=10)
+        
+        ttk.Button(按钮区, text="新增设备信息", command=self.新增设备弹窗).pack(side=tk.LEFT, padx=5)
+        ttk.Button(按钮区, text="修改选中设备信息", command=self.修改选中设备).pack(side=tk.LEFT, padx=5)
+        ttk.Button(按钮区, text="更新设备工作状态", command=self.更新设备状态).pack(side=tk.LEFT, padx=5)
+        ttk.Button(按钮区, text="删除选中设备", command=self.删除选中设备).pack(side=tk.LEFT, padx=5)
+        ttk.Button(按钮区, text="刷新设备列表", command=self.刷新设备列表).pack(side=tk.LEFT, padx=5)
+        ttk.Button(按钮区, text="导出设备台账", command=self.导出设备台账).pack(side=tk.RIGHT, padx=5)
+        
+        # 筛选区
+        筛选区 = ttk.LabelFrame(模块面板, text="设备筛选")
+        筛选区.pack(fill=tk.X, padx=10, pady=5)
+        
+        ttk.Label(筛选区, text="投放区域:").grid(row=0, column=0, padx=5, pady=5)
+        self.设备区域筛选框 = ttk.Combobox(筛选区, values=["全部", "水库A区", "水库B区", "水库C区", "大坝入口", "码头泊位"])
+        self.设备区域筛选框.current(0)
+        self.设备区域筛选框.grid(row=0, column=1, padx=5, pady=5)
+        
+        ttk.Label(筛选区, text="工作状态:").grid(row=0, column=2, padx=20, pady=5)
+        self.设备状态筛选框 = ttk.Combobox(筛选区, values=["全部", "在线", "离线", "作业中", "待机", "故障"])
+        self.设备状态筛选框.current(0)
+        self.设备状态筛选框.grid(row=0, column=3, padx=5, pady=5)
+        
+        ttk.Button(筛选区, text="执行筛选", command=self.筛选设备列表).grid(row=0, column=4, padx=20, pady=5)
+        
+        # 设备列表表格区
+        表格容器 = ttk.Frame(模块面板)
+        表格容器.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        设备列名 = ("设备名称", "设备类型", "工作状态", "投放区域", "初始投放时间", "最近检修时间")
+        self.设备表格 = ttk.Treeview(表格容器, columns=设备列名, show="headings", height=20)
+        for 列名 in 设备列名:
+            self.设备表格.heading(列名, text=列名)
+            self.设备表格.column(列名, width=180, anchor=tk.CENTER)
+        
+        设备滚动条 = ttk.Scrollbar(表格容器, orient=tk.VERTICAL, command=self.设备表格.yview)
+        self.设备表格.configure(yscroll=设备滚动条.set)
+        设备滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.设备表格.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
+        # 初始化加载设备列表
+        self.刷新设备列表()
+
+    def 新增设备弹窗(self):
+        弹窗 = tk.Toplevel(self.主窗口)
+        弹窗.title("新增设备信息")
+        弹窗.geometry("500x400")
+        弹窗.resizable(False, False)
+        
+        输入项配置 = [
+            ("设备名称:", 0),
+            ("设备类型:", 1),
+            ("工作状态:", 2),
+            ("投放区域:", 3),
+            ("初始投放时间:", 4),
+            ("最近检修时间:", 5)
+        ]
+        
+        输入框字典 = {}
+        for 标签文本, 行号 in 输入项配置:
+            ttk.Label(弹窗, text=标签文本, font=("SimHei", 11)).place(x=50, y=30 + 行号*50)
+            if 标签文本 == "工作状态:":
+                输入框 = ttk.Combobox(弹窗, values=["在线", "离线", "作业中", "待机", "故障"], width=25)
+                输入框.current(0)
+            elif 标签文本 == "初始投放时间:" or 标签文本 == "最近检修时间:":
+                输入框 = ttk.Entry(弹窗, width=28)
+                输入框.insert(0, datetime.datetime.now().strftime("%Y-%m-%d"))
+            else:
+                输入框 = ttk.Entry(弹窗, width=28)
+            输入框.place(x=180, y=30 + 行号*50)
+            输入框字典[标签文本] = 输入框
+        
+        def 保存新增设备():
+            设备名称 = 输入框字典["设备名称:"].get().strip()
+            设备类型 = 输入框字典["设备类型:"].get().strip()
+            工作状态 = 输入框字典["工作状态:"].get()
+            投放区域 = 输入框字典["投放区域:"].get().strip()
+            初始投放时间 = 输入框字典["初始投放时间:"].get().strip()
+            最近检修时间 = 输入框字典["最近检修时间:"].get().strip()
+            
+            if not 设备名称 or not 设备类型 or not 投放区域:
+                messagebox.showerror("错误", "设备名称、类型、投放区域不能为空！", parent=弹窗)
+                return
+            
+            数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+            游标 = 数据库连接.cursor()
+            游标.execute("INSERT INTO 作业装备台账 VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+                      (设备名称, 设备类型, 工作状态, 投放区域, 初始投放时间, 最近检修时间))
+            数据库连接.commit()
+            数据库连接.close()
+            
+            self.刷新设备列表()
+            messagebox.showinfo("成功", "设备信息新增完成！", parent=弹窗)
+            弹窗.destroy()
+        
+        ttk.Button(弹窗, text="保存设备信息", command=保存新增设备).place(x=200, y=330, width=150, height=35)
+
+    def 修改选中设备(self):
+        选中行 = self.设备表格.selection()
+        if not 选中行:
+            messagebox.showwarning("警告", "请先选择要修改的设备！")
+            return
+        
+        选中数据 = self.设备表格.item(选中行[0], "values")
+        设备名称 = 选中数据[0]
+        
+        弹窗 = tk.Toplevel(self.主窗口)
+        弹窗.title("修改设备信息")
+        弹窗.geometry("500x400")
+        弹窗.resizable(False, False)
+        
+        输入项配置 = [
+            ("设备名称:", 0),
+            ("设备类型:", 1),
+            ("工作状态:", 2),
+            ("投放区域:", 3),
+            ("初始投放时间:", 4),
+            ("最近检修时间:", 5)
+        ]
+        
+        输入框字典 = {}
+        for 索引, (标签文本, 行号) in enumerate(输入项配置):
+            ttk.Label(弹窗, text=标签文本, font=("SimHei", 11)).place(x=50, y=30 + 行号*50)
+            if 标签文本 == "工作状态:":
+                输入框 = ttk.Combobox(弹窗, values=["在线", "离线", "作业中", "待机", "故障"], width=25)
+                输入框.set(选中数据[索引])
+            else:
+                输入框 = ttk.Entry(弹窗, width=28)
+                输入框.insert(0, 选中数据[索引])
+            输入框.place(x=180, y=30 + 行号*50)
+            输入框字典[标签文本] = 输入框
+        
+        def 保存修改后的设备():
+            新设备名称 = 输入框字典["设备名称:"].get().strip()
+            设备类型 = 输入框字典["设备类型:"].get().strip()
+            工作状态 = 输入框字典["工作状态:"].get()
+            投放区域 = 输入框字典["投放区域:"].get().strip()
+            初始投放时间 = 输入框字典["初始投放时间:"].get().strip()
+            最近检修时间 = 输入框字典["最近检修时间:"].get().strip()
+            
+            if not 新设备名称 or not 设备类型 or not 投放区域:
+                messagebox.showerror("错误", "设备名称、类型、投放区域不能为空！", parent=弹窗)
+                return
+            
+            数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+            游标 = 数据库连接.cursor()
+            游标.execute("""UPDATE 作业装备台账 
+                          SET 设备名称=?, 设备类型=?, 工作状态=?, 投放区域=?, 初始投放时间=?, 最近检修时间=? 
+                          WHERE 设备名称=?""",
+                      (新设备名称, 设备类型, 工作状态, 投放区域, 初始投放时间, 最近检修时间, 设备名称))
+            数据库连接.commit()
+            数据库连接.close()
+            
+            self.刷新设备列表()
+            messagebox.showinfo("成功", "设备信息修改完成！", parent=弹窗)
+            弹窗.destroy()
+        
+        ttk.Button(弹窗, text="保存修改", command=保存修改后的设备).place(x=200, y=330, width=150, height=35)
+
+    def 更新设备状态(self):
+        选中行 = self.设备表格.selection()
+        if not 选中行:
+            messagebox.showwarning("警告", "请先选择要更新状态的设备！")
+            return
+        
+        选中数据 = self.设备表格.item(选中行[0], "values")
+        设备名称 = 选中数据[0]
+        当前状态 = 选中数据[2]
+        
+        新状态 = simpledialog.askstring("更新设备状态", f"设备【{设备名称}】当前状态：{当前状态}\\n请输入新的工作状态（在线/离线/作业中/待机/故障）：", parent=self.主窗口)
+        if not 新状态 or 新状态 not in ["在线", "离线", "作业中", "待机", "故障"]:
+            messagebox.showerror("错误", "请输入有效的工作状态！")
+            return
+        
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("UPDATE 作业装备台账 SET 工作状态=? WHERE 设备名称=?", (新状态, 设备名称))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        self.刷新设备列表()
+        messagebox.showinfo("成功", f"设备【{设备名称}】状态已更新为【{新状态}】！")
+
+    def 删除选中设备(self):
+        选中行 = self.设备表格.selection()
+        if not 选中行:
+            messagebox.showwarning("警告", "请先选择要删除的设备！")
+            return
+        
+        选中数据 = self.设备表格.item(选中行[0], "values")
+        设备名称 = 选中数据[0]
+        
+        if not messagebox.askyesno("确认删除", f"确定要删除设备【{设备名称}】吗？此操作不可恢复！"):
+            return
+        
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("DELETE FROM 作业装备台账 WHERE 设备名称=?", (设备名称,))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        self.刷新设备列表()
+        messagebox.showinfo("成功", "设备信息已删除！")
+
+    def 刷新设备列表(self):
+        for 行 in self.设备表格.get_children():
+            self.设备表格.delete(行)
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 作业装备台账 ORDER BY 序号 ASC")
+        for 行数据 in 游标.fetchall():
+            self.设备表格.insert("", tk.END, values=行数据[1:])
+        数据库连接.close()
+
+    def 筛选设备列表(self):
+        选中区域 = self.设备区域筛选框.get()
+        选中状态 = self.设备状态筛选框.get()
+        
+        for 行 in self.设备表格.get_children():
+            self.设备表格.delete(行)
+        
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        
+        查询语句 = "SELECT * FROM 作业装备台账 WHERE 1=1"
+        参数列表 = []
+        if 选中区域 != "全部":
+            查询语句 += " AND 投放区域 = ?"
+            参数列表.append(选中区域)
+        if 选中状态 != "全部":
+            查询语句 += " AND 工作状态 = ?"
+            参数列表.append(选中状态)
+        查询语句 += " ORDER BY 序号 ASC"
+        
+        游标.execute(query=查询语句, parameters=参数列表)
+        for 行数据 in 游标.fetchall():
+            self.设备表格.insert("", tk.END, values=行数据[1:])
+        数据库连接.close()
+
+    def 导出设备台账(self):
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        全部数据 = pd.read_sql("SELECT * FROM 作业装备台账 ORDER BY 序号 ASC", 数据库连接)
+        数据库连接.close()
+        
+        导出路径 = f"作业装备台账_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
+        全部数据.to_excel(导出路径, index=False)
+        messagebox.showinfo("导出成功", f"设备台账已导出至：\\n{os.path.abspath(导出路径)}")
+
+    # ====================== 5. 治理效果核算与台账管理模块 ======================
+    def 创建治理效果核算模块(self):
+        模块面板 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(模块面板, text="5.治理效果核算与台账管理")
+        
+        # 左侧：核算参数与数据选择区
+        左侧容器 = ttk.Frame(模块面板)
+        左侧容器.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 核算周期选择
+        周期选择区 = ttk.LabelFrame(左侧容器, text="核算周期与数据选择")
+        周期选择区.pack(fill=tk.X, padx=5, pady=5)
+        
+        ttk.Label(周期选择区, text="核算开始时间:").grid(row=0, column=0, padx=5, pady=8, sticky=tk.E)
+        self.核算开始时间框 = ttk.Entry(周期选择区, width=18)
+        self.核算开始时间框.grid(row=0, column=1, padx=5, pady=8)
+               self.核算开始时间框.insert(0, (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y-%m-%d"))
+        
+        ttk.Label(周期选择区, text="核算结束时间:").grid(row=0, column=2, padx=5, pady=8, sticky=tk.E)
+        self.核算结束时间框 = ttk.Entry(周期选择区, width=18)
+        self.核算结束时间框.grid(row=0, column=3, padx=5, pady=8)
+        self.核算结束时间框.insert(0, datetime.datetime.now().strftime("%Y-%m-%d"))
+        
+        ttk.Button(周期选择区, text="加载模拟监测数据", command=self.加载模拟核算数据).grid(row=1, column=0, columnspan=2, padx=5, pady=5)
+        ttk.Button(周期选择区, text="执行治理效果核算", command=self.执行治理效果核算).grid(row=1, column=2, columnspan=2, padx=5, pady=5)
+        
+        # 核算结果展示区
+        核算结果区 = ttk.LabelFrame(左侧容器, text="核算结果详情")
+        核算结果区.pack(fill=tk.BOTH, expand=True, padx=5, pady=10)
+        
+        self.核算结果展示框 = tk.Text(核算结果区, height=15, font=("SimHei", 11))
+        self.核算结果展示框.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        # 右侧：可视化图表区
+        右侧容器 = ttk.Frame(模块面板)
+        右侧容器.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 图表容器
+        self.核算图表容器 = ttk.Frame(右侧容器)
+        self.核算图表容器.pack(fill=tk.BOTH, expand=True)
+        
+        # 初始化图表
+        self.核算图表 = Figure(figsize=(8, 6), dpi=100)
+        self.核算画布 = FigureCanvasTkAgg(self.核算图表, master=self.核算图表容器)
+        self.核算画布.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        
+        # 初始空白图
+        子图 = self.核算图表.add_subplot(111)
+        子图.set_title("治理效果核算对比图")
+        子图.text(0.5, 0.5, "请先执行核算，再查看图表", ha='center', va='center', fontsize=12)
+        self.核算图表.tight_layout()
+        self.核算画布.draw()
+        
+        # 底部操作按钮
+        底部按钮区 = ttk.Frame(右侧容器)
+        底部按钮区.pack(fill=tk.X, pady=10)
+        ttk.Button(底部按钮区, text="保存核算结果", command=self.保存核算结果).pack(side=tk.LEFT, padx=5)
+        ttk.Button(底部按钮区, text="导出核算报告", command=self.导出核算报告).pack(side=tk.LEFT, padx=5)
+        ttk.Button(底部按钮区, text="查看历史核算记录", command=self.查看历史核算记录).pack(side=tk.RIGHT, padx=5)
+
+    def 加载模拟核算数据(self):
+        # 生成模拟的治理前后数据
+        np.random.seed(42)
+        样本数 = 30
+        日期范围 = pd.date_range(start=self.核算开始时间框.get(), periods=样本数)
+        
+        # 治理前数据（较高污染）
+        治理前总氮 = np.random.uniform(0.8, 2.5, 样本数)
+        治理前总磷 = np.random.uniform(0.04, 0.15, 样本数)
+        治理前藻类 = np.random.uniform(500000, 2000000, 样本数)
+        
+        # 治理后数据（污染降低）
+        治理后总氮 = 治理前总氮 * np.random.uniform(0.3, 0.7, 样本数)
+        治理后总磷 = 治理前总磷 * np.random.uniform(0.2, 0.6, 样本数)
+        治理后藻类 = 治理前藻类 * np.random.uniform(0.1, 0.5, 样本数)
+        
+        self.当前核算数据 = {
+            '日期': 日期范围,
+            '治理前总氮': 治理前总氮,
+            '治理后总氮': 治理后总氮,
+            '治理前总磷': 治理前总磷,
+            '治理后总磷': 治理后总磷,
+            '治理前藻类': 治理前藻类,
+            '治理后藻类': 治理后藻类
+        }
+        messagebox.showinfo("加载成功", "模拟监测数据已加载，可执行核算！")
+
+    def 执行治理效果核算(self):
+        if not self.当前核算数据:
+            messagebox.showwarning("警告", "请先加载监测数据！")
+            return
+        
+        # 计算平均削减率
+        总氮削减率列表 = (self.当前核算数据['治理前总氮'] - self.当前核算数据['治理后总氮']) / self.当前核算数据['治理前总氮'] * 100
+        总磷削减率列表 = (self.当前核算数据['治理前总磷'] - self.当前核算数据['治理后总磷']) / self.当前核算数据['治理前总磷'] * 100
+        藻类清除率列表 = (self.当前核算数据['治理前藻类'] - self.当前核算数据['治理后藻类']) / self.当前核算数据['治理前藻类'] * 100
+        
+        平均总氮削减率 = np.mean(总氮削减率列表)
+        平均总磷削减率 = np.mean(总磷削减率列表)
+        平均藻类清除率 = np.mean(藻类清除率列表)
+        
+        # 生成核算报告
+        核算周期 = f"{self.核算开始时间框.get()} 至 {self.核算结束时间框.get()}"
+        核算报告文本 = f"""
+        ===== 水库藻华治理效果核算报告 =====
+        核算时间：{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        核算周期：{核算周期}
+
+        ===== 核心指标核算结果 =====
+        总氮平均削减率：{平均总氮削减率:.2f}%
+        总磷平均削减率：{平均总磷削减率:.2f}%
+        藻类平均清除率：{平均藻类清除率:.2f}%
+
+        ===== 治理效果评价 =====
+        {'★★★★★ 治理效果显著' if 平均总氮削减率 > 50 and 平均总磷削减率 > 50 and 平均藻类清除率 > 70 else '★★★★ 治理效果良好' if 平均总氮削减率 > 30 else '★★★ 治理效果一般'}
+
+        ===== 详细数据说明 =====
+        核算周期内共获取有效监测数据：{len(self.当前核算数据['日期'])}组
+        数据覆盖范围：{self.当前核算数据['日期'][0].strftime('%Y-%m-%d')} 至 {self.当前核算数据['日期'][-1].strftime('%Y-%m-%d')}
+        数据完整性：100%
+        数据质量等级：优
+        """
+        
+        # 展示结果
+        self.核算结果展示框.delete(1.0, tk.END)
+        self.核算结果展示框.insert(tk.END, 核算报告文本)
+        
+        # 保存到数据库
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 治理效果核算记录 VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+                  (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 核算周期, 平均总氮削减率, 平均总磷削减率, 平均藻类清除率, 核算报告文本))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        # 生成图表
+        self.生成核算图表()
+        messagebox.showinfo("核算完成", "治理效果核算已完成，结果已保存！")
+
+    def 生成核算图表(self):
+        self.核算图表.clear()
+        
+        # 子图1：总氮对比
+        子图1 = self.核算图表.add_subplot(131)
+        子图1.plot(self.当前核算数据['日期'], self.当前核算数据['治理前总氮'], label='治理前', color='red', linestyle='--')
+        子图1.plot(self.当前核算数据['日期'], self.当前核算数据['治理后总氮'], label='治理后', color='green', linewidth=2)
+        子图1.set_title('总氮浓度对比')
+        子图1.set_ylabel('总氮 (mg/L)')
+        子图1.legend()
+        子图1.tick_params(axis='x', rotation=45)
+        
+        # 子图2：总磷对比
+        子图2 = self.核算图表.add_subplot(132)
+        子图2.plot(self.当前核算数据['日期'], self.当前核算数据['治理前总磷'], label='治理前', color='red', linestyle='--')
+        子图2.plot(self.当前核算数据['日期'], self.当前核算数据['治理后总磷'], label='治理后', color='green', linewidth=2)
+        子图2.set_title('总磷浓度对比')
+        子图2.set_ylabel('总磷 (mg/L)')
+        子图2.legend()
+        子图2.tick_params(axis='x', rotation=45)
+        
+        # 子图3：藻类对比
+        子图3 = self.核算图表.add_subplot(133)
+        子图3.plot(self.当前核算数据['日期'], self.当前核算数据['治理前藻类'], label='治理前', color='red', linestyle='--')
+        子图3.plot(self.当前核算数据['日期'], self.当前核算数据['治理后藻类'], label='治理后', color='green', linewidth=2)
+        子图3.set_title('藻类密度对比')
+        子图3.set_ylabel('藻类密度 (个/L)')
+        子图3.legend()
+        子图3.tick_params(axis='x', rotation=45)
+        
+        self.核算图表.tight_layout()
+        self.核算画布.draw()
+
+    def 保存核算结果(self):
+        messagebox.showinfo("提示", "核算结果已在执行核算时自动保存至数据库！")
+
+    def 导出核算报告(self):
+        核算内容 = self.核算结果展示框.get(1.0, tk.END).strip()
+        if not 核算内容:
+            messagebox.showwarning("警告", "请先执行核算！")
+            return
+        
+        导出路径 = f"治理效果核算报告_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.txt"
+        with open(导出路径, "w", encoding="utf-8") as 文件:
+            文件.write(核算内容)
+        messagebox.showinfo("导出成功", f"核算报告已导出至：\\n{os.path.abspath(导出路径)}")
+
+    def 查看历史核算记录(self):
+        数据库连接 = sqlite3.connect('水库藻华管控系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT 核算时间, 核算周期, 总氮削减率, 总磷削减率, 藻类清除率 FROM 治理效果核算记录 ORDER BY 核算时间 DESC")
+        历史记录 = 游标.fetchall()
+        数据库连接.close()
+        
+        if not 历史记录:
+            messagebox.showinfo("提示", "暂无历史核算记录！")
+            return
+        
+        # 简单展示
+        记录文本 = "===== 历史核算记录 =====\n"
+        for 记录 in 历史记录[:5]:
+            记录文本 += f"\n核算时间：{记录[0]}\n核算周期：{记录[1]}\n总氮削减率：{记录[2]:.2f}% | 总磷削减率：{记录[3]:.2f}% | 藻类清除率：{记录[4]:.2f}%\n"
+            记录文本 += "-"*50
+        
+        messagebox.showinfo("历史核算记录", 记录文本)
+
+# ====================== 程序入口 ======================
+if __name__ == "__main__":
+    init_database()
+    根窗口 = tk.Tk()
+    应用 = 水库藻华管控系统(根窗口)
+    根窗口.mainloop()`,
+            
+            traceability: `# 藻秸协同资源化产品溯源管理系统 V1.0
+# 完整源代码
+import tkinter as tk
+from tkinter import ttk, messagebox, filedialog
+import sqlite3
+import datetime
+import pandas as pd
+import os
+
+# 数据库初始化
+def init_traceability_db():
+    数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+    游标 = 数据库连接.cursor()
+    
+    # 创建原料登记表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 原料登记 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        原料类型 TEXT NOT NULL,
+        来源地点 TEXT NOT NULL,
+        数量 REAL NOT NULL,
+        单位 TEXT NOT NULL,
+        登记时间 TEXT NOT NULL,
+        负责人 TEXT NOT NULL,
+        备注 TEXT
+    )
+    ''')
+    
+    # 创建生产加工记录表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 生产加工 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        批次号 TEXT NOT NULL,
+        原料使用 TEXT NOT NULL,
+        产品名称 TEXT NOT NULL,
+        生产数量 REAL NOT NULL,
+        生产时间 TEXT NOT NULL,
+        操作人员 TEXT NOT NULL,
+        生产状态 TEXT NOT NULL
+    )
+    ''')
+    
+    # 创建产品检测表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 产品检测 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        批次号 TEXT NOT NULL,
+        检测项目 TEXT NOT NULL,
+        检测结果 TEXT NOT NULL,
+        检测时间 TEXT NOT NULL,
+        检测人员 TEXT NOT NULL,
+        是否合格 TEXT NOT NULL
+    )
+    ''')
+    
+    # 创建销售流向表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 销售流向 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        批次号 TEXT NOT NULL,
+        产品名称 TEXT NOT NULL,
+        销售数量 REAL NOT NULL,
+        客户名称 TEXT NOT NULL,
+        销售时间 TEXT NOT NULL,
+        物流信息 TEXT,
+        备注 TEXT
+    )
+    ''')
+    
+    数据库连接.commit()
+    数据库连接.close()
+
+# 主系统类
+class 藻秸协同溯源系统:
+    def __init__(self, 主窗口):
+        self.主窗口 = 主窗口
+        self.主窗口.title("藻秸协同资源化产品溯源管理系统 V1.0")
+        self.主窗口.geometry("1400x900")
+        self.主窗口.state('zoomed')
+        
+        # 创建选项卡
+        self.选项卡容器 = ttk.Notebook(self.主窗口)
+        self.选项卡容器.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 创建各个模块
+        self.创建原料登记模块()
+        self.创建生产加工模块()
+        self.创建产品检测模块()
+        self.创建销售流向模块()
+        self.创建溯源查询模块()
+        self.创建数据导出模块()
+        
+        # 初始化数据库
+        init_traceability_db()
+
+    # ====================== 1. 原料登记模块 ======================
+    def 创建原料登记模块(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="1.原料登记入库")
+        
+        # 左侧：登记表单
+        左侧容器 = ttk.LabelFrame(页面, text="原料信息登记")
+        左侧容器.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 表单字段
+        字段配置 = [
+            ("原料类型:", 0, ["秸秆", "藻泥", "混合原料"]),
+            ("来源地点:", 1, None),
+            ("数量:", 2, None),
+            ("单位:", 3, ["吨", "公斤", "立方米"]),
+            ("负责人:", 4, None),
+            ("备注:", 5, None)
+        ]
+        
+        self.原料输入框 = {}
+        for 标签文本, 行号, 下拉选项 in 字段配置:
+            ttk.Label(左侧容器, text=标签文本, font=("SimHei", 11)).grid(row=行号, column=0, padx=10, pady=15, sticky=tk.E)
+            if 下拉选项:
+                输入框 = ttk.Combobox(左侧容器, values=下拉选项, width=25)
+                输入框.current(0)
+            else:
+                输入框 = ttk.Entry(左侧容器, width=28)
+            输入框.grid(row=行号, column=1, padx=10, pady=15)
+            self.原料输入框[标签文本] = 输入框
+        
+        # 按钮
+        ttk.Button(左侧容器, text="登记入库", command=self.登记原料).grid(row=6, column=0, columnspan=2, pady=20)
+        ttk.Button(左侧容器, text="清空表单", command=lambda: [输入框.delete(0, tk.END) for 输入框 in self.原料输入框.values() if isinstance(输入框, ttk.Entry)]).grid(row=7, column=0, columnspan=2)
+        
+        # 右侧：原料列表
+        右侧容器 = ttk.LabelFrame(页面, text="原料入库记录")
+        右侧容器.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        列名 = ("原料类型", "来源地点", "数量", "单位", "登记时间", "负责人")
+        self.原料表格 = ttk.Treeview(右侧容器, columns=列名, show="headings")
+        for 列 in 列名:
+            self.原料表格.heading(列, text=列)
+            self.原料表格.column(列, width=150, anchor=tk.CENTER)
+        
+        滚动条 = ttk.Scrollbar(右侧容器, orient=tk.VERTICAL, command=self.原料表格.yview)
+        self.原料表格.configure(yscroll=滚动条.set)
+        滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.原料表格.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
+        self.刷新原料列表()
+
+    def 登记原料(self):
+        try:
+            原料类型 = self.原料输入框["原料类型:"].get()
+            来源地点 = self.原料输入框["来源地点:"].get()
+            数量 = float(self.原料输入框["数量:"].get())
+            单位 = self.原料输入框["单位:"].get()
+            负责人 = self.原料输入框["负责人:"].get()
+            备注 = self.原料输入框["备注:"].get() if "备注:" in self.原料输入框 else ""
+        except ValueError:
+            messagebox.showerror("错误", "数量必须为有效数字！")
+            return
+        
+        if not 来源地点 or not 负责人:
+            messagebox.showerror("错误", "来源地点和负责人不能为空！")
+            return
+        
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 原料登记 VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)",
+                  (原料类型, 来源地点, 数量, 单位, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 负责人, 备注))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        self.刷新原料列表()
+        messagebox.showinfo("成功", "原料登记入库成功！")
+
+    def 刷新原料列表(self):
+        for 行 in self.原料表格.get_children():
+            self.原料表格.delete(行)
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 原料登记 ORDER BY 登记时间 DESC")
+        for 行数据 in 游标.fetchall():
+            self.原料表格.insert("", tk.END, values=行数据[1:7])
+        数据库连接.close()
+
+    # ====================== 2. 生产加工模块 ======================
+    def 创建生产加工模块(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="2.生产加工记录")
+        
+        # 左侧：生产记录表单
+        左侧容器 = ttk.LabelFrame(页面, text="生产加工信息")
+        左侧容器.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        字段配置 = [
+            ("批次号:", 0, None),
+            ("原料使用:", 1, None),
+            ("产品名称:", 2, ["有机肥料", "土壤改良剂", "生物质燃料", "其他"]),
+            ("生产数量:", 3, None),
+            ("操作人员:", 4, None),
+            ("生产状态:", 5, ["待生产", "生产中", "已完成", "质检中"])
+        ]
+        
+        self.生产输入框 = {}
+        for 标签文本, 行号, 下拉选项 in 字段配置:
+            ttk.Label(左侧容器, text=标签文本, font=("SimHei", 11)).grid(row=行号, column=0, padx=10, pady=15, sticky=tk.E)
+            if 下拉选项:
+                输入框 = ttk.Combobox(左侧容器, values=下拉选项, width=25)
+                输入框.current(0)
+            else:
+                输入框 = ttk.Entry(左侧容器, width=28)
+            输入框.grid(row=行号, column=1, padx=10, pady=15)
+            self.生产输入框[标签文本] = 输入框
+        
+        # 自动生成批次号
+        self.生产输入框["批次号:"].insert(0, f"PC{datetime.datetime.now().strftime('%Y%m%d%H%M')}")
+        
+        ttk.Button(左侧容器, text="保存生产记录", command=self.保存生产记录).grid(row=6, column=0, columnspan=2, pady=20)
+        
+        # 右侧：生产记录列表
+        右侧容器 = ttk.LabelFrame(页面, text="生产加工记录")
+        右侧容器.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        列名 = ("批次号", "产品名称", "生产数量", "生产时间", "操作人员", "生产状态")
+        self.生产表格 = ttk.Treeview(右侧容器, columns=列名, show="headings")
+        for 列 in 列名:
+            self.生产表格.heading(列, text=列)
+            self.生产表格.column(列, width=150, anchor=tk.CENTER)
+        
+        滚动条 = ttk.Scrollbar(右侧容器, orient=tk.VERTICAL, command=self.生产表格.yview)
+        self.生产表格.configure(yscroll=滚动条.set)
+        滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.生产表格.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
+        self.刷新生产列表()
+
+    def 保存生产记录(self):
+        try:
+            批次号 = self.生产输入框["批次号:"].get()
+            原料使用 = self.生产输入框["原料使用:"].get()
+            产品名称 = self.生产输入框["产品名称:"].get()
+            生产数量 = float(self.生产输入框["生产数量:"].get())
+            操作人员 = self.生产输入框["操作人员:"].get()
+            生产状态 = self.生产输入框["生产状态:"].get()
+        except ValueError:
+            messagebox.showerror("错误", "生产数量必须为有效数字！")
+            return
+        
+        if not 批次号 or not 操作人员:
+            messagebox.showerror("错误", "批次号和操作人员不能为空！")
+            return
+        
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 生产加工 VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)",
+                  (批次号, 原料使用, 产品名称, 生产数量, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 操作人员, 生产状态))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        self.刷新生产列表()
+        messagebox.showinfo("成功", "生产记录保存成功！")
+
+    def 刷新生产列表(self):
+        for 行 in self.生产表格.get_children():
+            self.生产表格.delete(行)
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 生产加工 ORDER BY 生产时间 DESC")
+        for 行数据 in 游标.fetchall():
+            self.生产表格.insert("", tk.END, values=(行数据[1], 行数据[3], 行数据[4], 行数据[5], 行数据[6], 行数据[7]))
+        数据库连接.close()
+
+    # ====================== 3. 产品检测模块 ======================
+    def 创建产品检测模块(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="3.产品质量检测")
+        
+        # 左侧：检测记录表单
+        左侧容器 = ttk.LabelFrame(页面, text="检测信息登记")
+        左侧容器.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        字段配置 = [
+            ("批次号:", 0, None),
+            ("检测项目:", 1, ["有机质含量", "氮磷钾含量", "重金属检测", "pH值", "水分含量", "其他"]),
+            ("检测结果:", 2, None),
+            ("检测人员:", 3, None),
+            ("是否合格:", 4, ["合格", "不合格", "待复检"])
+        ]
+        
+        self.检测输入框 = {}
+        for 标签文本, 行号, 下拉选项 in 字段配置:
+            ttk.Label(左侧容器, text=标签文本, font=("SimHei", 11)).grid(row=行号, column=0, padx=10, pady=15, sticky=tk.E)
+            if 下拉选项:
+                输入框 = ttk.Combobox(左侧容器, values=下拉选项, width=25)
+                输入框.current(0)
+            else:
+                输入框 = ttk.Entry(左侧容器, width=28)
+            输入框.grid(row=行号, column=1, padx=10, pady=15)
+            self.检测输入框[标签文本] = 输入框
+        
+        ttk.Button(左侧容器, text="保存检测记录", command=self.保存检测记录).grid(row=5, column=0, columnspan=2, pady=20)
+        
+        # 右侧：检测记录列表
+        右侧容器 = ttk.LabelFrame(页面, text="产品检测记录")
+        右侧容器.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        列名 = ("批次号", "检测项目", "检测结果", "检测时间", "检测人员", "是否合格")
+        self.检测表格 = ttk.Treeview(右侧容器, columns=列名, show="headings")
+        for 列 in 列名:
+            self.检测表格.heading(列, text=列)
+            self.检测表格.column(列, width=150, anchor=tk.CENTER)
+        
+        滚动条 = ttk.Scrollbar(右侧容器, orient=tk.VERTICAL, command=self.检测表格.yview)
+        self.检测表格.configure(yscroll=滚动条.set)
+        滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.检测表格.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
+        self.刷新检测列表()
+
+    def 保存检测记录(self):
+        批次号 = self.检测输入框["批次号:"].get()
+        检测项目 = self.检测输入框["检测项目:"].get()
+        检测结果 = self.检测输入框["检测结果:"].get()
+        检测人员 = self.检测输入框["检测人员:"].get()
+        是否合格 = self.检测输入框["是否合格:"].get()
+        
+        if not 批次号 or not 检测结果 or not 检测人员:
+            messagebox.showerror("错误", "批次号、检测结果和检测人员不能为空！")
+            return
+        
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 产品检测 VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+                  (批次号, 检测项目, 检测结果, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 检测人员, 是否合格))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        self.刷新检测列表()
+        messagebox.showinfo("成功", "检测记录保存成功！")
+
+    def 刷新检测列表(self):
+        for 行 in self.检测表格.get_children():
+            self.检测表格.delete(行)
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 产品检测 ORDER BY 检测时间 DESC")
+        for 行数据 in 游标.fetchall():
+            self.检测表格.insert("", tk.END, values=行数据[1:7])
+        数据库连接.close()
+
+    # ====================== 4. 销售流向模块 ======================
+    def 创建销售流向模块(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="4.销售流向跟踪")
+        
+        # 左侧：销售记录表单
+        左侧容器 = ttk.LabelFrame(页面, text="销售信息登记")
+        左侧容器.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        字段配置 = [
+            ("批次号:", 0, None),
+            ("产品名称:", 1, ["有机肥料", "土壤改良剂", "生物质燃料", "其他"]),
+            ("销售数量:", 2, None),
+            ("客户名称:", 3, None),
+            ("物流信息:", 4, None),
+            ("备注:", 5, None)
+        ]
+        
+        self.销售输入框 = {}
+        for 标签文本, 行号, 下拉选项 in 字段配置:
+            ttk.Label(左侧容器, text=标签文本, font=("SimHei", 11)).grid(row=行号, column=0, padx=10, pady=15, sticky=tk.E)
+            if 下拉选项:
+                输入框 = ttk.Combobox(左侧容器, values=下拉选项, width=25)
+                输入框.current(0)
+            else:
+                输入框 = ttk.Entry(左侧容器, width=28)
+            输入框.grid(row=行号, column=1, padx=10, pady=15)
+            self.销售输入框[标签文本] = 输入框
+        
+        ttk.Button(左侧容器, text="保存销售记录", command=self.保存销售记录).grid(row=6, column=0, columnspan=2, pady=20)
+        
+        # 右侧：销售记录列表
+        右侧容器 = ttk.LabelFrame(页面, text="销售流向记录")
+        右侧容器.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        列名 = ("批次号", "产品名称", "销售数量", "客户名称", "销售时间", "物流信息")
+        self.销售表格 = ttk.Treeview(右侧容器, columns=列名, show="headings")
+        for 列 in 列名:
+            self.销售表格.heading(列, text=列)
+            self.销售表格.column(列, width=150, anchor=tk.CENTER)
+        
+        滚动条 = ttk.Scrollbar(右侧容器, orient=tk.VERTICAL, command=self.销售表格.yview)
+        self.销售表格.configure(yscroll=滚动条.set)
+        滚动条.pack(side=tk.RIGHT, fill=tk.Y)
+        self.销售表格.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
+        self.刷新销售列表()
+
+    def 保存销售记录(self):
+        try:
+            批次号 = self.销售输入框["批次号:"].get()
+            产品名称 = self.销售输入框["产品名称:"].get()
+            销售数量 = float(self.销售输入框["销售数量:"].get())
+            客户名称 = self.销售输入框["客户名称:"].get()
+            物流信息 = self.销售输入框["物流信息:"].get()
+            备注 = self.销售输入框["备注:"].get() if "备注:" in self.销售输入框 else ""
+        except ValueError:
+            messagebox.showerror("错误", "销售数量必须为有效数字！")
+            return
+        
+        if not 批次号 or not 客户名称:
+            messagebox.showerror("错误", "批次号和客户名称不能为空！")
+            return
+        
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 销售流向 VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)",
+                  (批次号, 产品名称, 销售数量, 客户名称, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 物流信息, 备注))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        self.刷新销售列表()
+        messagebox.showinfo("成功", "销售记录保存成功！")
+
+    def 刷新销售列表(self):
+        for 行 in self.销售表格.get_children():
+            self.销售表格.delete(行)
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM 销售流向 ORDER BY 销售时间 DESC")
+        for 行数据 in 游标.fetchall():
+            self.销售表格.insert("", tk.END, values=(行数据[1], 行数据[2], 行数据[3], 行数据[4], 行数据[5], 行数据[6]))
+        数据库连接.close()
+
+    # ====================== 5. 溯源查询模块 ======================
+    def 创建溯源查询模块(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="5.全流程溯源查询")
+        
+        # 顶部查询区
+        查询区 = ttk.LabelFrame(页面, text="溯源查询")
+        查询区.pack(fill=tk.X, padx=10, pady=10)
+        
+        ttk.Label(查询区, text="输入批次号查询:", font=("SimHei", 12)).pack(side=tk.LEFT, padx=10, pady=10)
+        self.溯源查询框 = ttk.Entry(查询区, width=30, font=("SimHei", 12))
+        self.溯源查询框.pack(side=tk.LEFT, padx=10, pady=10)
+        ttk.Button(查询区, text="执行溯源查询", command=self.执行溯源查询).pack(side=tk.LEFT, padx=10, pady=10)
+        
+        # 底部溯源结果展示区
+        结果区 = ttk.LabelFrame(页面, text="全流程溯源结果")
+        结果区.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        self.溯源结果展示框 = tk.Text(结果区, height=25, font=("SimHei", 11))
+        self.溯源结果展示框.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+    def 执行溯源查询(self):
+        批次号 = self.溯源查询框.get().strip()
+        if not 批次号:
+            messagebox.showwarning("警告", "请输入要查询的批次号！")
+            return
+        
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        游标 = 数据库连接.cursor()
+        
+        # 查询生产信息
+        游标.execute("SELECT * FROM 生产加工 WHERE 批次号 = ?", (批次号,))
+        生产信息 = 游标.fetchone()
+        
+        # 查询检测信息
+        游标.execute("SELECT * FROM 产品检测 WHERE 批次号 = ?", (批次号,))
+        检测信息列表 = 游标.fetchall()
+        
+        # 查询销售信息
+        游标.execute("SELECT * FROM 销售流向 WHERE 批次号 = ?", (批次号,))
+        销售信息 = 游标.fetchone()
+        
+        数据库连接.close()
+        
+        # 生成溯源报告
+        溯源报告 = f"""
+        {'='*60}
+                    藻秸协同资源化产品全流程溯源报告
+        {'='*60}
+        
+        【产品批次号】：{批次号}
+        【查询时间】：{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        
+        {'-'*60}
+        1. 生产加工环节
+        {'-'*60}
+        """
+        if 生产信息:
+            溯源报告 += f"""
+        产品名称：{生产信息[3]}
+        原料使用：{生产信息[2]}
+        生产数量：{生产信息[4]}
+        生产时间：{生产信息[5]}
+        操作人员：{生产信息[6]}
+        生产状态：{生产信息[7]}
+        """
+        else:
+            溯源报告 += "  暂无该批次生产信息\n"
+        
+        溯源报告 += f"""
+        {'-'*60}
+        2. 质量检测环节
+        {'-'*60}
+        """
+        if 检测信息列表:
+            for 检测 in 检测信息列表:
+                溯源报告 += f"""
+        检测项目：{检测[2]}
+        检测结果：{检测[3]}
+        检测时间：{检测[4]}
+        检测人员：{检测[5]}
+        是否合格：{检测[6]}
+        {'-'*40}
+        """
+        else:
+            溯源报告 += "  暂无该批次检测信息\n"
+        
+        溯源报告 += f"""
+        {'-'*60}
+        3. 销售流向环节
+        {'-'*60}
+        """
+        if 销售信息:
+            溯源报告 += f"""
+        产品名称：{销售信息[2]}
+        销售数量：{销售信息[3]}
+        客户名称：{销售信息[4]}
+        销售时间：{销售信息[5]}
+        物流信息：{销售信息[6] if 销售信息[6] else '无'}
+        """
+        else:
+            溯源报告 += "  暂无该批次销售信息\n"
+        
+        溯源报告 += f"""
+        {'='*60}
+                            溯源报告结束
+        {'='*60}
+        """
+        
+        self.溯源结果展示框.delete(1.0, tk.END)
+        self.溯源结果展示框.insert(tk.END, 溯源报告)
+
+    # ====================== 6. 数据导出模块 ======================
+    def 创建数据导出模块(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="6.数据批量导出")
+        
+        # 居中容器
+        容器 = ttk.Frame(页面)
+        容器.pack(expand=True)
+        
+        ttk.Label(容器, text="全流程溯源数据批量导出", font=("微软雅黑", 16, "bold")).pack(pady=30)
+        
+        ttk.Button(容器, text="导出原料登记数据", command=lambda: self.导出数据表('原料登记')).pack(pady=10, fill=tk.X, padx=50)
+        ttk.Button(容器, text="导出生产加工数据", command=lambda: self.导出数据表('生产加工')).pack(pady=10, fill=tk.X, padx=50)
+        ttk.Button(容器, text="导出产品检测数据", command=lambda: self.导出数据表('产品检测')).pack(pady=10, fill=tk.X, padx=50)
+        ttk.Button(容器, text="导出销售流向数据", command=lambda: self.导出数据表('销售流向')).pack(pady=10, fill=tk.X, padx=50)
+        ttk.Button(容器, text="导出全部溯源数据", command=self.导出全部数据).pack(pady=30, fill=tk.X, padx=50)
+        
+        self.导出结果框 = tk.Text(容器, height=8, width=60, font=("微软雅黑", 10))
+        self.导出结果框.pack(pady=20)
+        self.导出结果框.insert(tk.END, "请点击上方按钮执行数据导出\n")
+        self.导出结果框.config(state=tk.DISABLED)
+
+    def 导出数据表(self, 表名):
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        try:
+            数据 = pd.read_sql(f"SELECT * FROM {表名}", 数据库连接)
+            导出路径 = f"{表名}_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
+            数据.to_excel(导出路径, index=False)
+            
+            self.导出结果框.config(state=tk.NORMAL)
+            self.导出结果框.insert(tk.END, f"【{表名}】数据导出成功！\n保存路径：{os.path.abspath(导出路径)}\n")
+            self.导出结果框.see(tk.END)
+            self.导出结果框.config(state=tk.DISABLED)
+        except Exception as e:
+            messagebox.showerror("导出失败", f"导出过程中发生错误：{str(e)}")
+        finally:
+            数据库连接.close()
+
+    def 导出全部数据(self):
+        表名列表 = ['原料登记', '生产加工', '产品检测', '销售流向']
+        数据库连接 = sqlite3.connect('藻秸协同溯源管理系统.db')
+        
+        try:
+            导出路径 = f"全流程溯源数据_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
+            with pd.ExcelWriter(导出路径, engine='openpyxl') as writer:
+                for 表名 in 表名列表:
+                    数据 = pd.read_sql(f"SELECT * FROM {表名}", 数据库连接)
+                    数据.to_excel(writer, sheet_name=表名, index=False)
+            
+            self.导出结果框.config(state=tk.NORMAL)
+            self.导出结果框.insert(tk.END, f"全部数据导出成功！\n保存路径：{os.path.abspath(导出路径)}\n")
+            self.导出结果框.see(tk.END)
+            self.导出结果框.config(state=tk.DISABLED)
+        except Exception as e:
+            messagebox.showerror("导出失败", f"导出过程中发生错误：{str(e)}")
+        finally:
+            数据库连接.close()
+
+# ====================== 程序入口 ======================
+if __name__ == "__main__":
+    init_traceability_db()
+    根窗口 = tk.Tk()
+    应用 = 藻秸协同溯源系统(根窗口)
+    根窗口.mainloop()`,
+            
+            buoyancy: `# 藻类防控装置智能浮力调节控制系统 V1.0
+# 完整源代码
+import tkinter as tk
+from tkinter import ttk, messagebox
+import sqlite3
+import datetime
+import random
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib
+matplotlib.use('TkAgg')
+
+# 设置matplotlib中文显示
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+# PID控制器类
+class PIDController:
+    def __init__(self, Kp=1.0, Ki=0.1, Kd=0.05):
+        self.Kp = Kp  # 比例系数
+        self.Ki = Ki  # 积分系数
+        self.Kd = Kd  # 微分系数
+        
+        self.目标值 = 0.0
+        self.当前值 = 0.0
+        
+        self.误差 = 0.0
+        self.上次误差 = 0.0
+        self.积分项 = 0.0
+        self.微分项 = 0.0
+        
+        self.输出 = 0.0
+        
+    def 设置目标(self, 目标):
+        self.目标值 = 目标
+        
+    def 更新(self, 当前测量值):
+        self.当前值 = 当前测量值
+        self.误差 = self.目标值 - self.当前值
+        
+        # PID计算
+        self.积分项 += self.误差
+        self.微分项 = self.误差 - self.上次误差
+        
+        self.输出 = (self.Kp * self.误差) + (self.Ki * self.积分项) + (self.Kd * self.微分项)
+        
+        # 限制输出范围
+        self.输出 = max(-100.0, min(100.0, self.输出))
+        
+        self.上次误差 = self.误差
+        return self.输出
+
+# 数据库初始化
+def init_buoyancy_db():
+    数据库连接 = sqlite3.connect('浮力调节控制系统.db')
+    游标 = 数据库连接.cursor()
+    
+    # 创建控制参数表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS PID参数 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        Kp REAL NOT NULL,
+        Ki REAL NOT NULL,
+        Kd REAL NOT NULL,
+        目标深度 REAL NOT NULL,
+        更新时间 TEXT NOT NULL
+    )
+    ''')
+    
+    # 创建实时数据表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 实时监测数据 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        采集时间 TEXT NOT NULL,
+        当前深度 REAL NOT NULL,
+        目标深度 REAL NOT NULL,
+        水位 REAL NOT NULL,
+        PID输出 REAL NOT NULL,
+        装置状态 TEXT NOT NULL
+    )
+    ''')
+    
+    # 插入默认参数
+    游标.execute("SELECT COUNT(*) FROM PID参数")
+    if 游标.fetchone()[0] == 0:
+        游标.execute("INSERT INTO PID参数 VALUES (NULL, ?, ?, ?, ?, ?)",
+                  (2.0, 0.1, 0.05, 2.0, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    
+    数据库连接.commit()
+    数据库连接.close()
+
+# 主系统类
+class 浮力调节控制系统:
+    def __init__(self, 主窗口):
+        self.主窗口 = 主窗口
+        self.主窗口.title("藻类防控装置智能浮力调节控制系统 V1.0")
+        self.主窗口.geometry("1400x900")
+        self.主窗口.state('zoomed')
+        
+        # 全局状态
+        self.系统运行中 = False
+        self.PID控制器 = PIDController()
+        self.当前深度 = 1.5
+        self.目标深度 = 2.0
+        self.当前水位 = 5.0
+        self.历史深度数据 = []
+        self.历史目标数据 = []
+        self.历史时间数据 = []
+        
+        # 加载数据库参数
+        self.加载PID参数()
+        
+        # 创建界面
+        self.创建主界面()
+        
+        # 初始化数据库
+        init_buoyancy_db()
+
+    def 加载PID参数(self):
+        数据库连接 = sqlite3.connect('浮力调节控制系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("SELECT * FROM PID参数 ORDER BY 更新时间 DESC LIMIT 1")
+        参数 = 游标.fetchone()
+        数据库连接.close()
+        
+        if 参数:
+            self.PID控制器.Kp = 参数[1]
+            self.PID控制器.Ki = 参数[2]
+            self.PID控制器.Kd = 参数[3]
+            self.目标深度 = 参数[4]
+            self.PID控制器.设置目标(self.目标深度)
+
+    def 创建主界面(self):
+        # 顶部：系统状态与控制
+        顶部容器 = ttk.LabelFrame(self.主窗口, text="系统状态与控制")
+        顶部容器.pack(fill=tk.X, padx=10, pady=10)
+        
+        # 状态显示
+        self.系统状态标签 = ttk.Label(顶部容器, text="系统状态：待机", font=("SimHei", 14, "bold"))
+        self.系统状态标签.grid(row=0, column=0, padx=20, pady=15)
+        
+        self.当前深度标签 = ttk.Label(顶部容器, text=f"当前深度：{self.当前深度:.2f} m", font=("SimHei", 12))
+        self.当前深度标签.grid(row=0, column=1, padx=20, pady=15)
+        
+        self.目标深度标签 = ttk.Label(顶部容器, text=f"目标深度：{self.目标深度:.2f} m", font=("SimHei", 12))
+        self.目标深度标签.grid(row=0, column=2, padx=20, pady=15)
+        
+        self.当前水位标签 = ttk.Label(顶部容器, text=f"当前水位：{self.当前水位:.2f} m", font=("SimHei", 12))
+        self.当前水位标签.grid(row=0, column=3, padx=20, pady=15)
+        
+        self.PID输出标签 = ttk.Label(顶部容器, text="PID输出：0.00 %", font=("SimHei", 12))
+        self.PID输出标签.grid(row=0, column=4, padx=20, pady=15)
+        
+        # 控制按钮
+        self.启动按钮 = ttk.Button(顶部容器, text="启动浮力调节系统", command=self.启动系统)
+        self.启动按钮.grid(row=1, column=0, padx=20, pady=10)
+        
+        ttk.Button(顶部容器, text="停止系统", command=self.停止系统).grid(row=1, column=1, padx=20, pady=10)
+        
+        # 左侧：PID参数配置
+        左侧容器 = ttk.LabelFrame(self.主窗口, text="PID参数在线配置")
+        左侧容器.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # PID参数输入
+        ttk.Label(左侧容器, text="比例系数 Kp:", font=("SimHei", 11)).grid(row=0, column=0, padx=10, pady=20, sticky=tk.E)
+        self.Kp输入框 = ttk.Entry(左侧容器, width=15)
+        self.Kp输入框.grid(row=0, column=1, padx=10, pady=20)
+        self.Kp输入框.insert(0, str(self.PID控制器.Kp))
+        
+        ttk.Label(左侧容器, text="积分系数 Ki:", font=("SimHei", 11)).grid(row=1, column=0, padx=10, pady=20, sticky=tk.E)
+        self.Ki输入框 = ttk.Entry(左侧容器, width=15)
+        self.Ki输入框.grid(row=1, column=1, padx=10, pady=20)
+        self.Ki输入框.insert(0, str(self.PID控制器.Ki))
+        
+        ttk.Label(左侧容器, text="微分系数 Kd:", font=("SimHei", 11)).grid(row=2, column=0, padx=10, pady=20, sticky=tk.E)
+        self.Kd输入框 = ttk.Entry(左侧容器, width=15)
+        self.Kd输入框.grid(row=2, column=1, padx=10, pady=20)
+        self.Kd输入框.insert(0, str(self.PID控制器.Kd))
+        
+        ttk.Button(左侧容器, text="保存PID参数", command=self.保存PID参数).grid(row=3, column=0, columnspan=2, pady=30)
+        
+        # 目标深度设置
+        ttk.Separator(左侧容器, orient=tk.HORIZONTAL).grid(row=4, column=0, columnspan=2, sticky="ew", pady=20)
+        
+        ttk.Label(左侧容器, text="目标悬浮深度 (m):", font=("SimHei", 11)).grid(row=5, column=0, padx=10, pady=20, sticky=tk.E)
+        self.目标深度输入框 = ttk.Entry(左侧容器, width=15)
+        self.目标深度输入框.grid(row=5, column=1, padx=10, pady=20)
+        self.目标深度输入框.insert(0, str(self.目标深度))
+        
+        ttk.Button(左侧容器, text="设置目标深度", command=self.设置目标深度).grid(row=6, column=0, columnspan=2, pady=10)
+        
+        # 右侧：实时趋势图
+        右侧容器 = ttk.LabelFrame(self.主窗口, text="实时深度变化曲线")
+        右侧容器.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 图表容器
+        self.图表容器 = ttk.Frame(右侧容器)
+        self.图表容器.pack(fill=tk.BOTH, expand=True)
+        
+        # 初始化图表
+        self.图表 = plt.Figure(figsize=(10, 6), dpi=100)
+        self.画布 = FigureCanvasTkAgg(self.图表, master=self.图表容器)
+        self.画布.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        
+        self.刷新图表()
+
+    def 保存PID参数(self):
+        try:
+            Kp = float(self.Kp输入框.get())
+            Ki = float(self.Ki输入框.get())
+            Kd = float(self.Kd输入框.get())
+        except ValueError:
+            messagebox.showerror("错误", "PID参数必须为有效数字！")
+            return
+        
+        self.PID控制器.Kp = Kp
+        self.PID控制器.Ki = Ki
+        self.PID控制器.Kd = Kd
+        
+        # 保存到数据库
+        数据库连接 = sqlite3.connect('浮力调节控制系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO PID参数 VALUES (NULL, ?, ?, ?, ?, ?)",
+                  (Kp, Ki, Kd, self.目标深度, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        messagebox.showinfo("成功", "PID参数已保存并生效！")
+
+    def 设置目标深度(self):
+        try:
+            新目标深度 = float(self.目标深度输入框.get())
+            if 新目标深度 <= 0 or 新目标深度 > 10:
+                messagebox.showerror("错误", "目标深度必须在0-10米之间！")
+                return
+        except ValueError:
+            messagebox.showerror("错误", "目标深度必须为有效数字！")
+            return
+        
+        self.目标深度 = 新目标深度
+        self.PID控制器.设置目标(self.目标深度)
+        self.目标深度标签.config(text=f"目标深度：{self.目标深度:.2f} m")
+        messagebox.showinfo("成功", f"目标深度已设置为 {self.目标深度:.2f} 米")
+
+    def 启动系统(self):
+        if self.系统运行中:
+            messagebox.showinfo("提示", "系统已在运行中！")
+            return
+        
+        self.系统运行中 = True
+        self.系统状态标签.config(text="系统状态：运行中", foreground="green")
+        self.启动按钮.config(state=tk.DISABLED)
+        
+        # 清空历史数据
+        self.历史深度数据.clear()
+        self.历史目标数据.clear()
+        self.历史时间数据.clear()
+        
+        # 开始控制循环
+        self.控制循环()
+        messagebox.showinfo("成功", "浮力调节控制系统已启动！")
+
+    def 停止系统(self):
+        if not self.系统运行中:
+            messagebox.showinfo("提示", "系统未运行！")
+            return
+        
+        self.系统运行中 = False
+        self.系统状态标签.config(text="系统状态：待机", foreground="black")
+        self.启动按钮.config(state=tk.NORMAL)
+        messagebox.showinfo("成功", "系统已停止！")
+
+    def 控制循环(self):
+        if not self.系统运行中:
+            return
+        
+        # 1. 模拟传感器数据采集（带随机扰动）
+        self.当前深度 += random.uniform(-0.05, 0.05)
+        self.当前水位 += random.uniform(-0.02, 0.02)
+        
+        # 2. 自适应目标深度计算（根据水位调整）
+        自适应目标 = self.目标深度 + (5.0 - self.当前水位) * 0.1
+        self.PID控制器.设置目标(自适应目标)
+        
+        # 3. PID控制计算
+        PID输出 = self.PID控制器.更新(self.当前深度)
+        
+        # 4. 模拟执行机构动作（根据PID输出调整深度）
+        self.当前深度 += PID输出 * 0.002
+        
+        # 5. 限制深度范围
+        self.当前深度 = max(0.5, min(8.0, self.当前深度))
+        
+        # 6. 确定装置状态
+        if abs(PID输出) > 50:
+            装置状态 = "大幅调节中"
+        elif abs(PID输出) > 10:
+            装置状态 = "微调中"
+        else:
+            装置状态 = "稳定悬浮"
+        
+        # 7. 保存数据
+        数据库连接 = sqlite3.connect('浮力调节控制系统.db')
+        游标 = 数据库连接.cursor()
+        游标.execute("INSERT INTO 实时监测数据 VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+                  (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                   self.当前深度, 自适应目标, self.当前水位, PID输出, 装置状态))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        # 8. 更新界面
+        self.当前深度标签.config(text=f"当前深度：{self.当前深度:.2f} m")
+        self.当前水位标签.config(text=f"当前水位：{self.当前水位:.2f} m")
+        self.PID输出标签.config(text=f"PID输出：{PID输出:.2f} %")
+        
+        # 9. 记录历史数据用于绘图
+        self.历史时间数据.append(datetime.datetime.now())
+        self.历史深度数据.append(self.当前深度)
+        self.历史目标数据.append(自适应目标)
+        
+        # 保持最近50个数据点
+        if len(self.历史时间数据) > 50:
+            self.历史时间数据.pop(0)
+            self.历史深度数据.pop(0)
+            self.历史目标数据.pop(0)
+        
+        # 10. 刷新图表
+        self.刷新图表()
+        
+        # 11. 异常状态预警
+        if abs(self.当前深度 - 自适应目标) > 1.0:
+            self.系统状态标签.config(text=f"系统状态：偏差过大！", foreground="red")
+        else:
+            self.系统状态标签.config(text="系统状态：运行中", foreground="green")
+        
+        # 12. 下一次循环（500ms后）
+        self.主窗口.after(500, self.控制循环)
+
+    def 刷新图表(self):
+        self.图表.clear()
+        子图 = self.图表.add_subplot(111)
+        
+        if self.历史时间数据:
+            # 绘制当前深度曲线
+            子图.plot(self.历史时间数据, self.历史深度数据, label='当前深度', color='blue', linewidth=2)
+            # 绘制目标深度曲线
+            子图.plot(self.历史时间数据, self.历史目标数据, label='目标深度', color='green', linestyle='--', linewidth=2)
+            
+            子图.set_title('装置悬浮深度实时变化曲线', fontsize=12, fontweight='bold')
+            子图.set_ylabel('深度 (m)', fontsize=11)
+            子图.set_xlabel('时间', fontsize=11)
+            子图.legend(fontsize=10)
+            子图.grid(True, alpha=0.3)
+            
+            # 旋转时间标签
+            plt.setp(子图.get_xticklabels(), rotation=45, ha='right')
+        else:
+            子图.text(0.5, 0.5, "系统未启动或暂无数据\n请点击【启动浮力调节系统】", 
+                     ha='center', va='center', fontsize=12)
+            子图.set_title('装置悬浮深度实时变化曲线', fontsize=12, fontweight='bold')
+        
+        self.图表.tight_layout()
+        self.画布.draw()
+
+# ====================== 程序入口 ======================
+if __name__ == "__main__":
+    init_buoyancy_db()
+    根窗口 = tk.Tk()
+    应用 = 浮力调节控制系统(根窗口)
+    根窗口.mainloop()`,
+            
+            coupling: `# 水文水动力耦合驱动的水库灌区藻华预测与防控系统 V1.0
+# 完整源代码
+import tkinter as tk
+from tkinter import ttk, messagebox, filedialog
+import sqlite3
+import datetime
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib
+matplotlib.use('TkAgg')
+
+# 尝试导入深度学习库，若失败则使用简化算法
+try:
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.preprocessing import MinMaxScaler
+    深度学习可用 = True
+except ImportError:
+    深度学习可用 = False
+
+# 设置matplotlib中文显示
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+# 数据库初始化
+def init_coupling_db():
+    数据库连接 = sqlite3.connect('水文水动力耦合系统.db')
+    游标 = 数据库连接.cursor()
+    
+    # 创建水文监测数据表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 水文监测数据 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        监测时间 TEXT NOT NULL,
+        水位 REAL NOT NULL,
+        流量 REAL NOT NULL,
+        流速 REAL NOT NULL,
+        水温 REAL NOT NULL,
+        总氮 REAL NOT NULL,
+        总磷 REAL NOT NULL,
+        藻类密度 REAL NOT NULL
+    )
+    ''')
+    
+    # 创建模型参数表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 模型参数 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        模型类型 TEXT NOT NULL,
+        参数名称 TEXT NOT NULL,
+        参数值 REAL NOT NULL,
+        更新时间 TEXT NOT NULL
+    )
+    ''')
+    
+    # 创建预测结果表
+    游标.execute('''
+    CREATE TABLE IF NOT EXISTS 预测结果 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        预测时间 TEXT NOT NULL,
+        预测时长 TEXT NOT NULL,
+        预测位置 TEXT NOT NULL,
+        预测藻类密度 REAL NOT NULL,
+        风险等级 TEXT NOT NULL,
+        模型版本 TEXT NOT NULL
+    )
+    ''')
+    
+    数据库连接.commit()
+    数据库连接.close()
+
+# 简化的耦合模型类
+class 耦合预测模型:
+    def __init__(self):
+        self.模型已训练 = False
+        self.随机森林模型 = None
+        self.数据归一化器 = None
+        
+        if 深度学习可用:
+            self.随机森林模型 = RandomForestRegressor(n_estimators=100, random_state=42)
+            self.数据归一化器 = MinMaxScaler()
+    
+    def 生成模拟训练数据(self, 样本数=1000):
+        np.random.seed(42)
+        # 生成时间序列
+        时间序列 = pd.date_range(start='2025-01-01', periods=样本数, freq='H')
+        
+        # 生成水文数据（带周期性）
+        小时索引 = np.arange(样本数)
+        水位 = 5.0 + 2.0 * np.sin(2 * np.pi * 小时索引 / 8760) + np.random.normal(0, 0.1, 样本数)
+        流量 = 10.0 + 5.0 * np.sin(2 * np.pi * 小时索引 / 8760 + 0.5) + np.random.normal(0, 0.5, 样本数)
+        流速 = 0.5 + 0.3 * np.sin(2 * np.pi * 小时索引 / 8760 + 0.3) + np.random.normal(0, 0.05, 样本数)
+        水温 = 20.0 + 10.0 * np.sin(2 * np.pi * 小时索引 / 8760 - 0.2) + np.random.normal(0, 1.0, 样本数)
+        
+        # 生成水质数据
+        总氮 = 1.0 + 0.5 * np.sin(2 * np.pi * 小时索引 / 8760 + 0.8) + np.random.normal(0, 0.1, 样本数)
+        总磷 = 0.05 + 0.03 * np.sin(2 * np.pi * 小时索引 / 8760 + 0.9) + np.random.normal(0, 0.005, 样本数)
+        
+        # 生成藻类密度（基于水文水质的复杂函数）
+        藻类密度 = (
+            500000 
+            + 200000 * np.sin(2 * np.pi * 小时索引 / 8760 - 0.5)
+            + 100000 * (水温 - 20)
+            + 500000 * (总氮 - 1.0)
+            + 10000000 * (总磷 - 0.05)
+            - 100000 * 流速
+            + np.random.normal(0, 50000, 样本数)
+        )
+        # 确保藻类密度不为负
+        藻类密度 = np.maximum(100000, 藻类密度)
+        
+        return pd.DataFrame({
+            '监测时间': 时间序列,
+            '水位': 水位,
+            '流量': 流量,
+            '流速': 流速,
+            '水温': 水温,
+            '总氮': 总氮,
+            '总磷': 总磷,
+            '藻类密度': 藻类密度
+        })
+    
+    def 训练模型(self, 训练数据):
+        if not 深度学习可用:
+            self.模型已训练 = True
+            return "模型训练完成（使用简化算法）"
+        
+        try:
+            # 准备特征和标签
+            特征列 = ['水位', '流量', '流速', '水温', '总氮', '总磷']
+            X = 训练数据[特征列].values
+            y = 训练数据['藻类密度'].values
+            
+            # 归一化
+            X_norm = self.数据归一化器.fit_transform(X)
+            
+            # 训练随机森林
+            self.随机森林模型.fit(X_norm, y)
+            self.模型已训练 = True
+            
+            return f"模型训练完成！\\n使用算法：随机森林回归\\n训练样本数：{len(训练数据)}"
+        except Exception as e:
+            return f"模型训练失败：{str(e)}"
+    
+    def 预测(self, 当前水文数据, 预测时长小时=24):
+        预测结果列表 = []
+        当前数据 = 当前水文数据.copy()
+        
+        for 小时 in range(预测时长小时):
+            if 深度学习可用 and self.模型已训练:
+                # 使用机器学习模型预测
+                特征 = np.array([[当前数据['水位'], 当前数据['流量'], 当前数据['流速'], 
+                                 当前数据['水温'], 当前数据['总氮'], 当前数据['总磷']]])
+                特征_norm = self.数据归一化器.transform(特征)
+                预测藻类密度 = self.随机森林模型.predict(特征_norm)[0]
+            else:
+                # 使用简化的经验公式预测
+                预测藻类密度 = (
+                    500000 
+                    + 100000 * (当前数据['水温'] - 20)
+                    + 500000 * (当前数据['总氮'] - 1.0)
+                    + 10000000 * (当前数据['总磷'] - 0.05)
+                    - 100000 * 当前数据['流速']
+                )
+                预测藻类密度 = max(100000, 预测藻类密度)
+            
+            # 确定风险等级
+            if 预测藻类密度 > 2000000:
+                风险等级 = "红色预警（极高风险）"
+            elif 预测藻类密度 > 1500000:
+                风险等级 = "橙色预警（高风险）"
+            elif 预测藻类密度 > 1000000:
+                风险等级 = "黄色预警（中风险）"
+            else:
+                风险等级 = "蓝色预警（低风险）"
+            
+            预测时间 = datetime.datetime.now() + datetime.timedelta(hours=小时)
+            预测结果列表.append({
+                '时间': 预测时间,
+                '预测藻类密度': 预测藻类密度,
+                '风险等级': 风险等级,
+                '水位': 当前数据['水位'],
+                '水温': 当前数据['水温'],
+                '总氮': 当前数据['总氮'],
+                '总磷': 当前数据['总磷']
+            })
+            
+            # 简单模拟下一小时的水文变化
+            当前数据['水温'] += np.random.normal(0, 0.1)
+            当前数据['总氮'] += np.random.normal(0, 0.01)
+            当前数据['总磷'] += np.random.normal(0, 0.001)
+        
+        return 预测结果列表
+
+# 主系统类
+class 水文水动力耦合系统:
+    def __init__(self, 主窗口):
+        self.主窗口 = 主窗口
+        self.主窗口.title("水文水动力耦合驱动的水库灌区藻华预测与防控系统 V1.0")
+        self.主窗口.geometry("1400x900")
+        self.主窗口.state('zoomed')
+        
+        # 初始化模型
+        self.预测模型 = 耦合预测模型()
+        self.当前预测结果 = None
+        
+        # 创建界面
+        self.创建主界面()
+        
+        # 初始化数据库
+        init_coupling_db()
+
+    def 创建主界面(self):
+        # 创建选项卡
+        self.选项卡容器 = ttk.Notebook(self.主窗口)
+        self.选项卡容器.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 1. 数据管理与模型训练页
+        self.创建数据管理页()
+        
+        # 2. 藻华预测页
+        self.创建藻华预测页()
+        
+        # 3. 结果可视化页
+        self.创建结果可视化页()
+        
+        # 4. 防控建议页
+        self.创建防控建议页()
+
+    def 创建数据管理页(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="1.数据管理与模型训练")
+        
+        # 左侧：数据操作
+        左侧容器 = ttk.LabelFrame(页面, text="数据操作")
+        左侧容器.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        ttk.Button(左侧容器, text="生成模拟训练数据", command=self.生成模拟数据).pack(fill=tk.X, padx=20, pady=15)
+        ttk.Button(左侧容器, text="导入水文监测数据", command=self.导入监测数据).pack(fill=tk.X, padx=20, pady=15)
+        ttk.Button(左侧容器, text="查看历史监测数据", command=self.查看历史数据).pack(fill=tk.X, padx=20, pady=15)
+        
+        ttk.Separator(左侧容器, orient=tk.HORIZONTAL).pack(fill=tk.X, padx=20, pady=30)
+        
+        ttk.Label(左侧容器, text="模型训练设置", font=("SimHei", 12, "bold")).pack(pady=10)
+        ttk.Button(左侧容器, text="开始训练预测模型", command=self.训练预测模型).pack(fill=tk.X, padx=20, pady=15)
+        
+        # 右侧：数据与模型状态
+        右侧容器 = ttk.LabelFrame(页面, text="数据与模型状态")
+        右侧容器.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        self.数据模型状态框 = tk.Text(右侧容器, height=25, font=("SimHei", 11))
+        self.数据模型状态框.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.数据模型状态框.insert(tk.END, "系统就绪\\n请先生成或导入数据，然后训练模型\\n\\n")
+        self.数据模型状态框.insert(tk.END, f"深度学习支持：{'可用（随机森林）' if 深度学习可用 else '不可用（将使用简化算法）'}\\n")
+
+    def 创建藻华预测页(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="2.藻华风险预测")
+        
+        # 左侧：当前水文参数输入
+        左侧容器 = ttk.LabelFrame(页面, text="当前水文水质参数")
+        左侧容器.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        字段配置 = [
+            ("水位 (m):", 0, 5.0),
+            ("流量 (m³/s):", 1, 10.0),
+            ("流速 (m/s):", 2, 0.5),
+            ("水温 (℃):", 3, 25.0),
+            ("总氮 (mg/L):", 4, 1.2),
+            ("总磷 (mg/L):", 5, 0.06)
+        ]
+        
+        self.水文输入框 = {}
+        for 标签文本, 行号, 默认值 in 字段配置:
+            ttk.Label(左侧容器, text=标签文本, font=("SimHei", 11)).grid(row=行号, column=0, padx=10, pady=20, sticky=tk.E)
+            输入框 = ttk.Entry(左侧容器, width=20)
+            输入框.grid(row=行号, column=1, padx=10, pady=20)
+            输入框.insert(0, str(默认值))
+            self.水文输入框[标签文本] = 输入框
+        
+        # 预测时长
+        ttk.Label(左侧容器, text="预测时长:", font=("SimHei", 11)).grid(row=6, column=0, padx=10, pady=20, sticky=tk.E)
+        self.预测时长框 = ttk.Combobox(左侧容器, values=["24小时", "48小时", "72小时", "7天"], width=17)
+        self.预测时长框.current(0)
+        self.预测时长框.grid(row=6, column=1, padx=10, pady=20)
+        
+        ttk.Button(左侧容器, text="执行藻华预测", command=self.执行藻华预测).grid(row=7, column=0, columnspan=2, pady=30)
+        
+        # 右侧：预测结果展示
+        右侧容器 = ttk.LabelFrame(页面, text="预测结果")
+        右侧容器.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        self.预测结果展示框 = tk.Text(右侧容器, height=25, font=("SimHei", 11))
+        self.预测结果展示框.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.预测结果展示框.insert(tk.END, "请输入参数后点击【执行藻华预测】\\n")
+
+    def 创建结果可视化页(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="3.预测结果可视化")
+        
+        # 图表容器
+        self.可视化图表容器 = ttk.Frame(页面)
+        self.可视化图表容器.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 初始化图表
+        self.可视化图表 = plt.Figure(figsize=(14, 8), dpi=100)
+        self.可视化画布 = FigureCanvasTkAgg(self.可视化图表, master=self.可视化图表容器)
+        self.可视化画布.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        
+        # 初始空白图
+        子图 = self.可视化图表.add_subplot(111)
+        子图.text(0.5, 0.5, "请先执行藻华预测，再查看可视化结果", 
+                 ha='center', va='center', fontsize=14)
+        子图.set_title('藻华预测结果可视化', fontsize=14, fontweight='bold')
+        self.可视化图表.tight_layout()
+        self.可视化画布.draw()
+
+    def 创建防控建议页(self):
+        页面 = ttk.Frame(self.选项卡容器)
+        self.选项卡容器.add(页面, text="4.防控方案建议")
+        
+        # 居中容器
+        容器 = ttk.Frame(页面)
+        容器.pack(expand=True)
+        
+        ttk.Label(容器, text="基于预测结果的防控方案建议", font=("SimHei", 16, "bold")).pack(pady=30)
+        
+        self.防控建议展示框 = tk.Text(容器, height=20, width=100, font=("SimHei", 12))
+        self.防控建议展示框.pack(pady=20)
+        self.防控建议展示框.insert(tk.END, "请先执行藻华预测，系统将根据风险等级自动生成防控建议\\n")
+        
+        ttk.Button(容器, text="生成防控方案建议", command=self.生成防控建议).pack(pady=20)
+
+    # ====================== 功能方法 ======================
+    def 生成模拟数据(self):
+        self.数据模型状态框.insert(tk.END, "\\n正在生成模拟训练数据...\\n")
+        self.训练数据 = self.预测模型.生成模拟训练数据(样本数=2000)
+        
+        # 保存到数据库
+        数据库连接 = sqlite3.connect('水文水动力耦合系统.db')
+        self.训练数据.to_sql('水文监测数据', 数据库连接, if_exists='append', index=False)
+        数据库连接.commit()
+        数据库连接.close()
+        
+        self.数据模型状态框.insert(tk.END, f"模拟数据生成完成！\\n数据时间范围：{self.训练数据['监测时间'].min()} 至 {self.训练数据['监测时间'].max()}\\n")
+        self.数据模型状态框.insert(tk.END, f"数据样本数：{len(self.训练数据)}\\n")
+        self.数据模型状态框.see(tk.END)
+
+    def 导入监测数据(self):
+        文件路径 = filedialog.askopenfilename(
+            title="选择水文监测数据文件",
+            filetypes=[("Excel文件", "*.xlsx"), ("CSV文件", "*.csv"), ("所有文件", "*.*")]
+        )
+        if 文件路径:
+            try:
+                if 文件路径.endswith('.csv'):
+                    self.训练数据 = pd.read_csv(文件路径)
+                else:
+                    self.训练数据 = pd.read_excel(文件路径)
+                
+                self.数据模型状态框.insert(tk.END, f"\\n数据导入成功！\\n样本数：{len(self.训练数据)}\\n")
+                self.数据模型状态框.see(tk.END)
+            except Exception as e:
+                messagebox.showerror("导入失败", f"数据导入失败：{str(e)}")
+
+    def 查看历史数据(self):
+        数据库连接 = sqlite3.connect('水文水动力耦合系统.db')
+        try:
+            数据 = pd.read_sql("SELECT * FROM 水文监测数据 ORDER BY 监测时间 DESC LIMIT 100", 数据库连接)
+            self.数据模型状态框.insert(tk.END, f"\\n===== 最近100条监测数据 =====\\n")
+            self.数据模型状态框.insert(tk.END, 数据.to_string(index=False))
+            self.数据模型状态框.insert(tk.END, "\\n...\\n")
+            self.数据模型状态框.see(tk.END)
+        except Exception as e:
+            self.数据模型状态框.insert(tk.END, f"\\n查询历史数据失败：{str(e)}\\n")
+        finally:
+            数据库连接.close()
+
+    def 训练预测模型(self):
+        if not hasattr(self, '训练数据') or self.训练数据 is None:
+            messagebox.showwarning("警告", "请先生成或导入训练数据！")
+            return
+        
+        self.数据模型状态框.insert(tk.END, "\\n开始训练预测模型...\\n")
+        self.数据模型状态框.update()
+        
+        结果 = self.预测模型.训练模型(self.训练数据)
+        
+        self.数据模型状态框.insert(tk.END, f"{结果}\\n")
+        self.数据模型状态框.see(tk.END)
+        messagebox.showinfo("训练完成", 结果)
+
+    def 执行藻华预测(self):
+        try:
+            # 获取输入参数
+            当前水文数据 = {
+                '水位': float(self.水文输入框["水位 (m):"].get()),
+                '流量': float(self.水文输入框["流量 (m³/s):"].get()),
+                '流速': float(self.水文输入框["流速 (m/s):"].get()),
+                '水温': float(self.水文输入框["水温 (℃):"].get()),
+                '总氮': float(self.水文输入框["总氮 (mg/L):"].get()),
+                '总磷': float(self.水文输入框["总磷 (mg/L):"].get())
+            }
+            
+            # 解析预测时长
+            预测时长文本 = self.预测时长框.get()
+            if 预测时长文本 == "24小时":
+                预测小时数 = 24
+            elif 预测时长文本 == "48小时":
+                预测小时数 = 48
+            elif 预测时长文本 == "72小时":
+                预测小时数 = 72
+            else:
+                预测小时数 = 168  # 7天
+            
+        except ValueError:
+            messagebox.showerror("错误", "所有水文参数必须为有效数字！")
+            return
+        
+        # 执行预测
+        self.当前预测结果 = self.预测模型.预测(当前水文数据, 预测小时数)
+        
+        # 展示预测结果
+        self.预测结果展示框.delete(1.0, tk.END)
+        self.预测结果展示框.insert(tk.END, f"{'='*60}\\n")
+        self.预测结果展示框.insert(tk.END, f"           水文水动力耦合模型藻华预测报告\\n")
+        self.预测结果展示框.insert(tk.END, f"{'='*60}\\n\\n")
+        self.预测结果展示框.insert(tk.END, f"预测时间：{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\\n")
+        self.预测结果展示框.insert(tk.END, f"预测时长：{预测时长文本}\\n")
+        self.预测结果展示框.insert(tk.END, f"模型版本：{'随机森林耦合模型' if 深度学习可用 else '简化经验模型'}\\n\\n")
+        
+        self.预测结果展示框.insert(tk.END, f"{'-'*60}\\n")
+        self.预测结果展示框.insert(tk.END, f"{'时间':<20} {'预测藻类密度':<15} {'风险等级':<20}\\n")
+        self.预测结果展示框.insert(tk.END, f"{'-'*60}\\n")
+        
+        for 结果 in self.当前预测结果[::6]:  # 每6小时显示一次
+            时间文本 = 结果['时间'].strftime('%Y-%m-%d %H:%M')
+            密度文本 = f"{结果['预测藻类密度']:.0f} 个/L"
+            self.预测结果展示框.insert(tk.END, f"{时间文本:<20} {密度文本:<15} {结果['风险等级']:<20}\\n")
+        
+        # 保存到数据库
+        数据库连接 = sqlite3.connect('水文水动力耦合系统.db')
+        游标 = 数据库连接.cursor()
+        for 结果 in self.当前预测结果:
+            游标.execute("INSERT INTO 预测结果 VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+                      (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                       预测时长文本,
+                       "水库灌区",
+                       结果['预测藻类密度'],
+                       结果['风险等级'],
+                       "V1.0"))
+        数据库连接.commit()
+        数据库连接.close()
+        
+        # 刷新可视化图表
+        self.刷新可视化图表()
+        
+        messagebox.showinfo("预测完成", "藻华预测已完成！结果已保存，可在可视化页查看图表")
+
+    def 刷新可视化图表(self):
+        if not self.当前预测结果:
+            return
+        
+        self.可视化图表.clear()
+        
+        # 提取数据
+        时间列表 = [结果['时间'] for 结果 in self.当前预测结果]
+        藻类密度列表 = [结果['预测藻类密度'] for 结果 in self.当前预测结果]
+        风险等级列表 = [结果['风险等级'] for 结果 in self.当前预测结果]
+        
+        # 子图1：藻类密度预测曲线
+        子图1 = self.可视化图表.add_subplot(221)
+        子图1.plot(时间列表, 藻类密度列表, label='预测藻类密度', color='blue', linewidth=2)
+        子图1.axhline(y=1000000, color='yellow', linestyle='--', label='中风险阈值')
+        子图1.axhline(y=1500000, color='orange', linestyle='--', label='高风险阈值')
+        子图1.axhline(y=2000000, color='red', linestyle='--', label='极高风险阈值')
+        子图1.set_title('藻类密度预测趋势', fontsize=12, fontweight='bold')
+        子图1.set_ylabel('藻类密度 (个/L)', fontsize=11)
+        子图1.legend(fontsize=10)
+        子图1.grid(True, alpha=0.3)
+        plt.setp(子图1.get_xticklabels(), rotation=45, ha='right')
+        
+        # 子图2：风险等级分布
+        子图2 = self.可视化图表.add_subplot(222)
+        风险计数 = {}
+        for 风险 in 风险等级列表:
+            风险计数[风险] = 风险计数.get(风险, 0) + 1
+        
+        颜色映射 = {
+            "蓝色预警（低风险）": "blue",
+            "黄色预警（中风险）": "yellow",
+            "橙色预警（高风险）": "orange",
+            "红色预警（极高风险）": "red"
+        }
+        
+        标签列表 = list(风险计数.keys())
+        数值列表 = list(风险计数.values())
+        颜色列表 = [颜色映射.get(标签, "gray") for 标签 in 标签列表]
+        
+        子图2.bar(标签列表, 数值列表, color=颜色列表)
+        子图2.set_title('预测周期内风险等级分布', fontsize=12, fontweight='bold')
+        子图2.set_ylabel('小时数', fontsize=11)
+        plt.setp(子图2.get_xticklabels(), rotation=30, ha='right')
+        
+        # 子图3：多参数对比
+        子图3 = self.可视化图表.add_subplot(212)
+        水温列表 = [结果['水温'] for 结果 in self.当前预测结果]
+        总氮列表 = [结果['总氮'] for 结果 in self.当前预测结果]
+        总磷列表 = [结果['总磷'] for 结果 in self.当前预测结果]
+        
+        双轴1 = 子图3.twinx()
+        线1 = 子图3.plot(时间列表, 藻类密度列表, label='藻类密度', color='blue', linewidth=2)
+        线2 = 双轴1.plot(时间列表, 水温列表, label='水温', color='red', linestyle='--')
+        线3 = 双轴1.plot(时间列表, 总氮列表, label='总氮', color='green', linestyle=':')
+        
+        子图3.set_title('多参数耦合预测对比', fontsize=12, fontweight='bold')
+        子图3.set_ylabel('藻类密度 (个/L)', fontsize=11, color='blue')
+        双轴1.set_ylabel('水温 / 总氮', fontsize=11)
+        
+        所有线 = 线1 + 线2 + 线3
+        所有标签 = [线.get_label() for 线 in 所有线]
+        子图3.legend(所有线, 所有标签, loc='upper left')
+        
+        plt.setp(子图3.get_xticklabels(), rotation=45, ha='right')
+        
+        self.可视化图表.tight_layout()
+        self.可视化画布.draw()
+
+    def 生成防控建议(self):
+        if not self.当前预测结果:
+            messagebox.showwarning("警告", "请先执行藻华预测！")
+            return
+        
+        # 统计最高风险等级
+        最高风险 = "蓝色预警（低风险）"
+        for 结果 in self.当前预测结果:
+            if "红色" in 结果['风险等级']:
+                最高风险 = 结果['风险等级']
+                break
+            elif "橙色" in 结果['风险等级']:
+                最高风险 = 结果['风险等级']
+            elif "黄色" in 结果['风险等级'] and "蓝色" in 最高风险:
+                最高风险 = 结果['风险等级']
+        
+        # 根据风险等级生成建议
+        防控建议 = f"""
+        {'='*70}
+                    基于水文水动力耦合模型的防控方案建议
+        {'='*70}
+        
+        【生成时间】：{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+        【预测最高风险等级】：{最高风险}
+        
+        {'-'*70}
+        一、风险分析
+        {'-'*70}
+        根据水文-水动力-水质耦合模型预测结果，未来一段时间内
+        水库灌区存在{最高风险.split('（')[0]}。
+        主要驱动因子：
+        • 水文条件：水位、流量变化有利于藻类聚集
+        • 水质条件：氮磷营养盐浓度较高，为藻华提供物质基础
+        • 气象条件：水温适宜，光照充足，藻类光合作用强
+        
+        {'-'*70}
+        二、分级防控建议
+        {'-'*70}
+        """
+        
+        if "红色" in 最高风险:
+            防控建议 += """
+        【红色预警响应措施】
+        1. 立即启动应急响应预案，进入紧急防控状态
+        2. 水利调度：加大下泄流量，提升水体交换速率，破坏藻华聚集条件
+        3. 装备调度：紧急调集所有可用除藻装备，在高风险区域密集布设
+        4. 监测加密：将监测频次提升至每小时1次，实时掌握藻情变化
+        5. 应急打捞：组织应急打捞队伍，对藻华聚集区进行紧急打捞
+        6. 信息报送：每日向上级主管部门报送防控进展情况
+        """
+        elif "橙色" in 最高风险:
+            防控建议 += """
+        【橙色预警响应措施】
+        1. 启动中级响应预案，进入强化防控状态
+        2. 水利调度：优化闸门调度，形成适度水流扰动，抑制藻类上浮
+        3. 装备调度：在重点区域布设除藻装置，做好全区域防控准备
+        4. 监测加密：将监测频次提升至每日4次，密切关注藻情发展
+        5. 准备打捞：打捞队伍待命，做好随时开展打捞作业的准备
+        """
+        elif "黄色" in 最高风险:
+            防控建议 += """
+        【黄色预警响应措施】
+        1. 启动关注级响应预案，进入预警防控状态
+        2. 水利调度：维持现有水利调度，保持水体基本流动
+        3. 装备调度：在关键节点布设预防性抑藻装置
+        4. 监测加密：将监测频次提升至每日2次，关注关键指标变化
+        5. 准备工作：检查防控装备状态，做好人员培训
+        """
+        else:
+            防控建议 += """
+        【蓝色预警响应措施】
+        1. 维持常态化防控状态
+        2. 水利调度：保持常规水利调度，维持水体健康流动
+        3. 装备调度：装备正常维护保养，处于待命状态
+        4. 监测：按常规频次进行监测，做好数据记录与分析
+        5. 日常管理：加强库区巡查，及时清理垃圾，减少面源污染
+        """
+        
+        防控建议 += f"""
+        {'-'*70}
+        三、资源化利用建议
+        {'-'*70}
+        1. 藻泥收集：对打捞的藻泥进行集中收集，避免二次污染
+        2. 秸秆协同：将库区周边秸秆收集，与藻泥协同处理
+        3. 资源化利用：
+           • 制备有机肥料：藻泥与秸秆混合发酵，生产有机肥
+           • 制备生物质燃料：将干燥藻秸混合物压块，作为生物质燃料
+           • 制备土壤改良剂：利用藻泥中的有机质改良土壤
+        4. 产品溯源：对资源化产品进行全流程溯源管理，确保产品质量
+        
+        {'='*70}
+                            防控方案建议结束
+        {'='*70}
+        """
+        
+        self.防控建议展示框.delete(1.0, tk.END)
+        self.防控建议展示框.insert(tk.END, 防控建议)
+
+# ====================== 程序入口 ======================
+if __name__ == "__main__":
+    init_coupling_db()
+    根窗口 = tk.Tk()
+    应用 = 水文水动力耦合系统(根窗口)
+    根窗口.mainloop()`
+        }
+
+        # 补充JavaScript下载函数
+        self.system_files = systemFiles
+        
+        # 初始化时将系统文件挂载到window对象
+        window.downloadFile = self.downloadFile
+        window.downloadAllFiles = self.downloadAllFiles
+
+    def downloadFile(self, system_key):
+        if system_key in self.system_files:
+            content = self.system_files[system_key]
+            filename = f"{system_key}_system_v1.0.py"
+            
+            # 创建Blob并下载
+            blob = Blob.new([content], {type: "text/plain;charset=utf-8"})
+            url = window.URL.createObjectURL(blob)
+            a = document.createElement('a')
+            a.href = url
+            a.download = filename
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+            window.URL.revokeObjectURL(url)
+            
+            print(f"已下载：{filename}")
+        else:
+            print(f"未找到系统：{system_key}")
+
+    def downloadAllFiles(self):
+        # 简单实现：依次下载每个文件
+        import time
+        for key in self.system_files:
+            self.downloadFile(key)
+            time.sleep(0.5)  # 简单延迟避免浏览器拦截
+        
+        print("所有文件下载完成！")
+

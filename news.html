@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻动态 - 秸藻清源</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center space-x-2 text-xl font-bold text-cyan-700">
+                    <i class="fa fa-leaf"></i>
+                    <span>秸藻清源</span>
+                </a>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-cyan-700 py-1">首页</a>
+                    <a href="overview.html" class="text-gray-700 hover:text-cyan-700 py-1">项目概述</a>
+                    <a href="technology.html" class="text-gray-700 hover:text-cyan-700 py-1">技术方案</a>
+                    <a href="team.html" class="text-gray-700 hover:text-cyan-700 py-1">团队介绍</a>
+                    <a href="patents.html" class="text-gray-700 hover:text-cyan-700 py-1">专利成果</a>
+                    <a href="cases.html" class="text-gray-700 hover:text-cyan-700 py-1">应用案例</a>
+                    <a href="contact.html" class="bg-cyan-700 text-white px-4 py-2 rounded-lg hover:bg-cyan-800">联系我们</a>
+                </div>
+                
+                <button class="md:hidden text-gray-700" id="menu-btn">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="hidden md:hidden bg-white border-t" id="mobile-menu">
+            <div class="container mx-auto px-4 py-4 space-y-3">
+                <a href="index.html" class="block text-gray-700">首页</a>
+                <a href="overview.html" class="block text-gray-700">项目概述</a>
+                <a href="technology.html" class="block text-gray-700">技术方案</a>
+                <a href="team.html" class="block text-gray-700">团队介绍</a>
+                <a href="patents.html" class="block text-gray-700">专利成果</a>
+                <a href="cases.html" class="block text-gray-700">应用案例</a>
+                <a href="contact.html" class="block text-cyan-700 font-semibold">联系我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="bg-gradient-to-r from-cyan-700 to-emerald-700 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">新闻动态</h1>
+            <p class="text-xl opacity-90">了解项目最新进展与行业资讯</p>
+        </div>
+    </section>
+
+    <!-- 新闻列表 -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">最新新闻</h2>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 新闻1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-40 bg-cyan-100 flex items-center justify-center">
+                            <i class="fa fa-newspaper-o text-5xl text-cyan-700"></i>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-gray-600 text-sm mb-2">2025年4月15日</div>
+                            <h3 class="text-xl font-semibold mb-3">秸藻清源项目获国家级创新创业大赛金奖</h3>
+                            <p class="text-gray-700 mb-4">
+                                在刚刚结束的全国大学生创新创业大赛中，"秸藻清源"项目凭借其创新的技术方案和显著的社会经济效益，从数千个项目中脱颖而出，荣获金奖。
+                            </p>
+                            <a href="#" class="text-cyan-700 hover:underline">阅读更多 →</a>
+                        </div>
+                    </div>
+
+                    <!-- 新闻2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-40 bg-emerald-100 flex items-center justify-center">
+                            <i class="fa fa-newspaper-o text-5xl text-emerald-700"></i>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-gray-600 text-sm mb-2">2025年3月20日</div>
+                            <h3 class="text-xl font-semibold mb-3">与某环保集团达成战略合作协议</h3>
+                            <p class="text-gray-700 mb-4">
+                                我司与国内知名环保集团签署战略合作协议，双方将在藻华治理技术推广、设备生产与市场拓展等方面开展深度合作。
+                            </p>
+                            <a href="#" class="text-cyan-700 hover:underline">阅读更多 →</a>
+                        </div>
+                    </div>
+
+                    <!-- 新闻3 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-40 bg-amber-100 flex items-center justify-center">
+                            <i class="fa fa-newspaper-o text-5xl text-amber-700"></i>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-gray-600 text-sm mb-2">2025年2月10日</div>
+                            <h3 class="text-xl font-semibold mb-3">第三代智能双体船成功下水试航</h3>
+                            <p class="text-gray-700 mb-4">
+                                经过半年的研发与改进，第三代智能双体藻华治理船在马鞍山成功下水试航，各项性能指标均达到设计要求。
+                            </p>
+                            <a href="#" class="text-cyan-700 hover:underline">阅读更多 →</a>
+                        </div>
+                    </div>
+
+                    <!-- 新闻4 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-40 bg-purple-100 flex items-center justify-center">
+                            <i class="fa fa-newspaper-o text-5xl text-purple-700"></i>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-gray-600 text-sm mb-2">2025年1月5日</div>
+                            <h3 class="text-xl font-semibold mb-3">巢湖示范项目通过专家验收</h3>
+                            <p class="text-gray-700 mb-4">
+                                巢湖西岸藻华防控示范工程项目顺利通过专家组验收，得到了专家们的高度评价和一致认可。
+                            </p>
+                            <a href="#" class="text-cyan-700 hover:underline">阅读更多 →</a>
+                        </div>
+                    </div>
+
+                    <!-- 新闻5 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-40 bg-red-100 flex items-center justify-center">
+                            <i class="fa fa-newspaper-o text-5xl text-red-700"></i>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-gray-600 text-sm mb-2">2024年12月18日</div>
+                            <h3 class="text-xl font-semibold mb-3">入选国家重点环保技术推广目录</h3>
+                            <p class="text-gray-700 mb-4">
+                                "秸藻清源"技术成功入选国家重点环保技术推广目录，将获得国家政策和资金支持。
+                            </p>
+                            <a href="#" class="text-cyan-700 hover:underline">阅读更多 →</a>
+                        </div>
+                    </div>
+
+                    <!-- 新闻6 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-40 bg-gray-100 flex items-center justify-center">
+                            <i class="fa fa-newspaper-o text-5xl text-gray-700"></i>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-gray-600 text-sm mb-2">2024年11月2日</div>
+                            <h3 class="text-xl font-semibold mb-3">参加中国国际环保展览会</h3>
+                            <p class="text-gray-700 mb-4">
+                                我司携最新技术成果参加中国国际环保展览会，吸引了众多国内外客户和投资者的关注。
+                            </p>
+                            <a href="#" class="text-cyan-700 hover:underline">阅读更多 →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 页面跳转按钮 -->
+                <div class="text-center mt-12">
+                    <a href="contact.html" class="inline-block bg-cyan-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-cyan-800 transition-colors">
+                        联系我们了解更多 →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center items-center space-x-2 mb-4">
+                <i class="fa fa-leaf text-cyan-400 text-xl"></i>
+                <span class="text-xl font-bold">秸藻清源</span>
+            </div>
+            <p class="text-gray-400 mb-6">空-水-地一体藻华闭环治理系统</p>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-gray-500 text-sm">
+                <p>&copy; 2025 秸藻清源 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
